@@ -1,7 +1,7 @@
 <?php
 
 namespace Database\Seeders;
-
+use App\Models\Campaign;
 // use Illuminate\Database\Console\Seeds\WithoutModelEvents;
 
 use App\Models\User;
@@ -20,5 +20,7 @@ class DatabaseSeeder extends Seeder
             'email' => 'prova@gmail.com',
             'password' => Hash::make('123456789')
         ]);
+
+        Campaign::factory()->count(4)->create();
     }
 }
