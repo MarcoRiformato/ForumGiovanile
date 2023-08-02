@@ -14,7 +14,7 @@ class CampaignController extends Controller
      */
     public function index()
     {
-        $campaigns = Campaign::all();
+        $campaigns = Campaign::orderBy('created_at', 'desc')->get();
     
         return Inertia::render('SelezionaCampagna', [
             'campaigns' => $campaigns
@@ -26,7 +26,7 @@ class CampaignController extends Controller
      */
     public function create()
     {
-        return Inertia::render('NuovaCampagna');
+        return Inertia::render('CreateCampaign');
     }
 
     /**
@@ -42,31 +42,51 @@ class CampaignController extends Controller
             'startingDate' => $request->startingDate,
             'endDate' => $request->endDate
         ]);
+
+        return redirect()->route('campaigns.index');
     }
 
     /**
      * Display the specified resource.
      */
-    public function show(Campaign $campaign)
+    public function show($campaign_id)
     {
-        //
+        $campaign = Campaign::find($campaign_id);
+        return Inertia::render('ShowCampaign', [
+            'campaign' => $campaign
+        ]);
     }
 
     /**
      * Show the form for editing the specified resource.
      */
-    public function edit(Campaign $campaign)
+    public function edit($campaign_id)
     {
-        //
+        $campaign = Campaign::find($campaign_id);
+        return Inertia::render('EditCampaign', [
+            'campaign' => $campaign
+        ]);
     }
 
     /**
      * Update the specified resource in storage.
      */
-    public function update(UpdateCampaignRequest $request, Campaign $campaign)
+    public function update(UpdateCampaignRequest $request, $id)
     {
-        //
+        $campaign = Campaign::find($id);
+    
+        $campaign->update([
+            'title' => $request->title,
+            'description' => $request->description,
+            'testingCampaign' => $request->testingCampaign,
+            'status' => $request->status,
+            'startingDate' => $request->startingDate,
+            'endDate' => $request->endDate
+        ]);
+    
+        return redirect()->route('campaigns.index')->with('message', 'Campagna modificata');
     }
+    
 
     /**
      * Remove the specified resource from storage.

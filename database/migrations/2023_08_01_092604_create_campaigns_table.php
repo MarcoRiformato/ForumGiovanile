@@ -15,10 +15,10 @@ public function up(): void
         $table->id();
         $table->string('title');
         $table->text('description')->nullable();
-        $table->boolean('testingCampaign');
-        $table->boolean('status');
-        $table->date('startingDate');
-        $table->date('endDate');
+        $table->boolean('testingCampaign')->nullable();
+        $table->boolean('status')->nullable();
+        $table->date('startingDate')->nullable();
+        $table->date('endDate')->nullable();
         $table->softDeletes();
         $table->timestamps();
     });
