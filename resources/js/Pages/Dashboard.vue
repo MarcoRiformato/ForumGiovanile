@@ -5,7 +5,7 @@ import AppLayout from '@/Layouts/AppLayout.vue';
 
 <template>
 <div >
-    <AppLayout title="Dashboard">
+    <AppLayout title="Forum Giovanile Elbano">
 
         <div class="bg-base-200">
             <div class="max-w-7xl mx-auto sm:px-6 lg:px-8">
