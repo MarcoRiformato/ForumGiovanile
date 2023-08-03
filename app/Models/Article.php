@@ -13,4 +13,10 @@ class Article extends Model
 
     protected $table = 'articles';
     protected $guarded = [];
+
+    public function user()
+    {
+        return $this->belongsTo(User::class);
+    }
+
 }

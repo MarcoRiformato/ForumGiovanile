@@ -2,8 +2,7 @@
 
 namespace Database\Seeders;
 use App\Models\Campaign;
-// use Illuminate\Database\Console\Seeds\WithoutModelEvents;
-
+use App\Models\Article;
 use App\Models\User;
 use Illuminate\Database\Seeder;
 use Illuminate\Support\Facades\Hash;
@@ -22,5 +21,6 @@ class DatabaseSeeder extends Seeder
         ]);
 
         Campaign::factory()->count(4)->create();
+        Article::factory()->count(4)->create();
     }
 }

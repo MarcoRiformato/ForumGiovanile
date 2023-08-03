@@ -17,6 +17,7 @@ return new class extends Migration
             $table->string('extract');
             $table->text('body');
             $table->foreignId('user_id')->constrained()->nullable();
+            $table->softDeletes();
             $table->timestamps();
         });
     }
