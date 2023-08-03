@@ -7,18 +7,24 @@
         <h2 class="text-base font-semibold leading-7 text-white">Modifica campagna</h2>
 
         <div class="mt-10 grid grid-cols-1 gap-x-6 gap-y-8 sm:grid-cols-6">
-          <div class="sm:col-span-4">
-            <label for="username" class="block text-sm font-medium leading-6 text-white">Titolo</label>
-            <div class="mt-2">
-              <div class="flex rounded-md bg-white/5 ring-1 ring-inset ring-white/10 focus-within:ring-2 focus-within:ring-inset focus-within:ring-indigo-500">
-                <span class="flex select-none items-center pl-3 text-gray-500 sm:text-sm"> </span>
-                <input
-                v-model="form.title"
-                 type="text" class="flex-1 border-0 bg-transparent py-1.5 pl-1 text-white focus:ring-0 sm:text-sm sm:leading-6" placeholder="Campagna che salverà il mondo" />
+          <div class="sm:col-span-4 grid sm:grid-cols-4 gap-4">
+            <div class="sm:col-span-3">
+              <label for="username" class="block text-sm font-medium leading-6 text-white">Titolo</label>
+              <div class="mt-2">
+                <div class="flex rounded-md bg-white/5 ring-1 ring-inset ring-white/10 focus-within:ring-2 focus-within:ring-inset focus-within:ring-indigo-500">
+                  <span class="flex select-none items-center pl-3 text-gray-500 sm:text-sm"> </span>
+                  <input
+                  v-model="form.title"
+                  type="text" class="flex-1 border-0 bg-transparent py-1.5 pl-1 text-white focus:ring-0 sm:text-sm sm:leading-6" placeholder="Campagna che salverà il mondo" />
+                </div>
               </div>
             </div>
+            
+            <div class="sm:col-span-1 flex items-center">
+              <span class="text-sm font-medium leading-6 text-white mr-2">Stato della campagna:</span>
+              <input v-model="form.status" type="checkbox" class="toggle toggle-info" />
+            </div>
           </div>
-
           <div class="col-span-full">
             <label for="about" class="block text-sm font-medium leading-6 text-white">Descrizione</label>
             <div class="mt-2">
@@ -95,7 +101,7 @@
                   <input type="checkbox" class="checkbox checkbox-primary h-4 w-4 rounded border-white/10 bg-white/5 text-indigo-600 focus:ring-indigo-600 focus:ring-offset-gray-900" />
                 </div>
                 <div class="text-sm leading-6">
-                  <label for="comments" class="font-medium text-white">Lavoratori - pendolari</label>
+                  <label class="font-medium text-white">Lavoratori - pendolari</label>
                   <p class="text-gray-400">Adulti residenti e non che si spostano quotidianamente per lavoro</p>
                 </div>
               </div>
@@ -105,9 +111,10 @@
       </div>
     </div>
 
-    <div class="mt-6 flex items-center justify-end gap-x-6">
-      <a :href="route('campaigns.show', campaign.id)" type="button" class="btn btn-secondary">Annulla</a>
-      <button type="submit" :disabled="form.processing" class="btn btn-primary ">Salva</button>
+    <div class="mt-6 flex items-center justify-between gap-x-6">
+      <button @click="destroy" type="button" class="btn btn-error">Cancella</button>
+      <button @click="$inertia.visit(route('campaigns.show', campaign.id))" type="button" class="btn btn-secondary">Annulla</button>
+      <button @click="submit" type="button" :disabled="form.processing" class="btn btn-primary ">Salva</button>
     </div>
   </form>
 </AppLayout>
@@ -116,10 +123,6 @@
 <script setup>
 import AppLayout from '@/Layouts/AppLayout.vue';
 import { useForm } from '@inertiajs/vue3';
-
-const submit = () =>{
-    form.put(route('campaigns.update', {id: props.campaign.id}));
-}
 
 const props = defineProps({
     campaign: Object
@@ -135,5 +138,12 @@ let form = useForm({
     endDate: props.campaign.endDate
 })
 
+const submit = () =>{
+    form.put(route('campaigns.update', {id: props.campaign.id}));
+}
+
+const destroy = () =>{
+    form.delete(route('campaigns.destroy', {id: props.campaign.id}));
+}
 
 </script>

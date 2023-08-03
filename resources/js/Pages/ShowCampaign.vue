@@ -12,8 +12,9 @@
               <h2 class="text-2xl font-bold leading-7 text-white sm:truncate sm:text-3xl sm:tracking-tight">Dettaglio campagna</h2>
             </div>
             <div class="mt-4 flex md:ml-4 md:mt-0">
-              <a :href="route('campaigns.edit', campaign.id)" type="button" class="btn btn-primary me-4">Modifica</a>
-              <button type="button" class="btn btn-secondary">Pubblica</button>
+              <div class="mt-4 flex md:ml-4 md:mt-0">
+                <button @click="$inertia.visit(route('campaigns.edit', campaign.id))" type="button" class="btn btn-primary me-4">Modifica</button>
+              </div>
             </div>
           </div>
           <div class="mt-6 border-t border-white/10">

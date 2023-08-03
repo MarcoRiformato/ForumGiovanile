@@ -2,12 +2,12 @@
   <AppLayout title="Dashboard">
     <div class="bg-base-200">
       <div class=" flex justify-end">
-        <a :href="route('campaigns.create')" role="button" class="btn me-2 mt-2 btn-active btn-secondary flex items-center">
+        <button @click="$inertia.visit(route('campaigns.create'))" role="button" class="btn me-12 mt-2 btn-active btn-secondary flex items-center">
           <svg xmlns="http://www.w3.org/2000/svg" class="h-5 w-5 mr-2" viewBox="0 0 20 20" fill="currentColor" aria-hidden="true">
             <path fill-rule="evenodd" d="M10 18a1 1 0 01-1-1V11H2a1 1 0 110-2h7V3a1 1 0 112 0v6h7a1 1 0 110 2h-7v6a1 1 0 01-1 1z" clip-rule="evenodd"/>
           </svg>
           Crea nuova campagna
-        </a>
+        </button>
       </div>
       <div v-for="campaign in campaigns">
           <div class="max-w-7xl mx-auto sm:px-6 lg:px-8">
@@ -24,7 +24,7 @@
                         </div>
                         <p> {{ campaign.description }} </p>
                         <div class="card-actions justify-end">
-                          <a type="button" :campaign="campaign" :href="route('campaigns.show', campaign.id)" class="btn btn-primary">Seleziona</a>
+                          <button type="button" :campaign="campaign" @click="$inertia.visit(route('campaigns.show', campaign.id))" class="btn btn-primary">Seleziona</button>
                         </div>
                       </div>
                     </div>

@@ -91,8 +91,13 @@ class CampaignController extends Controller
     /**
      * Remove the specified resource from storage.
      */
-    public function destroy(Campaign $campaign)
+    public function destroy($campaign_id)
     {
-        //
+        
+        $campaign = Campaign::find($campaign_id);
+        $campaign->delete();
+
+        return redirect()->route('campaigns.index');
+
     }
 }
