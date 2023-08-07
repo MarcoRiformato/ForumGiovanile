@@ -19,6 +19,12 @@ class DatabaseSeeder extends Seeder
             'email' => 'prova@gmail.com',
             'password' => Hash::make('123456789')
         ]);
+        User::factory()->create([
+            'name' => 'admin',
+            'email' => 'admin@admin.it',
+            'password' => Hash::make('123456789'),
+            'is_admin' => '1'
+        ]);
 
         Campaign::factory()->count(4)->create();
         Article::factory()->count(4)->create();

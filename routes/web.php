@@ -38,3 +38,7 @@ Route::middleware([
 
 Route::resource('/campaigns', CampaignController::class);
 Route::resource('/articles', ArticleController::class);
+
+Route::get('/admindashboard', function () {
+    return Inertia::render('AdminDashboard');
+})->middleware(['auth:sanctum', 'verified', 'IsAdmin']);

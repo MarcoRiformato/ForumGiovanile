@@ -40,9 +40,12 @@ class ArticleController extends Controller
     /**
      * Display the specified resource.
      */
-    public function show(Article $article)
+    public function show($article_id)
     {
-        //
+        $article = Article::find($article_id);
+        return Inertia::render('ShowArticle', [
+            'article' => $article
+        ]);
     }
 
     /**

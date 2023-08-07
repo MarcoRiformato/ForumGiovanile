@@ -8,8 +8,9 @@
         <p class="mt-2 text-lg leading-8">Leggi analisi, sondaggi e notizie del Forum Giovanile Elbano</p>
       </div>
       <div class="mx-auto grid max-w-2xl auto-rows-fr grid-cols-1 gap-8 sm:mt-10 lg:mx-0 lg:max-w-none lg:grid-cols-3">
-        <article  @click="$inertia.visit(route('articles.show', article.id))" v-for="article in articles" :key="article.id" class="relative isolate flex flex-col justify-end overflow-hidden rounded-2xl bg-gray-900 px-8 pb-8 pt-20 sm:pt-48 lg:pt-80">
-          <img src="https://picsum.photos/800" alt="" class="absolute inset-0 -z-10 h-full w-full object-cover" />
+        <article v-for="article in articles" :key="article.id" class="relative isolate flex flex-col justify-end overflow-hidden rounded-2xl bg-gray-900 px-8 pb-8 pt-20 sm:pt-48 lg:pt-80">
+          <div :article="article" @click="$inertia.visit(route('articles.show', article.id))">
+            <img src="https://picsum.photos/800" alt="" class="absolute inset-0 -z-10 h-full w-full object-cover" />
           <div class="absolute inset-0 -z-10 bg-gradient-to-t from-gray-900 via-gray-900/40" />
           <div class="absolute inset-0 -z-10 rounded-2xl ring-1 ring-inset ring-gray-900/10" />
 
@@ -26,11 +27,12 @@
             </div>
           </div>
           <h3 class="mt-3 text-lg font-semibold leading-6 text-white">
-            <a href="post.href">
+            <p>
               <span class="absolute inset-0" />
               {{ article.title }}
-            </a>
+            </p>
           </h3>
+          </div>
         </article>
       </div>
     </div>
@@ -41,7 +43,7 @@
 import AppLayout from '@/Layouts/AppLayout.vue';
 
 
-let props = defineProps({
+defineProps({
   articles: Object
 })
 
