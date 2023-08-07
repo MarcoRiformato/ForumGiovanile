@@ -5,6 +5,7 @@ use Illuminate\Foundation\Application;
 use Illuminate\Support\Facades\Route;
 use Inertia\Inertia;
 use App\Http\Controllers\CampaignController;
+use App\Http\Controllers\AdminController;
 
 /*
 |--------------------------------------------------------------------------
@@ -39,6 +40,6 @@ Route::middleware([
 Route::resource('/campaigns', CampaignController::class);
 Route::resource('/articles', ArticleController::class);
 
-Route::get('/admindashboard', function () {
-    return Inertia::render('AdminDashboard');
-})->middleware(['auth:sanctum', 'verified', 'IsAdmin']);
+Route::middleware(['auth', 'admin'])->group(function () {
+    Route::get('/admin/dashboard', [AdminController::class, 'dashboard'])->name('admin.dashboard');
+});
