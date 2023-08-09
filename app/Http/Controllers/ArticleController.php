@@ -53,8 +53,11 @@ class ArticleController extends Controller
      */
     public function edit(Article $article)
     {
-        //
+        return Inertia::render('Admin/EditArticle', [
+            'article' => $article
+        ]);
     }
+    
 
     /**
      * Update the specified resource in storage.

@@ -10,6 +10,6 @@ import AppLayout from '@/Layouts/AppLayout.vue';
 
 defineProps({
   article: Object
-  })
+})
 
 </script>
