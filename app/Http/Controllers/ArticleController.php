@@ -64,8 +64,15 @@ class ArticleController extends Controller
      */
     public function update(Request $request, Article $article)
     {
-        //
+        $article->update([
+            'title' => $request->title,
+            'extract' => $request->extract,
+            'body' => $request->body
+        ]);
+    
+        return redirect()->route('articles.index')->with('message', 'Articolo modificata');
     }
+    
 
     /**
      * Remove the specified resource from storage.

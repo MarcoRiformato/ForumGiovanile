@@ -29,15 +29,13 @@
             rows="3" class="block w-full rounded-md border-0 bg-white/5 py-1.5 text-white shadow-sm ring-1 ring-inset ring-white/10 focus:ring-2 focus:ring-inset focus:ring-indigo-500 sm:text-sm sm:leading-6" />
         </div>
         </div>
+        
         <div class="col-span-full">
-        <label for="about" class="block text-sm font-medium leading-6 text-white">Testo dell'articolo</label>
-        <div class="mt-2">
-            <textarea
-            v-model="form.body"
-            rows="3" class="block w-full rounded-md border-0 bg-white/5 py-1.5 text-white shadow-sm ring-1 ring-inset ring-white/10 focus:ring-2 focus:ring-inset focus:ring-indigo-500 sm:text-sm sm:leading-6" />
+            <label for="article-body" class="block text-sm font-medium leading-6 text-white">Testo dell'articolo</label>
+            <div class="mt-2 bg-white/5 rounded-md">
+                <QuillEditor  toolbar="essential" v-model:content="form.body" contentType="html" theme="snow" />
+            </div>
         </div>
-        </div>
-
         <div class="col-span-full">
         <label for="cover-photo" class="block text-sm font-medium leading-6 text-white">Foto</label>
         <div class="mt-2 flex justify-center rounded-lg border border-dashed border-white/25 px-6 py-10">
@@ -60,7 +58,7 @@
 
 <div class="mt-6 flex items-center justify-between gap-x-6">
     <button @click="destroy" type="button" class="btn btn-error">Cancella</button>
-    <button @click="$inertia.visit(route('campaigns.show', campaign.id))" type="button" class="btn btn-secondary">Annulla</button>
+    <button @click="$inertia.visit(route('articles.show', article.id))" type="button" class="btn btn-secondary">Annulla</button>
     <button @click="submit" type="button" :disabled="form.processing" class="btn btn-primary ">Salva</button>
 </div>
 </form>
@@ -71,6 +69,7 @@
 import AppLayout from '@/Layouts/AppLayout.vue';
 import { useForm } from '@inertiajs/vue3';
 
+
 const props = defineProps({
     article: Object
 })
@@ -80,13 +79,13 @@ let form = useForm({
     title: props.article.title,
     extract: props.article.extract,
     body: props.article.body,
-    startingDate: props.article.startingDate,
-    endDate: props.article.endDate
 })
 
-const submit = () =>{
+const submit = () => {
+    console.log("Submitting form:", form);
     form.put(route('articles.update', {id: props.article.id}));
 }
+
 
 const destroy = () =>{
     form.delete(route('articles.destroy', {id: props.article.id}));
