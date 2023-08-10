@@ -26,7 +26,7 @@ class ArticleController extends Controller
      */
     public function create()
     {
-        //
+        return Inertia::render('Admin/CreateArticle');
     }
 
     /**
@@ -34,8 +34,16 @@ class ArticleController extends Controller
      */
     public function store(Request $request)
     {
-        //
+        $article = Article::create([
+            'title' => $request->title,
+            'extract' => $request->extract,
+            'body' => $request->body,
+            'user_id' => auth()->id(), // add this line
+        ]);
+    
+        return redirect()->route('admin.dashboard');
     }
+    
 
     /**
      * Display the specified resource.
@@ -70,15 +78,18 @@ class ArticleController extends Controller
             'body' => $request->body
         ]);
     
-        return redirect()->route('articles.index')->with('message', 'Articolo modificata');
+        return redirect()->route('admin.dashboard')->with('message', 'Articolo modificata');
     }
     
 
     /**
      * Remove the specified resource from storage.
      */
-    public function destroy(Article $article)
+    public function destroy($article_id)
     {
-        //
+        $article = Article::find($article_id);
+        $article->delete();
+
+        return redirect()->route('articles.index');
     }
 }

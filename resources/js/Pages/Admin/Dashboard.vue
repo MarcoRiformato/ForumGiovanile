@@ -7,7 +7,7 @@
         <h1 class="text-4xl mt-4">Gestisci articoli</h1>
       </div>
       <div class="mt-4 sm:ml-16 sm:mt-0 sm:flex-none ">
-        <button type="button" class="btn btn-primary mt-4">Crea nuovo articolo</button>
+        <button type="button" @click="$inertia.visit(route('articles.create'))" class="btn btn-primary mt-4">Crea nuovo articolo</button>
       </div>
     </div>
     <div class="-mx-4 mt-2 sm:-mx-0">

@@ -58,7 +58,7 @@
 
 <div class="mt-6 flex items-center justify-between gap-x-6">
     <button @click="destroy" type="button" class="btn btn-error">Cancella</button>
-    <button @click="$inertia.visit(route('articles.show', article.id))" type="button" class="btn btn-secondary">Annulla</button>
+    <button @click="$inertia.visit(route('admin.dashboard'))" type="button" class="btn btn-secondary">Annulla</button>
     <button @click="submit" type="button" :disabled="form.processing" class="btn btn-primary ">Salva</button>
 </div>
 </form>
