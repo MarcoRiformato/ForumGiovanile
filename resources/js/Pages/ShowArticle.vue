@@ -7,8 +7,8 @@
       <h1 class="mt-2 text-3xl font-bold tracking-tight  sm:text-4xl">{{ article.title }}</h1>
       <p class="mt-6 text-xl leading-8">{{ article.extract }}</p>
       <figure class="mt-8">
-        <img class="aspect-video rounded-xl bg-gray-50 object-cover" src="https://picsum.photos/700" alt="" />
-          <p>Descrizione dell'imagine</p>
+          <img v-if="article.media && article.media.length > 0" :src="'/storage/' + article.media[0].filepath" class="aspect-video rounded-xl bg-gray-50 object-cover" alt="Article Image" />
+          <p v-if="article.media && article.media.length > 0">Descrizione dell'imagine</p>
       </figure>
 
       <div class="quill-content">

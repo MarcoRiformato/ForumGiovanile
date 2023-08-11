@@ -2,7 +2,7 @@
     <AppLayout>
 <div class="bg-base-200">
 <h1 class="text-4xl p-4">Crea articolo</h1>
-    <form class="px-8 bg-base-200 pb-8"  @submit.prevent="submit">
+<form class="px-8 bg-base-200 pb-8" @submit.prevent="submit" enctype="multipart/form-data">
 <div class="space-y-12">
     <div class="border-b border-white/10 pb-12">
 
@@ -42,7 +42,7 @@
             <div class="mt-4 flex text-sm leading-6 text-gray-400">
                 <label for="file-upload" class="relative cursor-pointer rounded-md bg-gray-900 font-semibold text-white focus-within:outline-none focus-within:ring-2 focus-within:ring-indigo-600 focus-within:ring-offset-2 focus-within:ring-offset-gray-900 hover:text-indigo-500">
                 <span>Carica una foto</span>
-                <input id="file-upload" name="file-upload" type="file" class="sr-only" />
+                <input id="file-upload" name="media_file" type="file" class="sr-only" @change="form.media_file = $event.target.files[0]" />
                 </label>
                 <p class="pl-1">oppure trascinala qui</p>
             </div>
@@ -74,11 +74,28 @@ const props = defineProps({
 let form = useForm({
     title: '',
     extract: '',
-    body: ''
+    body: '',
+    media_file: null
 })
 
-const submit = () =>{
-    form.post(route('articles.store'));
+
+const submit = () => {
+    const formData = new FormData();
+    formData.append('title', form.title);
+    formData.append('extract', form.extract);
+    formData.append('body', form.body);
+    if (form.media_file) {
+        formData.append('media_file', form.media_file);
+    }
+
+    form.post(route('articles.store'), {
+        body: formData,
+        onSuccess: () => {
+            form.reset();
+        }
+    });
 }
+
+
 
 </script>

@@ -10,7 +10,8 @@
       <div class="mx-auto grid max-w-2xl auto-rows-fr grid-cols-1 gap-8 sm:mt-10 lg:mx-0 lg:max-w-none lg:grid-cols-3">
         <article v-for="article in articles" :key="article.id" class="relative isolate flex flex-col justify-end overflow-hidden rounded-2xl bg-gray-900 px-8 pb-8 pt-20 sm:pt-48 lg:pt-80">
           <div :article="article" @click="$inertia.visit(route('articles.show', article.id))">
-            <img src="https://picsum.photos/800" alt="" class="absolute inset-0 -z-10 h-full w-full object-cover" />
+            <img v-if="article.media && article.media.length > 0" :src="'/storage/' + article.media[0].filepath" alt="Article Image" class="absolute inset-0 -z-10 h-full w-full object-cover" />
+            <img v-else src="https://picsum.photos/800" alt="Article Image" class="absolute inset-0 -z-10 h-full w-full object-cover" />
           <div class="absolute inset-0 -z-10 bg-gradient-to-t from-gray-900 via-gray-900/40" />
           <div class="absolute inset-0 -z-10 rounded-2xl ring-1 ring-inset ring-gray-900/10" />
 

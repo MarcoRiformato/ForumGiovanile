@@ -19,4 +19,10 @@ class Article extends Model
         return $this->belongsTo(User::class);
     }
 
+    public function media() {
+        return $this->belongsToMany(Media::class);
+    }
+    
+    
+
 }
