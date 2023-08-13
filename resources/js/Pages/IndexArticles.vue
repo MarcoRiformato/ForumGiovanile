@@ -23,7 +23,7 @@
               </svg>
               <div class="flex gap-x-2.5">
                 <img src="https://picsum.photos/100" alt="" class="h-6 w-6 flex-none rounded-full bg-white/10" />
-                {{ article.user_id }}
+                {{ article.user.name }}
               </div>
             </div>
           </div>

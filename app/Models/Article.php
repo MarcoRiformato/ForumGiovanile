@@ -22,7 +22,6 @@ class Article extends Model
     public function media() {
         return $this->belongsToMany(Media::class);
     }
-    
-    
+
 
 }

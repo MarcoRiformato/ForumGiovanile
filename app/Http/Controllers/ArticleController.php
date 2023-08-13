@@ -15,11 +15,13 @@ class ArticleController extends Controller
      */
     public function index()
     {
-        $articles = Article::with('media')->orderBy('created_at', 'desc')->get();
+        $articles = Article::with(['media', 'user'])->orderBy('created_at', 'desc')->get();
         return Inertia::render('IndexArticles', [
             'articles' => $articles
         ]);
     }
+    
+    
     
 
     /**

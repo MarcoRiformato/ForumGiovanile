@@ -10,13 +10,13 @@ class AdminController extends Controller
 {
     public function dashboard()
     {
-
-        $articles = Article::orderBy('created_at', 'desc')->get();
-
+        $articles = Article::with('user')->orderBy('created_at', 'desc')->get();
+    
         return Inertia::render('Admin/Dashboard', [
             'articles' => $articles
         ]);
     }
+    
 
     public function manageUsers()
     {

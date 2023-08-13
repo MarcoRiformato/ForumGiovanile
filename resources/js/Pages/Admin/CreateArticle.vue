@@ -32,7 +32,7 @@
         <div class="col-span-full">
             <label for="article-body" class="block text-sm font-medium leading-6 text-white">Testo dell'articolo</label>
             <div class="mt-2 bg-white/5 rounded-md">
-                <QuillEditor  toolbar="essential" v-model:content="form.body" contentType="html" theme="snow" />
+                <QuillEditor  toolbar="full" v-model:content="form.body" contentType="html" theme="snow" />
             </div>
         </div>
         <div class="col-span-full">
@@ -95,7 +95,5 @@ const submit = () => {
         }
     });
 }
-
-
 
 </script>
