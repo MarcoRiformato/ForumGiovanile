@@ -6,6 +6,7 @@ use Illuminate\Support\Facades\Route;
 use Inertia\Inertia;
 use App\Http\Controllers\CampaignController;
 use App\Http\Controllers\AdminController;
+use App\Http\Controllers\UserController;
 
 /*
 |--------------------------------------------------------------------------
@@ -45,6 +46,12 @@ Route::middleware(['auth', 'admin'])->group(function () {
     Route::get('/admin/articles/{article}/edit', [ArticleController::class, 'edit'])->name('admin.articles.edit');
     Route::get('/admin/articles/create', [ArticleController::class, 'edit'])->name('admin.articles.create');
     Route::post('/admin/articles/{article}/media', [MediaController::class, 'store'])->name('admin.articles.media.store');
+    Route::resource('/admin/users', UserController::class)->names([
+        'index' => 'admin.users.index',
+        'edit' => 'admin.users.edit',
+    ]);
+    
+
 });
 
 

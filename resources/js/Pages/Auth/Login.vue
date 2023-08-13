@@ -32,7 +32,7 @@ const submit = () => {
 <template>
     <Head title="Log in" />
 
-    <AuthenticationCard>
+    <AuthenticationCard class="bg-base-200">
         <template #logo>
             <AuthenticationCardLogo />
         </template>

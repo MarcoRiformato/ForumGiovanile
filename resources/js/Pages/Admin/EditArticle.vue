@@ -94,10 +94,7 @@ const submit = () => {
 
     // Use the put method to send the FormData for updating.
     form.put(route('articles.update', {id: props.article.id}), {
-        body: formData,
-        onSuccess: () => {
-            // You can add any success actions here, like form.reset() if needed.
-        }
+        body: formData
     });
 }
 
