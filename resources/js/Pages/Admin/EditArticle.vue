@@ -1,5 +1,5 @@
 <template>
-    <AppLayout>
+<AppLayout>
 <div class="bg-base-200">
 <h1 class="text-4xl p-4">Modifica articolo</h1>
     <form class="px-8 bg-base-200 pb-8"  @submit.prevent="submit">
@@ -33,7 +33,7 @@
         <div class="col-span-full">
             <label for="article-body" class="block text-sm font-medium leading-6 text-white">Testo dell'articolo</label>
             <div class="mt-2 bg-white/5 rounded-md">
-                <QuillEditor  toolbar="essential" v-model:content="form.body" contentType="html" theme="snow" />
+                <QuillEditor  toolbar="full" v-model:content="form.body" contentType="html" theme="snow" />
             </div>
         </div>
         <div class="col-span-full">
@@ -62,8 +62,8 @@
     <button @click="submit" type="button" :disabled="form.processing" class="btn btn-primary ">Salva</button>
 </div>
 </form>
-        </div>
-    </AppLayout>
+</div>
+</AppLayout>
 </template>
 <script setup>
 import AppLayout from '@/Layouts/AppLayout.vue';
@@ -82,9 +82,25 @@ let form = useForm({
 })
 
 const submit = () => {
-    console.log("Submitting form:", form);
-    form.put(route('articles.update', {id: props.article.id}));
+    const formData = new FormData();
+    formData.append('title', form.title);
+    formData.append('extract', form.extract);
+    formData.append('body', form.body);
+    
+    // If there's a media_file, append it to the FormData.
+    if (form.media_file) {
+        formData.append('media_file', form.media_file);
+    }
+
+    // Use the put method to send the FormData for updating.
+    form.put(route('articles.update', {id: props.article.id}), {
+        body: formData,
+        onSuccess: () => {
+            // You can add any success actions here, like form.reset() if needed.
+        }
+    });
 }
+
 
 
 const destroy = () =>{

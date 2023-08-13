@@ -108,19 +108,44 @@ public function store(Request $request)
     }
     
 
-    /**
-     * Update the specified resource in storage.
-     */
-    public function update(Request $request, Article $article)
-    {
-        $article->update([
-            'title' => $request->title,
-            'extract' => $request->extract,
-            'body' => $request->body
+/**
+ * Update the specified resource in storage.
+ */
+public function update(Request $request, Article $article)
+{
+    $validatedData = $request->validate([
+        'title' => 'required|string|max:255',
+        'extract' => 'required|string|max:1000',
+        'body' => 'required|string',
+        'media_file' => 'sometimes|file|mimes:jpg,jpeg,png,gif,webp,mp4,mp3,pdf|max:10240', // max 10MB
+    ]);
+
+    $article->update([
+        'title' => $validatedData['title'],
+        'extract' => $validatedData['extract'],
+        'body' => $validatedData['body']
+    ]);
+
+    if ($request->hasFile('media_file')) {
+        // If you want to replace the existing media file, you can delete the old file here.
+
+        $file = $request->file('media_file');
+        $path = $file->store('media', 'public');
+
+        $media = new Media([
+            'filepath' => $path,
+            'filetype' => $this->determineFileType($file->getClientMimeType()),
+            'filename' => $file->getClientOriginalName(),
+            'article_id' => $article->id,
         ]);
-    
-        return redirect()->route('admin.dashboard')->with('message', 'Articolo modificata');
+
+        $media->save();
+        $article->media()->sync([$media->id]);  // Using sync to replace existing media
     }
+
+    return redirect()->route('admin.dashboard')->with('message', 'Articolo modificata');
+}
+
     
 
     /**
