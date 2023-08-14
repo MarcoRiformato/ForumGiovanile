@@ -7,6 +7,7 @@ use Inertia\Inertia;
 use App\Http\Controllers\CampaignController;
 use App\Http\Controllers\AdminController;
 use App\Http\Controllers\UserController;
+use App\Http\Controllers\MainDashboard;
 
 /*
 |--------------------------------------------------------------------------
@@ -20,7 +21,7 @@ use App\Http\Controllers\UserController;
 */
 
 Route::get('/', function () {
-    return Inertia::render('Welcome', [
+    return Inertia::render('Dashboard', [
         'canLogin' => Route::has('login'),
         'canRegister' => Route::has('register'),
         'laravelVersion' => Application::VERSION,
@@ -50,8 +51,7 @@ Route::middleware(['auth', 'admin'])->group(function () {
         'index' => 'admin.users.index',
         'edit' => 'admin.users.edit',
     ]);
-    
-
 });
+Route::get('/dashboard', [MainDashboard::class, 'index'])->name('dashboard');
 
 

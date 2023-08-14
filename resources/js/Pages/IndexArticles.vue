@@ -1,7 +1,6 @@
 <template>
 <AppLayout>
   <div class="overflow-hidden bg-base-200">
-    <!-- Blog section -->
     <div class="mx-auto max-w-7xl px-6 sm:mt-4 lg:px-8">
       <div class="mx-auto max-w-2xl lg:mx-0 lg:max-w-none">
         <h2 class="text-3xl font-bold tracking-tight sm:text-4xl">Ultime notizie</h2>
