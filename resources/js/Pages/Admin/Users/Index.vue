@@ -1,5 +1,5 @@
 <template>
-<AppLayout>
+<AppLayout title="Gestisci utenti">
 <div class="bg-base-200">
 <div class="px-4 sm:px-6 lg:px-8">
     <div class="flex flex-col sm:flex-row sm:items-center">

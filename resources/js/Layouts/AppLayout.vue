@@ -60,10 +60,11 @@ const logout = () => {
                                 <NavLink v-if="$page.props.auth.user && $page.props.auth.user.is_admin !== 0" :href="route('admin.users.index')" :active="route().current('admin.users.index')">
                                     Utenti
                                 </NavLink>
-                                <NavLink v-if="$page.props.auth.user && $page.props.auth.user.is_admin !== 0" :href="route('admin.users.index')" :active="route().current('admin.users.index')">
+                                <!--
+                                <NavLink  :href="route('admin.users.index')" :active="route().current('admin.users.index')">
                                     Documenti
-                                </NavLink>
-                                <NavLink v-if="$page.props.auth.user && $page.props.auth.user.is_admin !== 0" :href="route('admin.users.index')" :active="route().current('admin.users.index')">
+                                </NavLink>-->
+                                <NavLink  :href="route('admin.users.index')" :active="route().current('admin.users.index')">
                                     Riferimenti utili
                                 </NavLink>
                             </div>
