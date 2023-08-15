@@ -4,6 +4,7 @@ namespace Database\Seeders;
 use App\Models\Campaign;
 use App\Models\Article;
 use App\Models\User;
+use App\Models\Document;
 use Illuminate\Database\Seeder;
 use Illuminate\Support\Facades\Hash;
 
@@ -28,5 +29,6 @@ class DatabaseSeeder extends Seeder
 
         Campaign::factory()->count(4)->create();
         Article::factory()->count(4)->create();
+        Document::factory()->count(4)->create();
     }
 }

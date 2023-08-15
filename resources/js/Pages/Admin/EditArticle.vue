@@ -98,8 +98,6 @@ const submit = () => {
     });
 }
 
-
-
 const destroy = () =>{
     form.delete(route('articles.destroy', {id: props.article.id}));
 }

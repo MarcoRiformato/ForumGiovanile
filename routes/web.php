@@ -8,6 +8,7 @@ use App\Http\Controllers\CampaignController;
 use App\Http\Controllers\AdminController;
 use App\Http\Controllers\UserController;
 use App\Http\Controllers\MainDashboard;
+use App\Http\Controllers\DocumentController;
 
 /*
 |--------------------------------------------------------------------------
@@ -39,19 +40,36 @@ Route::middleware([
     })->name('dashboard');
 });
 
-Route::resource('/campaigns', CampaignController::class);
 Route::resource('/articles', ArticleController::class);
+Route::get('documents/index', [DocumentController::class, 'index'])->name('documents.index');
 
 Route::middleware(['auth', 'admin'])->group(function () {
     Route::get('/admin/dashboard', [AdminController::class, 'dashboard'])->name('admin.dashboard');
+
+    // Articles routes
     Route::get('/admin/articles/{article}/edit', [ArticleController::class, 'edit'])->name('admin.articles.edit');
     Route::get('/admin/articles/create', [ArticleController::class, 'edit'])->name('admin.articles.create');
     Route::post('/admin/articles/{article}/media', [MediaController::class, 'store'])->name('admin.articles.media.store');
+
+    // Users routes
     Route::resource('/admin/users', UserController::class)->names([
         'index' => 'admin.users.index',
         'edit' => 'admin.users.edit',
     ]);
+
+    // Documents routes
+    Route::get('/admin/documents.index', [AdminController::class, 'manageDocuments'])->name('admin.documents.index');
+
+    // Documents routes
+    Route::get('/admin/documents/{document}/edit', [DocumentController::class, 'edit'])->name('admin.documents.edit');
+    Route::get('/admin/documents/create', [DocumentController::class, 'create'])->name('admin.documents.create');
+    Route::post('/admin/documents/store', [DocumentController::class, 'store'])->name('admin.documents.store');
+    Route::put('/admin/documents/{document}', [DocumentController::class, 'update'])->name('admin.documents.update');
+    Route::delete('/admin/documents/{document}', [DocumentController::class, 'destroy'])->name('admin.documents.destroy');
+
+    
 });
+
 Route::get('/dashboard', [MainDashboard::class, 'index'])->name('dashboard');
 
 

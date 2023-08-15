@@ -4,6 +4,7 @@ namespace App\Http\Controllers;
 
 use App\Models\User;
 use App\Models\Article;
+use App\Models\Document;
 use Inertia\Inertia;
 
 class AdminController extends Controller
@@ -30,5 +31,10 @@ class AdminController extends Controller
         return view('admin.articles.index', compact('articles'));
     }
 
-    // Additional CRUD methods for users, articles, etc.
+    public function manageDocuments()
+    {
+        $documents = Document::all();
+        return Inertia::render('Admin/Documents/Index', compact('documents'));
+    }
+    
 }
