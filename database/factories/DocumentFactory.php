@@ -19,7 +19,7 @@ class DocumentFactory extends Factory
         return [
             'title' => 'Statuto del forum',
             'description' => 'Questo è un documento',
-            'embed_link' => '<iframe src="https://docs.google.com/document/d/e/2PACX-1vQO9PCMf8JbnizMmiTY8rBKAZY2p9u6lXtxg9OTnx0Pk0OQ_aIT7xBoRZG0aE8cgf9kFzVILDwTNJ8U/pub?embedded=true"></iframe>'
+            'link' => 'https://docs.google.com/document/d/1AtBB7fap8ilM3e-ae0-3rk0NE9vPe2YoPtLkuTVvlaM/edit?usp=sharing'
         ];
     }
 }

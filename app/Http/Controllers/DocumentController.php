@@ -35,7 +35,7 @@ class DocumentController extends Controller
         $validatedData = $request->validate([
             'title' => 'required|string|max:255',
             'description' => 'nullable|string',
-            'embed_link' => 'required|string',
+            'link' => 'required|string',
         ]);
 
         Document::create($validatedData);
@@ -75,7 +75,7 @@ class DocumentController extends Controller
         $validatedData = $request->validate([
             'title' => 'required|string|max:255',
             'description' => 'nullable|string',
-            'embed_link' => 'required|string',
+            'link' => 'required|string',
         ]);
 
         $document->update($validatedData);

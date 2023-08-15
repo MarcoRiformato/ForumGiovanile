@@ -26,9 +26,9 @@
 
                             <!-- Embed Link -->
                             <div class="col-span-full">
-                                <label for="embed_link" class="block text-sm font-medium leading-6 text-white">Link Embed</label>
+                                <label for="link" class="block text-sm font-medium leading-6 text-white">Link Embed</label>
                                 <div class="mt-2">
-                                    <textarea rows="3" v-model="form.embed_link" type="url" class="block w-full rounded-md border-0 bg-white/5 py-1.5 text-white shadow-sm ring-1 ring-inset ring-white/10 focus:ring-2 focus:ring-inset focus:ring-indigo-500 sm:text-sm sm:leading-6" />
+                                    <textarea rows="3" v-model="form.link" type="url" class="block w-full rounded-md border-0 bg-white/5 py-1.5 text-white shadow-sm ring-1 ring-inset ring-white/10 focus:ring-2 focus:ring-inset focus:ring-indigo-500 sm:text-sm sm:leading-6" />
                                 </div>
                             </div>
                         </div>
@@ -51,14 +51,14 @@ import { useForm } from '@inertiajs/vue3';
 let form = useForm({
     title: '',
     description: '',
-    embed_link: ''
+    link: ''
 })
 
 const submit = () => {
     const formData = new FormData();
     formData.append('title', form.title);
     formData.append('description', form.description);
-    formData.append('embed_link', form.embed_link);
+    formData.append('link', form.link);
 
     form.post(route('admin.documents.store'), {
         body: formData,

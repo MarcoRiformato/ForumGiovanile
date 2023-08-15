@@ -20,7 +20,9 @@
                             </tr>
                         </thead>
                         <tbody class="divide-y divide-gray-200">
-                            <tr v-for="document in documents" :key="document.id">
+                            <tr
+                            @click="$inertia.visit(route('documents.index'))"
+                             v-for="document in documents" :key="document.id">
                                 <td class="py-4 px-4 text-sm font-medium">{{ document.title }}</td>
                                 <td class="py-4 px-4 text-sm">{{ document.description }}</td>
                                 <td class="py-4 px-4 text-sm">

@@ -26,9 +26,9 @@
 
                             <!-- Embed Link -->
                             <div class="col-span-full">
-                                <label for="embed_link" class="block text-sm font-medium leading-6 text-white">Link Embed</label>
+                                <label for="link" class="block text-sm font-medium leading-6 text-white">Link Embed</label>
                                 <div class="mt-2">
-                                    <textarea v-model="form.embed_link" rows="3"  class="ock w-full rounded-md border-0 bg-white/5 py-1.5 text-white shadow-sm ring-1 ring-inset ring-white/10 focus:ring-2 focus:ring-inset focus:ring-indigo-500 sm:text-sm sm:leading-6" />
+                                    <textarea v-model="form.link" rows="3"  class="ock w-full rounded-md border-0 bg-white/5 py-1.5 text-white shadow-sm ring-1 ring-inset ring-white/10 focus:ring-2 focus:ring-inset focus:ring-indigo-500 sm:text-sm sm:leading-6" />
                                 </div>
                             </div>
                         </div>
@@ -57,14 +57,14 @@ let form = useForm({
     id: props.document.id,
     title: props.document.title,
     description: props.document.description,
-    embed_link: props.document.embed_link
+    link: props.document.link
 })
 
 const submit = () => {
     const formData = new FormData();
     formData.append('title', form.title);
     formData.append('description', form.description);
-    formData.append('embed_link', form.embed_link);
+    formData.append('link', form.link);
 
     // Use the put method to send the FormData for updating.
     form.put(route('admin.documents.update', {id: props.document.id}), {

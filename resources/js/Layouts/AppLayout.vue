@@ -176,6 +176,12 @@ const logout = () => {
                         <ResponsiveNavLink v-if="$page.props.auth.user && $page.props.auth.user.is_admin !== 0" :href="route('admin.users.index')" :active="route().current('admin.users.index')">
                             Utenti
                         </ResponsiveNavLink>
+                        <ResponsiveNavLink :href="route('documents.index')" :active="route().current('documents.index')">
+                            Documenti
+                        </ResponsiveNavLink>
+                        <ResponsiveNavLink v-if="$page.props.auth.user && $page.props.auth.user.is_admin !== 0" :href="route('admin.documents.index')" :active="route().current('admin.documents.index')">
+                            Utenti
+                        </ResponsiveNavLink>
                     </div>
 
                     <!-- Responsive Settings Options -->
@@ -251,6 +257,14 @@ const logout = () => {
                                 </template>
                             </template>
                         </div>
+                    </div>
+                    <div v-else class="mt-3 space-y-1">
+                        <ResponsiveNavLink :href="route('login')">
+                            Login
+                        </ResponsiveNavLink>
+                        <ResponsiveNavLink :href="route('register')">
+                            Register
+                        </ResponsiveNavLink>
                     </div>
                 </div>
             </nav>

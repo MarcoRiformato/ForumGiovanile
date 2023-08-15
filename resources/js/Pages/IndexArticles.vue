@@ -15,7 +15,8 @@
           <div class="absolute inset-0 -z-10 rounded-2xl ring-1 ring-inset ring-gray-900/10" />
 
           <div class="flex flex-wrap items-center gap-y-1 overflow-hidden text-sm leading-6 text-gray-300">
-            <time :created_at="article.created_at" class="mr-8">{{ article.created_at }}</time>
+            <time :created_at="article.created_at" class="mr-8">{{ formatDate(article.created_at) }}</time>
+
             <div class="-ml-4 flex items-center gap-x-4">
               <svg viewBox="0 0 2 2" class="-ml-0.5 h-0.5 w-0.5 flex-none fill-white/50">
                 <circle cx="1" cy="1" r="1" />
@@ -41,6 +42,12 @@
 </template>
 <script setup>
 import AppLayout from '@/Layouts/AppLayout.vue';
+import dayjs from 'dayjs';
+
+// Inside your script tag
+const formatDate = (date) => {
+  return dayjs(date).format('DD/MM/YYYY');
+};
 
 
 defineProps({
