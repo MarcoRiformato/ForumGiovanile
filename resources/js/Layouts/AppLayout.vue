@@ -49,17 +49,17 @@ const logout = () => {
                             <!-- Navigation Links -->
                             <div class="hidden space-x-8 sm:-my-px sm:ml-10 sm:flex">
                                 <NavLink :href="route('dashboard')" :active="route().current('dashboard')">
-                                    Pagina principale
+                                    Home
                                 </NavLink>
                                 <NavLink :href="route('articles.index')" :active="route().current('articles.index')">
                                     Notizie
                                 </NavLink>
                                 <NavLink v-if="$page.props.auth.user && $page.props.auth.user.is_admin !== 0" :href="route('admin.dashboard')" :active="route().current('admin.dashboard')">
                                     Admin notizie
-                                </NavLink>
+                                </NavLink><!--
                                 <NavLink v-if="$page.props.auth.user && $page.props.auth.user.is_admin !== 0" :href="route('admin.users.index')" :active="route().current('admin.users.index')">
                                     Utenti
-                                </NavLink>
+                                </NavLink>-->
                                 <NavLink  :href="route('documents.index')" :active="route().current('documents.index')">
                                     Documenti
                                 </NavLink>
@@ -172,7 +172,7 @@ const logout = () => {
                 <div :class="{'block': showingNavigationDropdown, 'hidden': ! showingNavigationDropdown}" class="sm:hidden">
                     <div class="pt-2 pb-3 space-y-1">
                         <ResponsiveNavLink :href="route('dashboard')" :active="route().current('dashboard')">
-                            Pagina principale
+                            Home
                         </ResponsiveNavLink>
                         <ResponsiveNavLink :href="route('articles.index')" :active="route().current('articles.index')">
                             Notizie

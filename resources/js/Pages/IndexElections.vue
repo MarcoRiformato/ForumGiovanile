@@ -14,7 +14,7 @@
             Ti vuoi candidare? <a href="#" class="font-semibold text-white"><span class="absolute inset-0" aria-hidden="true" />Seguici prego <span aria-hidden="true">&rarr;</span></a>
           </div>
         </div>
-        <div class="text-center" v-for="election in elections">
+        <div class="text-center" v-for="election in elections" @click="$inertia.visit(route('elections.show', election.id))">
           <h1 class="text-4xl font-bold tracking-tight text-white sm:text-6xl">{{ election.name }}</h1>
           <p class="mt-6 text-lg leading-8">{{ election.description }}</p>
           <i class="mt-6 text-lg leading-8">Dal {{ election.start_date }} al {{ election.end_date }}</i>

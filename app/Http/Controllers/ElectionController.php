@@ -37,7 +37,7 @@ class ElectionController extends Controller
     /**
      * Display the specified resource.
      */
-    public function show(Election $election)
+    public function show(string $id)
     {
         $election = Election::findOrFail($id);
         return Inertia::render('Elections/Show', [
