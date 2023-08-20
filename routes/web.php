@@ -9,6 +9,7 @@ use App\Http\Controllers\AdminController;
 use App\Http\Controllers\UserController;
 use App\Http\Controllers\MainDashboard;
 use App\Http\Controllers\DocumentController;
+use App\Http\Controllers\ElectionController;
 
 /*
 |--------------------------------------------------------------------------
@@ -42,6 +43,8 @@ Route::middleware([
 
 Route::resource('/articles', ArticleController::class);
 Route::get('documents/index', [DocumentController::class, 'index'])->name('documents.index');
+Route::get('elections/index', [ElectionController::class, 'index'])->name('elections.index');
+Route::get('elections/{election}', [ElectionController::class, 'show'])->name('elections.show');
 
 Route::middleware(['auth', 'admin'])->group(function () {
     Route::get('/admin/dashboard', [AdminController::class, 'dashboard'])->name('admin.dashboard');
@@ -59,13 +62,19 @@ Route::middleware(['auth', 'admin'])->group(function () {
 
     // Documents routes
     Route::get('/admin/documents.index', [AdminController::class, 'manageDocuments'])->name('admin.documents.index');
-
-    // Documents routes
     Route::get('/admin/documents/{document}/edit', [DocumentController::class, 'edit'])->name('admin.documents.edit');
     Route::get('/admin/documents/create', [DocumentController::class, 'create'])->name('admin.documents.create');
     Route::post('/admin/documents/store', [DocumentController::class, 'store'])->name('admin.documents.store');
     Route::put('/admin/documents/{document}', [DocumentController::class, 'update'])->name('admin.documents.update');
     Route::delete('/admin/documents/{document}', [DocumentController::class, 'destroy'])->name('admin.documents.destroy');
+
+    // Elections routes
+    Route::get('/admin/elections.index', [AdminController::class, 'manageElections'])->name('admin.elections.index');
+    Route::get('/admin/elections/{document}/edit', [ElectionController::class, 'edit'])->name('admin.elections.edit');
+    Route::get('/admin/elections/create', [ElectionController::class, 'create'])->name('admin.elections.create');
+    Route::post('/admin/elections/store', [ElectionController::class, 'store'])->name('admin.elections.store');
+    Route::put('/admin/elections/{document}', [ElectionController::class, 'update'])->name('admin.elections.update');
+    Route::delete('/admin/elections/{document}', [ElectionController::class, 'destroy'])->name('admin.elections.destroy');
 
     
 });

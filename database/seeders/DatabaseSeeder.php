@@ -5,6 +5,7 @@ use App\Models\Campaign;
 use App\Models\Article;
 use App\Models\User;
 use App\Models\Document;
+use App\Models\Election;
 use Illuminate\Database\Seeder;
 use Illuminate\Support\Facades\Hash;
 
@@ -27,7 +28,7 @@ class DatabaseSeeder extends Seeder
             'is_admin' => '1'
         ]);
 
-        Campaign::factory()->count(4)->create();
+        Election::factory()->count(2)->create();
         Article::factory()->count(4)->create();
         Document::factory()->count(4)->create();
     }
