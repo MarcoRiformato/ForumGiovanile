@@ -24,4 +24,10 @@ public function options()
     return $this->belongsToMany(Option::class);
 }
 
+public function candidate()
+{
+    return $this->belongsTo(Candidate::class);
+}
+
+
 }

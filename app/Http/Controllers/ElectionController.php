@@ -23,7 +23,7 @@ class ElectionController extends Controller
      */
     public function create()
     {
-        //
+        return Inertia::render('Admin/Elections/Create');
     }
 
     /**
@@ -39,11 +39,27 @@ class ElectionController extends Controller
      */
     public function show(string $id)
     {
-        $election = Election::findOrFail($id);
+        $election = Election::with('questions.options', 'questions.candidates')
+            ->findOrFail($id);
+
         return Inertia::render('Elections/Show', [
             'election' => $election
         ]);
     }
+
+    /**
+     * Display the specified resource for admins.
+     */
+    public function showForAdmin(string $id)
+    {
+        $election = Election::with('questions.options', 'questions.candidates')
+            ->findOrFail($id);
+
+        return Inertia::render('Admin/Elections/Show', [
+            'election' => $election
+        ]);
+    }
+    
 
     /**
      * Show the form for editing the specified resource.

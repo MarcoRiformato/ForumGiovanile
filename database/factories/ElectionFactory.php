@@ -22,8 +22,8 @@ class ElectionFactory extends Factory
     public function definition()
     {
         return [
-            'name' => $this->faker->sentence(3),
-            'description' => $this->faker->paragraph,
+            'name' => 'Elezioni 2023',
+            'description' => 'Elezione super importante',
             'start_date' => $this->faker->dateTimeBetween('-1 month', 'now'),
             'end_date' => $this->faker->dateTimeBetween('now', '+1 month'),
             'status' => $this->faker->randomElement(['open', 'closed', 'upcoming']),

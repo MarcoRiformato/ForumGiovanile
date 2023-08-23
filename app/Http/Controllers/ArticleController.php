@@ -20,9 +20,6 @@ class ArticleController extends Controller
             'articles' => $articles
         ]);
     }
-    
-    
-    
 
     /**
      * Show the form for creating a new resource.

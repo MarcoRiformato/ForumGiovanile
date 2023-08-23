@@ -1,18 +1,40 @@
 <template>
-    <AppLayout>
-    <div class="bg-base-200 px-8 py-8">
-        <h1 class="pb-8">Index Admin Elections</h1>
-
-        <p>Election: una sola elezione, "elezioni 2023"</p>
-        <p>Question: 4 o 5 domande, "chi voti?" "cosa ne pensi?" "referendum" </p>
-        <p>Option: "marco rifo o pietro gentili" "sanità o trasporti" "si o no"</p>
-        <p>Vote: "pietro" "sanità" "no"</p>
-        <p>Candidate "marco rifo" "paolo bonomelli" "pietro gentili"</p>
+<AppLayout>
+<div class="bg-base-200 px-8 py-2">
+    <div class="mb-12 flex flex-col sm:flex-row sm:items-center">
+    <div class="flex-auto mb-4 sm:mb-0 mt-8">
+        <h1 class="-mt-8 text-4xl">Gestisci elezioni</h1>
     </div>
-    </AppLayout>
-    </template>
-    <script setup>
-    import AppLayout from '@/Layouts/AppLayout.vue';
-    
-    
-    </script>
+    <div class=" sm:ml-16 sm:mt-0 sm:flex-none">
+        <button type="button" @click="$inertia.visit(route('admin.elections.create'))" class="btn btn-primary">Crea nuova elezione</button>
+    </div>
+</div>
+    <div class="cards-container">
+        <div v-for="election in elections" :key="election.id" class="card-container">
+        <div class="card w-96 bg-secondary text-primary-content">
+            <div class="card-body">
+            <h2 class="card-title">{{ election.name }}</h2>
+            <p>{{ election.description }}</p>
+            <p>{{ election.start_date }}</p>
+            <p>{{ election.end_date }}</p>
+            <p>{{ election.status }}</p>
+            <div class="card-actions justify-end">
+                <button
+                @click.stop="$inertia.visit(route('admin.elections.show', election.id))"
+                 :href="election.link" class="btn">Modifica</button>
+            </div>
+            </div>
+        </div>
+    </div>
+</div>
+</div>
+</AppLayout>
+</template>
+<script setup>
+import AppLayout from '@/Layouts/AppLayout.vue';
+
+defineProps({
+    elections: Object
+})
+
+</script>

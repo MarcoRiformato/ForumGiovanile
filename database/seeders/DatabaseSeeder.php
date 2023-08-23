@@ -6,14 +6,14 @@ use App\Models\Article;
 use App\Models\User;
 use App\Models\Document;
 use App\Models\Election;
+use App\Models\Question;
+use App\Models\Option;
+use App\Models\Candidate;
 use Illuminate\Database\Seeder;
 use Illuminate\Support\Facades\Hash;
 
 class DatabaseSeeder extends Seeder
 {
-    /**
-     * Seed the application's database.
-     */
     public function run(): void
     {
         User::factory()->create([
@@ -28,8 +28,30 @@ class DatabaseSeeder extends Seeder
             'is_admin' => '1'
         ]);
 
-        Election::factory()->count(2)->create();
+        // Create one election
+        $election = Election::factory()->create();
+
+        // Create two questions with options
+        for ($i = 0; $i < 2; $i++) {
+            $question = Question::factory()->create([
+                'election_id' => $election->id,
+                'type' => 'options',
+            ]);
+            Option::factory()->count(4)->create(['question_id' => $question->id]);
+        }
+
+        // Create two questions with candidates
+        for ($i = 0; $i < 2; $i++) {
+            $question = Question::factory()->create([
+                'election_id' => $election->id,
+                'type' => 'candidates',
+            ]);
+            Candidate::factory()->count(4)->create(['question_id' => $question->id]);
+        }
+
         Article::factory()->count(4)->create();
         Document::factory()->count(4)->create();
     }
 }
+
+

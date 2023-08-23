@@ -13,6 +13,8 @@ return new class extends Migration
     {
         Schema::create('candidates', function (Blueprint $table) {
             $table->id();
+            $table->unsignedBigInteger('question_id')->nullable();
+            $table->foreign('question_id')->references('id')->on('questions')->nullable();
             $table->string('name');
             $table->text('description')->nullable();
             $table->timestamps();

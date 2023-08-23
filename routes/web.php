@@ -69,6 +69,9 @@ Route::middleware(['auth', 'admin'])->group(function () {
 
     // Elections routes
     Route::get('/admin/elections.index', [AdminController::class, 'manageElections'])->name('admin.elections.index');
+
+    Route::get('/admin/elections/{election}', [ElectionController::class, 'showForAdmin'])->name('admin.elections.show');
+    
     Route::get('/admin/elections/{document}/edit', [ElectionController::class, 'edit'])->name('admin.elections.edit');
     Route::get('/admin/elections/create', [ElectionController::class, 'create'])->name('admin.elections.create');
     Route::post('/admin/elections/store', [ElectionController::class, 'store'])->name('admin.elections.store');

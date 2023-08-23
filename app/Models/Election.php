@@ -24,6 +24,11 @@ class Election extends Model
         return $this->hasMany(Vote::class);
     }
 
+    public function questions()
+    {
+        return $this->hasMany(Question::class);
+    }
+
     /**
      * Get the user that created the election.
      */

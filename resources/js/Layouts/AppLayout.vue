@@ -32,7 +32,11 @@ const logout = () => {
         <Head :title="title" />
 
         <Banner />
-
+        <div class="overflow-hidden shadow sm:rounded-lg mx-4 my-4 h-40">
+            <div class="relative aspect-[5/2] xl:rounded-3xl overflow-hidden">
+            <img src="https://picsum.photos/850/250" alt="" class="absolute inset-0 w-full h-20 object-cover" />
+            </div>
+        </div>
         <div class="min-h-screen bg-base-200">
             <nav class="bg-base-100 border-b border-gray-100">
                 <!-- Primary Navigation Menu -->
@@ -284,9 +288,42 @@ const logout = () => {
             </header>
 
             <!-- Page Content -->
-            <main>
+            <div class="min-h-screen bg-base-200 flex flex-col sm:flex-row">
+            <!-- Page Content -->
+            <main v-if="$page.props.auth.user && $page.props.auth.user.is_admin !== 0" class="w-full p-4">
                 <slot />
             </main>
+            <main v-else class="w-full sm:w-2/3 p-4">
+                <slot />
+            </main>
+            <!-- Ad Container -->
+            <aside v-if="!($page.props.auth.user && $page.props.auth.user.is_admin !== 0)"
+            class="ads hidden sm:flex sm:w-1/3 p-4 flex flex-col justify-start items-center">
+            <img src="https://picsum.photos/250/200" alt="Ad Image 1" class="ad">
+            <img src="https://picsum.photos/250/200" alt="Ad Image 1" class="ad">
+            <img src="https://picsum.photos/250/200" alt="Ad Image 1" class="ad">
+            <img src="https://picsum.photos/250/200" alt="Ad Image 1" class="ad">
+            <img src="https://picsum.photos/250/200" alt="Ad Image 1" class="ad">
+            <img src="https://picsum.photos/250/200" alt="Ad Image 1" class="ad">
+            <img src="https://picsum.photos/250/200" alt="Ad Image 1" class="ad">
+            </aside>
+            </div>
         </div>
     </div>
 </template>
+
+<style>
+.ad {
+  border-radius: 0.375rem;
+}
+
+/* For larger screens */
+@media (min-width: 640px) {
+  .ad {
+    width: 250px;
+    height: 200px;
+    margin-bottom: 1.5rem; /* equivalent to mb-6 in Tailwind */
+  }
+}
+
+</style>

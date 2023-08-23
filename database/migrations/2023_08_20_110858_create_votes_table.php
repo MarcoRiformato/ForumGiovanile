@@ -13,6 +13,10 @@ return new class extends Migration
     {
         Schema::create('votes', function (Blueprint $table) {
             $table->id();
+            $table->unsignedBigInteger('option_id')->nullable();
+            $table->foreign('option_id')->references('id')->on('options');
+            $table->unsignedBigInteger('candidate_id')->nullable();
+            $table->foreign('candidate_id')->references('id')->on('candidates');
             $table->unsignedBigInteger('user_id');
             $table->foreign('user_id')->references('id')->on('users');
             $table->unsignedBigInteger('election_id');

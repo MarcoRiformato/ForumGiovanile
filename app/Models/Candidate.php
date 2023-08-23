@@ -14,4 +14,10 @@ class Candidate extends Model
     return $this->belongsToMany(Election::class);
 }
 
+public function question()
+{
+    return $this->belongsTo(Question::class);
+}
+
+
 }

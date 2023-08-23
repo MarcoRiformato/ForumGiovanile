@@ -16,6 +16,7 @@ return new class extends Migration
             $table->unsignedBigInteger('election_id');
             $table->foreign('election_id')->references('id')->on('elections');
             $table->string('text');
+            $table->string('type');
             $table->timestamps();
         });
         

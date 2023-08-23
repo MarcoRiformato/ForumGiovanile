@@ -10,7 +10,7 @@ class MainDashboard extends Controller
 {
     public function index()
     {
-        $latestArticles = Article::with(['media', 'user'])->orderBy('created_at', 'desc')->take(3)->get();
+        $latestArticles = Article::with(['media', 'user'])->orderBy('created_at', 'desc')->take(2)->get();
 
         return Inertia::render('Dashboard', [
             'latestArticles' => $latestArticles
