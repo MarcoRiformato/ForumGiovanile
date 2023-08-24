@@ -11,11 +11,6 @@ class Election extends Model
     protected $table = 'elections';
     protected $guarded = [];
 
-    protected $casts = [
-        'start_date' => 'datetime',
-        'end_date' => 'datetime',
-    ];
-
     /**
      * Get the votes for the election.
      */

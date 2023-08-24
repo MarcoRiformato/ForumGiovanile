@@ -9,7 +9,7 @@
         <button type="button" @click="$inertia.visit(route('admin.elections.create'))" class="btn btn-primary">Crea nuova elezione</button>
     </div>
 </div>
-    <div class="cards-container">
+    <div class="cards-container -mt-8">
         <div v-for="election in elections" :key="election.id" class="card-container">
         <div class="card w-96 bg-secondary text-primary-content">
             <div class="card-body">
@@ -21,7 +21,7 @@
             <div class="card-actions justify-end">
                 <button
                 @click.stop="$inertia.visit(route('admin.elections.show', election.id))"
-                 :href="election.link" class="btn">Modifica</button>
+                 :href="election.link" class="btn">Consulta</button>
             </div>
             </div>
         </div>

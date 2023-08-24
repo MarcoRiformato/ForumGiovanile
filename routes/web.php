@@ -68,16 +68,22 @@ Route::middleware(['auth', 'admin'])->group(function () {
     Route::delete('/admin/documents/{document}', [DocumentController::class, 'destroy'])->name('admin.documents.destroy');
 
     // Elections routes
-    Route::get('/admin/elections.index', [AdminController::class, 'manageElections'])->name('admin.elections.index');
-
-    Route::get('/admin/elections/{election}', [ElectionController::class, 'showForAdmin'])->name('admin.elections.show');
+    Route::get('/admin/elections/create', [ElectionController::class, 'createElectionDetails'])->name('admin.elections.create');
+    Route::post('/admin/elections/create', [ElectionController::class, 'storeElectionDetails']);
+    Route::get('/admin/elections/questions', [ElectionController::class, 'createQuestions'])->name('admin.elections.questions');
+    Route::post('/admin/elections/questions/store', [ElectionController::class, 'storeQuestions'])->name('admin.elections.questions.store');
+    Route::get('/admin/elections/review', [ElectionController::class, 'review'])->name('admin.elections.review');
+    Route::post('/admin/elections/finish', [ElectionController::class, 'store'])->name('admin.elections.store');
     
+
+
+    Route::get('/admin/elections.index', [AdminController::class, 'manageElections'])->name('admin.elections.index');
+    Route::get('/admin/elections/{election}', [ElectionController::class, 'showForAdmin'])->name('admin.elections.show');
     Route::get('/admin/elections/{document}/edit', [ElectionController::class, 'edit'])->name('admin.elections.edit');
-    Route::get('/admin/elections/create', [ElectionController::class, 'create'])->name('admin.elections.create');
     Route::post('/admin/elections/store', [ElectionController::class, 'store'])->name('admin.elections.store');
     Route::put('/admin/elections/{document}', [ElectionController::class, 'update'])->name('admin.elections.update');
     Route::delete('/admin/elections/{document}', [ElectionController::class, 'destroy'])->name('admin.elections.destroy');
-
+    
     
 });
 

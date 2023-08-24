@@ -9,6 +9,8 @@ class Question extends Model
 {
     use HasFactory;
 
+    protected $guarded = [];
+
     public function election()
 {
     return $this->belongsTo(Election::class);
@@ -18,8 +20,6 @@ public function options()
 {
     return $this->hasMany(Option::class);
 }
-
-protected $fillable = ['type']; // 'candidates' or 'options'
 
 public function candidates()
 {

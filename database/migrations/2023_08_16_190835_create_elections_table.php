@@ -13,11 +13,11 @@ return new class extends Migration
     {
         Schema::create('elections', function (Blueprint $table) {
             $table->id();
-            $table->string('name');
+            $table->string('name')->nullable();
             $table->text('description')->nullable();
-            $table->timestamp('start_date');
-            $table->timestamp('end_date');
-            $table->string('status')->default('upcoming');
+            $table->timestamp('start_date')->nullable();
+            $table->timestamp('end_date')->nullable();
+            $table->string('status')->default('upcoming')->nullable();
             $table->timestamps();
         });
         

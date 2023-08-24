@@ -9,14 +9,21 @@ class Option extends Model
 {
     use HasFactory;
 
+    /**
+     * The attributes that are mass assignable.
+     *
+     * @var array
+     */
+    protected $guarded = [];
+
     public function question()
-{
-    return $this->belongsTo(Question::class);
+    {
+        return $this->belongsTo(Question::class);
+    }
+
+    public function votes()
+    {
+        return $this->belongsToMany(Vote::class);
+    }
 }
 
-public function votes()
-{
-    return $this->belongsToMany(Vote::class);
-}
-
-}

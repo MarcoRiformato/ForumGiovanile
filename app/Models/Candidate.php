@@ -9,15 +9,21 @@ class Candidate extends Model
 {
     use HasFactory;
 
+    /**
+     * The attributes that are mass assignable.
+     *
+     * @var array
+     */
+    protected $guarded = [];
+
     public function elections()
-{
-    return $this->belongsToMany(Election::class);
+    {
+        return $this->belongsToMany(Election::class);
+    }
+
+    public function question()
+    {
+        return $this->belongsTo(Question::class);
+    }
 }
 
-public function question()
-{
-    return $this->belongsTo(Question::class);
-}
-
-
-}

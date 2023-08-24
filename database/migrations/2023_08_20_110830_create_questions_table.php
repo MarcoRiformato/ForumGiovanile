@@ -15,8 +15,8 @@ return new class extends Migration
             $table->id();
             $table->unsignedBigInteger('election_id');
             $table->foreign('election_id')->references('id')->on('elections');
-            $table->string('text');
-            $table->string('type');
+            $table->string('text')->nullable();
+            $table->string('type')->nullable();
             $table->timestamps();
         });
         

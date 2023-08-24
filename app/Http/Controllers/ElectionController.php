@@ -21,18 +21,114 @@ class ElectionController extends Controller
     /**
      * Show the form for creating a new resource.
      */
-    public function create()
+    // Step 1: Create Election Details
+    public function createElectionDetails()
     {
         return Inertia::render('Admin/Elections/Create');
     }
 
+    // Step 2: Store Election Details
+    public function storeElectionDetails(Request $request)
+    {
+        $validatedData = $request->validate([
+            'name' => 'required|max:255',
+            'description' => 'required',
+            'start_date' => 'required|date',
+            'end_date' => 'required|date',
+            'status' => 'required',
+        ]);
+
+        session(['election' => $validatedData]);
+
+        return redirect()->route('admin.elections.create.questions');
+    }
+
+    // Step 3: Create Questions
+    public function createQuestions()
+    {
+        return Inertia::render('Admin/Elections/Questions');
+    }
+
+    // Step 4: Store Questions
+    public function storeQuestions(Request $request)
+    {
+        $validatedData = $request->validate([
+            'questions.*.text' => 'required|max:255',
+            'questions.*.type' => 'required|in:options,candidates',
+            'questions.*.options.*.text' => 'required_if:questions.*.type,options|max:255',
+            'questions.*.candidates.*.name' => 'required_if:questions.*.type,candidates|max:255',
+            'questions.*.candidates.*.description' => 'nullable',
+        ]);
+
+        session(['questions' => $validatedData['questions']]);
+
+        return redirect()->route('admin.elections.review');
+    }
+
+
+    // Step 5: Review
+    public function review()
+    {
+        $election = session('election');
+        $questions = session('questions');
+        return Inertia::render('Admin/Elections/Review', compact('election', 'questions'));
+    }
+
+    public function store(Request $request)
+    {
+        $data = $request->validate([
+            'name' => 'nullable|string|max:255',
+            'description' => 'nullable|string',
+            'start_date' => 'nullable|date',
+            'end_date' => 'nullable|date',
+            'status' => 'nullable|string',
+            'questions' => 'nullable|json', 
+        ]);        
+    
+        // Decode the JSON string for questions
+        $questions = json_decode($data['questions'], true);
+    
+        // Create a new election
+        $election = Election::create([
+            'name' => $data['name'],
+            'description' => $data['description'],
+            'start_date' => $data['start_date'],
+            'end_date' => $data['end_date'],
+            'status' => $data['status'],
+        ]);
+    
+        // Handle the questions, options, and candidates
+        foreach ($questions as $questionData) {
+            $question = $election->questions()->create([
+                'text' => $questionData['text'],
+                'type' => $questionData['type'],
+            ]);
+    
+            if ($questionData['type'] === 'options') {
+                foreach ($questionData['options'] as $optionData) {
+                    $question->options()->create(['text' => $optionData['text']]);
+                }
+            } else if ($questionData['type'] === 'candidates') {
+                foreach ($questionData['candidates'] as $candidateData) {
+                    $question->candidates()->create([
+                        'name' => $candidateData['name'],
+                        'description' => $candidateData['description']
+                    ]);
+                }
+            }
+        }
+    
+        // Clear the session data if needed
+        $request->session()->forget(['election', 'questions']);
+    
+        return redirect()->route('admin.elections.index')->with('success', 'Election created successfully');
+    }
+    
+
+
     /**
      * Store a newly created resource in storage.
      */
-    public function store(Request $request)
-    {
-        //
-    }
 
     /**
      * Display the specified resource.
