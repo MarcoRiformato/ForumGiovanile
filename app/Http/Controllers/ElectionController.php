@@ -160,18 +160,89 @@ class ElectionController extends Controller
     /**
      * Show the form for editing the specified resource.
      */
-    public function edit(Election $election)
+    public function editStep1($id)
     {
-        //
+        $election = Election::findOrFail($id);
+        return Inertia::render('Admin/Elections/Edit_Step1', [
+            'election' => $election
+        ]);
+    }
+    
+    public function editStep2($id)
+    {
+        $election = Election::with('questions.options', 'questions.candidates')->findOrFail($id);
+        return Inertia::render('Admin/Elections/Edit_Step2', [
+            'election' => $election
+        ]);
     }
 
     /**
      * Update the specified resource in storage.
      */
-    public function update(Request $request, Election $election)
-    {
-        //
-    }
+
+     public function updateStep1(Request $request, $id)
+     {
+         $election = Election::findOrFail($id);
+     
+         $validatedData = $request->validate([
+             'name' => 'required|max:255',
+             'description' => 'required',
+             'start_date' => 'required|date',
+             'end_date' => 'required|date',
+             'status' => 'required',
+         ]);
+     
+         $election->update($validatedData);
+     
+         return response()->json(['message' => 'Election details updated successfully']);
+     }
+     
+
+     public function updateStep2(Request $request, $id)
+     {
+         $election = Election::findOrFail($id);
+     
+         // Validate basic election details
+         $validatedData = $request->validate([
+             'questions.*.text' => 'required|max:255',
+             'questions.*.type' => 'required|in:options,candidates',
+             'questions.*.options.*.text' => 'required_if:questions.*.type,options|max:255',
+             'questions.*.candidates.*.name' => 'required_if:questions.*.type,candidates|max:255',
+             'questions.*.candidates.*.description' => 'nullable',
+         ]);
+     
+         // Delete existing questions and related options and candidates
+         $election->questions->each(function ($question) {
+             $question->options()->delete(); // Delete related options
+             $question->candidates()->delete(); // Delete related candidates
+             $question->delete(); // Delete the question itself
+         });
+     
+         // Re-insert questions, options, and candidates
+         foreach ($validatedData['questions'] as $questionData) {
+             $question = $election->questions()->create([
+                 'text' => $questionData['text'],
+                 'type' => $questionData['type'],
+             ]);
+     
+             if ($questionData['type'] === 'options') {
+                 foreach ($questionData['options'] as $optionData) {
+                     $question->options()->create(['text' => $optionData['text']]);
+                 }
+             } else if ($questionData['type'] === 'candidates') {
+                 foreach ($questionData['candidates'] as $candidateData) {
+                     $question->candidates()->create([
+                         'name' => $candidateData['name'],
+                         'description' => $candidateData['description']
+                     ]);
+                 }
+             }
+         }
+     
+         return response()->json(['message' => 'Election updated successfully']);
+     }
+     
+    
 
     /**
      * Remove the specified resource from storage.

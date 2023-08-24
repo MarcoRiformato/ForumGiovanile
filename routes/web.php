@@ -73,16 +73,18 @@ Route::middleware(['auth', 'admin'])->group(function () {
     Route::get('/admin/elections/questions', [ElectionController::class, 'createQuestions'])->name('admin.elections.questions');
     Route::post('/admin/elections/questions/store', [ElectionController::class, 'storeQuestions'])->name('admin.elections.questions.store');
     Route::get('/admin/elections/review', [ElectionController::class, 'review'])->name('admin.elections.review');
-    Route::post('/admin/elections/finish', [ElectionController::class, 'store'])->name('admin.elections.store');
     
+    Route::get('/admin/elections/edit/{id}/step1', [ElectionController::class, 'editStep1'])->name('admin.elections.step1');
+    Route::get('/admin/elections/edit/{id}/step2', [ElectionController::class, 'editStep2'])->name('admin.elections.step2');
+
+    Route::put('/admin/elections/edit/{id}/step1', [ElectionController::class, 'updateStep1'])->name('admin.elections.updateStep1');
+    Route::put('/admin/elections/edit/{id}/step2', [ElectionController::class, 'updateStep2'])->name('admin.elections.updateStep2');
 
 
     Route::get('/admin/elections.index', [AdminController::class, 'manageElections'])->name('admin.elections.index');
     Route::get('/admin/elections/{election}', [ElectionController::class, 'showForAdmin'])->name('admin.elections.show');
-    Route::get('/admin/elections/{document}/edit', [ElectionController::class, 'edit'])->name('admin.elections.edit');
     Route::post('/admin/elections/store', [ElectionController::class, 'store'])->name('admin.elections.store');
-    Route::put('/admin/elections/{document}', [ElectionController::class, 'update'])->name('admin.elections.update');
-    Route::delete('/admin/elections/{document}', [ElectionController::class, 'destroy'])->name('admin.elections.destroy');
+    Route::delete('/admin/elections/{election}', [ElectionController::class, 'destroy'])->name('admin.elections.destroy');
     
     
 });

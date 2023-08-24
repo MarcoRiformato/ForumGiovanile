@@ -80,11 +80,7 @@ const form = useForm({
 });
 
 const submit = () => {
-    form.post(route('admin.elections.store'), {
-        onSuccess: () => {
-            window.location.href = route('admin.elections.index');
-        }
-    });
+    form.post(route('admin.elections.store'));
 };
 
   

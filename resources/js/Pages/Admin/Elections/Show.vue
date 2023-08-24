@@ -6,7 +6,9 @@
             <dt class="text-sm font-medium leading-6 text-gray-400">Nome</dt>
             <dd class="mt-1 text-sm leading-6 sm:col-span-2 sm:mt-0">{{ election.name }}</dd>
             <div class="flex justify-end -mt-4 sm:col-span-1 sm:flex-none">
-              <button class="btn btn-primary">
+              <button
+              @click="$inertia.visit(route('admin.elections.step1', election.id))"
+              class="btn btn-primary">
                 Modifica
               </button>
             </div>
