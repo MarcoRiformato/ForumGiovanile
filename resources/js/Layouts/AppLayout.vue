@@ -180,11 +180,11 @@ social: [
                                 <template #content>
                                     <!-- Account Management -->
                                     <div class="block px-4 py-2 text-xs text-gray-400">
-                                        Manage Account
+                                        Gestisci account
                                     </div>
 
                                     <DropdownLink :href="route('profile.show')">
-                                        Profile
+                                        Profilo
                                     </DropdownLink>
 
                                     <DropdownLink v-if="$page.props.jetstream.hasApiFeatures" :href="route('api-tokens.index')">
@@ -196,7 +196,7 @@ social: [
                                     <!-- Authentication -->
                                     <form @submit.prevent="logout">
                                         <DropdownLink as="button">
-                                            Log Out
+                                            Esci
                                         </DropdownLink>
                                     </form>
                                 </template>
@@ -205,10 +205,10 @@ social: [
 
                         <div v-else class="ml-3 space-x-4">
                         <Link :href="route('login')" class="">
-                            Login
+                            Accedi
                         </Link>
                         <Link :href="route('register')" class="">
-                            Register
+                            Registrati
                         </Link>
                     </div>
 

@@ -43,6 +43,7 @@ Route::get('/dashboard', function () {
 Route::get('/admindashboard', [AdminController::class, 'index'])->name('admindashboard');
 Route::resource('/articles', ArticleController::class);
 Route::get('/', [MainDashboard::class, 'index'])->name('home');
+Route::middleware(['auth:sanctum', 'verified'])->get('/dashboard', [MainDashboard::class, 'index'])->name('dashboard');
 Route::get('documents/index', [DocumentController::class, 'index'])->name('documents.index');
 Route::get('elections/index', [ElectionController::class, 'index'])->name('elections.index');
 Route::get('elections/{election}', [ElectionController::class, 'show'])->name('elections.show');
