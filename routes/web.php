@@ -22,25 +22,27 @@ use App\Http\Controllers\ElectionController;
 */
 
 Route::get('/', function () {
-    return Inertia::render('Dashboard', [
-        'canLogin' => Route::has('login'),
-        'canRegister' => Route::has('register'),
-        'laravelVersion' => Application::VERSION,
-        'phpVersion' => PHP_VERSION,
-    ]);
+return Inertia::render('Dashboard', [
+    'canLogin' => Route::has('login'),
+    'canRegister' => Route::has('register'),
+    'laravelVersion' => Application::VERSION,
+    'phpVersion' => PHP_VERSION,
+]);
 });
 
 Route::middleware([
-    'auth:sanctum',
-    config('jetstream.auth_session'),
-    'verified',
+'auth:sanctum',
+config('jetstream.auth_session'),
+'verified',
 ])->group(function () {
-    Route::get('/dashboard', function () {
-        return Inertia::render('Dashboard');
-    })->name('dashboard');
+Route::get('/dashboard', function () {
+    return Inertia::render('Dashboard');
+})->name('dashboard');
 });
 
+Route::get('/admindashboard', [AdminController::class, 'index'])->name('admindashboard');
 Route::resource('/articles', ArticleController::class);
+Route::get('/', [MainDashboard::class, 'index'])->name('home');
 Route::get('documents/index', [DocumentController::class, 'index'])->name('documents.index');
 Route::get('elections/index', [ElectionController::class, 'index'])->name('elections.index');
 Route::get('elections/{election}', [ElectionController::class, 'show'])->name('elections.show');
@@ -50,7 +52,7 @@ Route::middleware(['auth', 'admin'])->group(function () {
 
     // Articles routes
     Route::get('/admin/articles/{article}/edit', [ArticleController::class, 'edit'])->name('admin.articles.edit');
-    Route::get('/admin/articles/create', [ArticleController::class, 'edit'])->name('admin.articles.create');
+    Route::get('/admin/articles/create', [ArticleController::class, 'create'])->name('admin.articles.create');
     Route::post('/admin/articles/{article}/media', [MediaController::class, 'store'])->name('admin.articles.media.store');
 
     // Users routes
@@ -73,7 +75,7 @@ Route::middleware(['auth', 'admin'])->group(function () {
     Route::get('/admin/elections/questions', [ElectionController::class, 'createQuestions'])->name('admin.elections.questions');
     Route::post('/admin/elections/questions/store', [ElectionController::class, 'storeQuestions'])->name('admin.elections.questions.store');
     Route::get('/admin/elections/review', [ElectionController::class, 'review'])->name('admin.elections.review');
-    
+
     Route::get('/admin/elections/edit/{id}/step1', [ElectionController::class, 'editStep1'])->name('admin.elections.step1');
     Route::get('/admin/elections/edit/{id}/step2', [ElectionController::class, 'editStep2'])->name('admin.elections.step2');
 
@@ -85,10 +87,9 @@ Route::middleware(['auth', 'admin'])->group(function () {
     Route::get('/admin/elections/{election}', [ElectionController::class, 'showForAdmin'])->name('admin.elections.show');
     Route::post('/admin/elections/store', [ElectionController::class, 'store'])->name('admin.elections.store');
     Route::delete('/admin/elections/{election}', [ElectionController::class, 'destroy'])->name('admin.elections.destroy');
-    
-    
+
+
 });
 
-Route::get('/dashboard', [MainDashboard::class, 'index'])->name('dashboard');
 
-
+;

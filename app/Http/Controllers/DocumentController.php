@@ -33,9 +33,9 @@ class DocumentController extends Controller
     public function store(Request $request)
     {
         $validatedData = $request->validate([
-            'title' => 'required|string|max:255',
+            'title' => 'nullable|string|max:255',
             'description' => 'nullable|string',
-            'link' => 'required|string',
+            'link' => 'nullable|string',
         ]);
 
         Document::create($validatedData);
@@ -73,9 +73,9 @@ class DocumentController extends Controller
         $document = Document::findOrFail($id);
 
         $validatedData = $request->validate([
-            'title' => 'required|string|max:255',
+            'title' => 'nullable|string|max:255',
             'description' => 'nullable|string',
-            'link' => 'required|string',
+            'link' => 'nullable|string',
         ]);
 
         $document->update($validatedData);

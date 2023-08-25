@@ -13,9 +13,9 @@ return new class extends Migration
     {
         Schema::create('articles', function (Blueprint $table) {
             $table->id();
-            $table->string('title');
-            $table->string('extract');
-            $table->mediumText('body');
+            $table->string('title')->nullable();
+            $table->string('extract')->nullable();
+            $table->mediumText('body')->nullable();
             $table->foreignId('user_id')->constrained()->nullable();
             $table->softDeletes();
             $table->timestamps();

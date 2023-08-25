@@ -38,10 +38,10 @@ class ArticleController extends Controller
 public function store(Request $request)
 {
     $validatedData = $request->validate([
-        'title' => 'required|string|max:255',
-        'extract' => 'required|string|max:1000',
-        'body' => 'required|string',
-        'media_file' => 'sometimes|file|mimes:jpg,jpeg,png,gif,webp,mp4,mp3,pdf|max:10240', // max 10MB
+        'title' => 'nullable|string|max:255',
+        'extract' => 'nullable|string|max:1000',
+        'body' => 'nullable|string',
+        'media_file' => 'nullable|file|mimes:jpg,jpeg,png,gif,webp,mp4,mp3,pdf|max:10240', // max 10MB
     ]);
 
     $article = Article::create([
@@ -111,9 +111,9 @@ public function store(Request $request)
 public function update(Request $request, Article $article)
 {
     $validatedData = $request->validate([
-        'title' => 'required|string|max:255',
-        'extract' => 'required|string|max:1000',
-        'body' => 'required|string',
+        'title' => 'nullable|string|max:255',
+        'extract' => 'nullable|string|max:1000',
+        'body' => 'nullable|string',
         'media_file' => 'sometimes|file|mimes:jpg,jpeg,png,gif,webp,mp4,mp3,pdf|max:10240', // max 10MB
     ]);
 

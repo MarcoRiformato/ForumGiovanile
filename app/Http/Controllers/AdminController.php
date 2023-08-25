@@ -10,6 +10,12 @@ use Inertia\Inertia;
 
 class AdminController extends Controller
 {
+
+    public function admindashboard()
+    {
+        return Inertia::render('Admin/AdminDashboard');
+    }
+
     public function dashboard()
     {
         $articles = Article::with('user')->orderBy('created_at', 'desc')->get();

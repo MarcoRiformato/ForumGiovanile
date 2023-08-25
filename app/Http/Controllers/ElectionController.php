@@ -31,11 +31,11 @@ class ElectionController extends Controller
     public function storeElectionDetails(Request $request)
     {
         $validatedData = $request->validate([
-            'name' => 'required|max:255',
-            'description' => 'required',
-            'start_date' => 'required|date',
-            'end_date' => 'required|date',
-            'status' => 'required',
+            'name' => 'nullable|max:255',
+            'description' => 'nullable',
+            'start_date' => 'nullable|date',
+            'end_date' => 'nullable|date',
+            'status' => 'nullable',
         ]);
 
         session(['election' => $validatedData]);
@@ -53,8 +53,8 @@ class ElectionController extends Controller
     public function storeQuestions(Request $request)
     {
         $validatedData = $request->validate([
-            'questions.*.text' => 'required|max:255',
-            'questions.*.type' => 'required|in:options,candidates',
+            'questions.*.text' => 'nullable|max:255',
+            'questions.*.type' => 'nullable|in:options,candidates',
             'questions.*.options.*.text' => 'required_if:questions.*.type,options|max:255',
             'questions.*.candidates.*.name' => 'required_if:questions.*.type,candidates|max:255',
             'questions.*.candidates.*.description' => 'nullable',
@@ -121,7 +121,7 @@ class ElectionController extends Controller
         // Clear the session data if needed
         $request->session()->forget(['election', 'questions']);
     
-        return redirect()->route('admin.elections.index')->with('success', 'Election created successfully');
+        return redirect()->route('admin.elections.index');
     }
     
 
@@ -185,16 +185,14 @@ class ElectionController extends Controller
          $election = Election::findOrFail($id);
      
          $validatedData = $request->validate([
-             'name' => 'required|max:255',
-             'description' => 'required',
-             'start_date' => 'required|date',
-             'end_date' => 'required|date',
-             'status' => 'required',
+             'name' => 'nullable|max:255',
+             'description' => 'nullable',
+             'start_date' => 'nullable|date',
+             'end_date' => 'nullable|date',
+             'status' => 'nullable',
          ]);
      
          $election->update($validatedData);
-     
-         return response()->json(['message' => 'Election details updated successfully']);
      }
      
 
@@ -204,8 +202,8 @@ class ElectionController extends Controller
      
          // Validate basic election details
          $validatedData = $request->validate([
-             'questions.*.text' => 'required|max:255',
-             'questions.*.type' => 'required|in:options,candidates',
+             'questions.*.text' => 'nullable|max:255',
+             'questions.*.type' => 'nullable|in:options,candidates',
              'questions.*.options.*.text' => 'required_if:questions.*.type,options|max:255',
              'questions.*.candidates.*.name' => 'required_if:questions.*.type,candidates|max:255',
              'questions.*.candidates.*.description' => 'nullable',
@@ -239,7 +237,7 @@ class ElectionController extends Controller
              }
          }
      
-         return response()->json(['message' => 'Election updated successfully']);
+         return redirect()->route('admin.elections.index')->with('message', 'Document successfully deleted.');
      }
      
     
