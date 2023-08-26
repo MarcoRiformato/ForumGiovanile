@@ -53,7 +53,7 @@
             <div class="mt-6 flex items-center justify-between gap-x-6">
                 <button @click="$inertia.visit(route('admin.elections.step1', {id: form.id}))" type="button" class="btn btn-secondary">Indietro</button>
                 <button @click="saveChangesStep2" type="button" class="btn btn-success" v-if="isChanged">Salva</button>
-                <button type="submit" :disabled="form.processing" class="btn btn-primary">Avanti</button>
+                <button @click="$inertia.visit(route('admin.elections.index'))" type="button" class="btn btn-primary">Annulla</button>
             </div>
         </form>
     </div>

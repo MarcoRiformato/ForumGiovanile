@@ -118,16 +118,17 @@ social: [
                     <div class="flex">
                         <!-- Logo -->
                         <div class="shrink-0 flex items-center">
-                            <Link :href="route('dashboard')">
+                            <Link :href="route('home')">
                                 <ApplicationMark class="block h-9 w-auto" />
                             </Link>
                         </div>
 
                         <!-- Navigation Links -->
                         <div class="hidden space-x-8 sm:-my-px sm:ml-10 sm:flex">
-                            <NavLink :href="route('dashboard')" :active="route().current('dashboard')">
-                                Home
+                            <NavLink :href="route('home')" :active="route().current('home')">
+                            Home
                             </NavLink>
+
                             <NavLink :href="route('articles.index')" :active="route().current('articles.index')">
                                 Notizie
                             </NavLink><!--
@@ -248,7 +249,7 @@ social: [
             <!-- Responsive Navigation Menu -->
             <div :class="{'block': showingNavigationDropdown, 'hidden': ! showingNavigationDropdown}" class="sm:hidden">
             <div class="pt-2 pb-3 space-y-1 text-center">
-                <ResponsiveNavLink :href="route('dashboard')" :active="route().current('dashboard')">
+                <ResponsiveNavLink :href="route('home')" :active="route().current('home')">
                     Home
                 </ResponsiveNavLink>
                 <ResponsiveNavLink :href="route('articles.index')" :active="route().current('articles.index')">
@@ -310,7 +311,7 @@ social: [
                         <!-- Authentication -->
                         <form method="POST" @submit.prevent="logout">
                             <ResponsiveNavLink as="button">
-                                Log Out
+                                Esci
                             </ResponsiveNavLink>
                         </form>
 
@@ -357,10 +358,10 @@ social: [
                 </div>
                 <div v-else class="mt-3 space-y-1">
                     <ResponsiveNavLink :href="route('login')">
-                        Login
+                        Accedi
                     </ResponsiveNavLink>
                     <ResponsiveNavLink :href="route('register')">
-                        Register
+                        Registrati
                     </ResponsiveNavLink>
                 </div>
             </div>

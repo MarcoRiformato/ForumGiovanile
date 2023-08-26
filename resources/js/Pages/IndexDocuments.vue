@@ -1,9 +1,9 @@
 <template>
   <AppLayout title="Documenti">
-    <div class="bg-base-200 ">
+    <div class="bg-base-200">
       <div class="cards-container">
         <div v-for="document in documents" :key="document.id" class="card-container">
-          <div class="card w-96 bg-primary text-primary-content">
+          <div class="card w-full sm:w-96 bg-primary text-primary-content">
             <div class="card-body">
               <h2 class="card-title">{{ document.title }}</h2>
               <p>{{ document.description }}</p>
@@ -21,15 +21,21 @@
 <style>
 .cards-container {
   display: grid;
-  grid-template-columns: repeat(auto-fit, minmax(375px, 1fr));
-  gap: 30px;
-  padding: 30px;
-  margin-right: 30px; /* Add some margin to the right */
-  justify-items: center; /* Center the cards */
+  grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+  gap: 1rem;
+  margin: auto;
+  justify-items: center;
+}
+
+@media (min-width: 1024px) {
+  .cards-container {
+    gap: 6rem;
+  }
 }
 
 .card-container {
-  margin: 30px;
+  padding: 0 15px;
+  margin: 1rem;
 }
 
 </style>
@@ -40,5 +46,4 @@ import AppLayout from '@/Layouts/AppLayout.vue';
 defineProps({
   documents: Object
 })
-
 </script>

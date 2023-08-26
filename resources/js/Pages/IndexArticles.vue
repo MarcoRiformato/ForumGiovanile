@@ -6,7 +6,7 @@
         <h2 class="text-3xl font-bold tracking-tight sm:text-4xl">Ultime notizie</h2>
         <p class="my-6 text-lg leading-8">Leggi analisi, sondaggi e notizie del Forum Giovanile Elbano</p>
       </div>
-      <div class="mx-auto grid max-w-2xl auto-rows-fr grid-cols-1 gap-8 sm:mt-10 lg:mx-0 lg:max-w-none lg:grid-cols-3">
+      <div class="mx-auto grid grid-cols-1 gap-8 sm:mt-10 lg:mx-0 lg:grid-cols-2 xl:grid-cols-3">
         <article v-for="article in articles" :key="article.id" class="relative isolate flex flex-col justify-end overflow-hidden rounded-2xl bg-gray-900 px-8 pb-8 pt-20 sm:pt-48 lg:pt-80">
           <div :article="article" @click="$inertia.visit(route('articles.show', article.id))">
             <img v-if="article.media && article.media.length > 0" :src="'/storage/' + article.media[0].filepath" alt="Article Image" class="absolute inset-0 -z-10 h-full w-full object-cover" />
