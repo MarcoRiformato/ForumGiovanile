@@ -27,9 +27,19 @@
   justify-items: center;
 }
 
+@media (min-width: 822px) {
+  .cards-container {
+    gap: 8rem;
+    padding-left: 2rem; /* Add this line */
+
+  }
+}
+
 @media (min-width: 1024px) {
   .cards-container {
-    gap: 6rem;
+    gap: 8rem;
+    padding-left: 4rem; /* Add this line */
+
   }
 }
 
