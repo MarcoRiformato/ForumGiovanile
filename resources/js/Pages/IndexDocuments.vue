@@ -1,5 +1,5 @@
 <template>
-  <AppLayout title="Documenti">
+  <AppLayout title="I documenti del forum">
     <div class="bg-base-200">
       <div class="cards-container">
         <div v-for="document in documents" :key="document.id" class="card-container">

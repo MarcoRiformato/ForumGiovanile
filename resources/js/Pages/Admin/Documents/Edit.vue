@@ -1,5 +1,5 @@
 <template>
-    <AppLayout>
+    <AppLayout title="Modifica documento">
         <div class="bg-base-200">
             <h1 class="text-4xl p-4">Modifica documento</h1>
             <form class="px-8 bg-base-200 pb-8" @submit.prevent="submit">

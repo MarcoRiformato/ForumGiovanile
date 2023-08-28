@@ -1,5 +1,5 @@
 <template>
-    <AppLayout title="Mostra elezione">
+    <AppLayout title="Conferma creazione">
       <div class="bg-base-200">
         <div class="ps-16">
           <div class="px-4 py-6 sm:grid sm:grid-cols-4 sm:gap-4 sm:px-0">

@@ -1,5 +1,5 @@
 <template>
-<AppLayout>
+<AppLayout title="Leggi articolo">
 <div class="bg-base-200">
       <div class=" px-6 py-8 lg:px-8">
     <div class="mx-auto max-w-3xl text-base leading-7 ">

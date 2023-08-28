@@ -1,5 +1,5 @@
 <template>
-    <AppLayout title="Modifica elezione - domande">
+    <AppLayout title="Modifica elezione step 2">
     <div class="bg-base-200 p-4">
         <h1 class="text-4xl mb-4">Modifica Domande</h1>
         <form class="px-8 bg-base-200 pb-8" @submit.prevent="submit">

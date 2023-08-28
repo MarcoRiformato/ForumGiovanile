@@ -90,7 +90,7 @@ defineProps({
 </script>
 
 <template>
-<AppLayout title="Forum Giovanile Elbano">
+<AppLayout title="Home">
   <div class="bg-base-200 force-center">
 
     <main class="isolate">

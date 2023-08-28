@@ -1,5 +1,5 @@
 <template>
-    <AppLayout>
+    <AppLayout title="Lista admin elezioni">
         <div class="bg-base-200 px-4 sm:px-6 lg:px-8">
             <div class="mt-8 flex flex-col sm:flex-row sm:items-center">
                 <div class="flex-auto mb-4 sm:mb-0 mt-8">

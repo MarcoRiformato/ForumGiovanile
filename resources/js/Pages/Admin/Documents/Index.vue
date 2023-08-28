@@ -1,5 +1,5 @@
 <template>
-    <AppLayout title="Documenti">
+    <AppLayout title="List admin documenti">
         <div class="bg-base-200">
             <div class="px-4 sm:px-6 lg:px-8">
                 <div class="mt-8 flex flex-col sm:flex-row sm:items-center">
