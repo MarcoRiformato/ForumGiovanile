@@ -4,13 +4,10 @@ import { ref, defineComponent, h } from 'vue'
 import { Bars3Icon, XMarkIcon } from '@heroicons/vue/24/outline'
 import {
   AcademicCapIcon,
-  CheckCircleIcon,
-  HandRaisedIcon,
-  RocketLaunchIcon,
-  SparklesIcon,
-  SunIcon,
+  HeartIcon,
+  BuildingLibraryIcon,
   UserGroupIcon,
-  BugAntIcon, ChatBubbleLeftRightIcon, ComputerDesktopIcon
+  BugAntIcon, ChatBubbleLeftRightIcon, GlobeEuropeAfricaIcon
 } from '@heroicons/vue/20/solid'
 
 const formatDate = (dateString) => {
@@ -21,34 +18,24 @@ const formatDate = (dateString) => {
 
 const values = [
   {
-    name: 'Be world-class.',
-    description: 'Lorem ipsum, dolor sit amet consectetur adipisicing elit aute id magna.',
-    icon: RocketLaunchIcon,
-  },
-  {
-    name: 'Take responsibility.',
-    description: 'Anim aute id magna aliqua ad ad non deserunt sunt. Qui irure qui lorem cupidatat commodo.',
-    icon: HandRaisedIcon,
-  },
-  {
-    name: 'Be supportive.',
-    description: 'Ac tincidunt sapien vehicula erat auctor pellentesque rhoncus voluptas blanditiis et.',
-    icon: UserGroupIcon,
-  },
-  {
-    name: 'Always learning.',
-    description: 'Iure sed ab. Aperiam optio placeat dolor facere. Officiis pariatur eveniet atque et dolor.',
+    name: 'Diritto allo studio.',
+    description: 'Sia per le superiori che per le università',
     icon: AcademicCapIcon,
   },
   {
-    name: 'Share everything you know.',
-    description: 'Laudantium tempora sint ut consectetur ratione. Ut illum ut rem numquam fuga delectus.',
-    icon: SparklesIcon,
+    name: ' Trasporto pubblico.',
+    description: 'Il diritto a muoversi facilmente, in ogni periodo dell anno e momento della giornata',
+    icon: GlobeEuropeAfricaIcon,
   },
   {
-    name: 'Enjoy downtime.',
-    description: 'Culpa dolorem voluptatem velit autem rerum qui et corrupti. Quibusdam quo placeat.',
-    icon: SunIcon,
+    name: 'Educazione civica.',
+    description: 'Sensibilizzazione sull educazione civica, relazionale e sessuale',
+    icon: BuildingLibraryIcon,
+  },
+  {
+    name: 'Eventi.',
+    description: 'Promozione di eventi ed iniziative per i giovani elbani',
+    icon: UserGroupIcon,
   },
 ]
 const team = [
@@ -102,7 +89,9 @@ defineProps({
             <div class="mx-auto max-w-2xl gap-x-14 lg:mx-0 lg:flex lg:max-w-none lg:items-center">
               <div class="w-full max-w-xl lg:shrink-0 xl:max-w-2xl">
                 <h1 class="text-4xl font-bold tracking-tight  sm:text-6xl">Siamo il forum giovanile elbano</h1>
-                <p class="relative mt-6 text-lg leading-8  sm:max-w-md lg:max-w-none">Cupidatat minim id magna ipsum sint dolor qui. Sunt sit in quis cupidatat mollit aute velit. Et labore commodo nulla aliqua proident mollit ullamco exercitation tempor. Sint aliqua anim nulla sunt mollit id pariatur in voluptate cillum. Eu voluptate tempor esse minim amet fugiat veniam occaecat aliqua.</p>
+                <p class="relative mt-6 text-lg  sm:max-w-md lg:max-w-none"><i>Rappresentiamo tutti gli elbani dai 13 ai 26 anni</i></p>
+                <p class="relative mt-6 text-lg leading-8  sm:max-w-md lg:max-w-none">Il Forum Giovanile dell’Elba è un organo ufficiale, istituito dai 7 comuni ed eletto ogni tre anni da tutti i ragazzi elbani tra i 13 e i 26 anni. Il Forum rappresenta tutti i giovani con i comuni, la Provincia e le altre istituzioni locali e nazionali, per realizzare le richieste e le idee della comunità giovanile. Inoltre organizziamo feste ed eventi per rendere più attiva la vita sociale della nostra isola.
+</p>
               </div>
             </div>
           </div>
@@ -117,16 +106,16 @@ defineProps({
           </div>
           <div class="mx-auto mt-16 grid auto-rows-fr grid-cols-2 sm:grid-cols-1 md:grid-cols-1 lg:grid-cols-2 xl:grid-cols-2 gap-8 sm:mt-20">
             <article v-for="(article, index) in latestArticles" :key="index"
-class="relative flex flex-col justify-end overflow-hidden rounded-2xl bg-gray-900 px-8 pb-8 pt-80 sm:pt-48 lg:pt-80">
-    <img src="https://picsum.photos/800" alt="" class="absolute inset-0 z-0 h-full w-full object-cover" />
-    <div class="absolute inset-0 z-10 bg-gradient-to-t from-gray-900 via-gray-900/40"></div>
-    <div class="absolute inset-0 z-10 rounded-2xl ring-1 ring-inset ring-gray-900/10"></div>
-    <div class="flex flex-wrap items-center gap-y-1 overflow-hidden text-sm leading-6 z-20">
+            class="relative flex flex-col justify-end overflow-hidden rounded-2xl bg-gray-900 px-8 pb-8 pt-80 sm:pt-48 lg:pt-80">
+                <img v-if="article.media && article.media.length > 0" :src="'/storage/' + article.media[0].filepath" alt="" class="absolute inset-0 z-0 h-full w-full object-cover" />
+                <div class="absolute inset-0 z-10 bg-gradient-to-t from-gray-900 via-gray-900/40"></div>
+                <div class="absolute inset-0 z-10 rounded-2xl ring-1 ring-inset ring-gray-900/10"></div>
+                <div class="flex flex-wrap items-center gap-y-1 overflow-hidden text-sm leading-6 z-20">
         <time :created_at="article.created_at" class="mr-8">{{ formatDate(article.created_at) }}</time>
         <div class="-ml-4 flex items-center gap-x-4">
             <svg viewBox="0 0 2 2" class="-ml-0.5 h-0.5 w-0.5 flex-none fill-white/50"></svg>
             <div class="flex gap-x-2.5">
-                <img src="https://picsum.photos/100" alt="" class="h-6 w-6 flex-none rounded-full bg-white/10" />
+                <img  src="https://picsum.photos/100" alt="" class="h-6 w-6 flex-none rounded-full bg-white/10" />
                 <p>{{ article.user.name }}</p>
             </div>
         </div>
@@ -151,7 +140,7 @@ class="relative flex flex-col justify-end overflow-hidden rounded-2xl bg-gray-90
 
         <div class="mx-auto max-w-2xl lg:mx-0">
           <h2 class="text-3xl font-bold tracking-tight text-white sm:text-4xl">La nostra visione</h2>
-          <p class="mt-6 text-lg leading-8 text-gray-300">Lorem ipsum, dolor sit amet consectetur adipisicing elit. Maiores impedit perferendis suscipit eaque, iste dolor cupiditate blanditiis.</p>
+          <p class="mt-6 text-lg leading-8 text-gray-300">I temi a cui lavoriamo più attivamente sono:</p>
         </div>
         <dl class="mx-auto mt-16 grid max-w-2xl grid-cols-1 gap-8 text-base leading-7 text-gray-300 sm:grid-cols-2 lg:mx-0 lg:max-w-none lg:gap-x-16">
           <div v-for="value in values" :key="value.name" class="relative pl-9">
@@ -189,7 +178,7 @@ class="relative flex flex-col justify-end overflow-hidden rounded-2xl bg-gray-90
       <div class="isolate bg-base-200 px-6 py-24 sm:py-32 lg:px-8">
     <div class="mx-auto max-w-2xl sm:text-center">
       <h2 class="text-3xl font-bold tracking-tight sm:text-4xl">Contattaci</h2>
-      <p class="mt-2 text-lg leading-8 ">Aute magna irure deserunt veniam aliqua magna enim voluptate.</p>
+      <p class="mt-2 text-lg leading-8 ">Per domande, informazioni o proposte</p>
     </div>
     <div class="mx-auto mt-20 max-w-lg space-y-16">
       <div class="flex gap-x-6">
@@ -197,10 +186,20 @@ class="relative flex flex-col justify-end overflow-hidden rounded-2xl bg-gray-90
           <ChatBubbleLeftRightIcon class="h-6 w-6 text-white" aria-hidden="true" />
         </div>
         <div>
-          <h3 class="text-base font-semibold leading-7">Scrivici su whatsapp</h3>
-          <p class="mt-2 leading-7">Ut cursus est ut amet. Lobortis eget egestas leo vitae eget porttitor risus blandit. Nunc a in lorem vel iaculis porttitor.</p>
+          <h3 class="text-base font-semibold leading-7">Scrivici su whatsapp al 3899435368 </h3>
           <p class="mt-4">
-            <a href="#" class="text-sm font-semibold leading-6 ">Contact us <span aria-hidden="true">&rarr;</span></a>
+            <a target="_blank"  href="https://wa.me/393899435367" class="text-sm font-semibold leading-6 ">Clicca qui <span aria-hidden="true">&rarr;</span></a>
+          </p>
+        </div>
+      </div>
+      <div class="flex gap-x-6">
+        <div class="flex h-10 w-10 shrink-0 items-center justify-center rounded-lg bg-indigo-600">
+          <ChatBubbleLeftRightIcon class="h-6 w-6 text-white" aria-hidden="true" />
+        </div>
+        <div>
+          <h3 class="text-base font-semibold leading-7">Mandaci un DM a @forum.giovani.elba</h3>
+          <p class="mt-4">
+            <a target="_blank" href="https://ig.me/m/forum.giovani.elba" class="text-sm font-semibold leading-6 ">Clicca qui <span aria-hidden="true">&rarr;</span></a>
           </p>
         </div>
       </div>
@@ -210,29 +209,13 @@ class="relative flex flex-col justify-end overflow-hidden rounded-2xl bg-gray-90
         </div>
         <div>
           <h3 class="text-base font-semibold leading-7">Inviaci una email</h3>
-          <p class="mt-2 leading-7">Expedita qui non ut quia ipsum voluptatum ipsam pariatur. Culpa vitae ipsum minus eius vero quo quibusdam.</p>
-          <p class="mt-4">
-            <a href="#" class="text-sm font-semibold leading-6 ">Report a bug <span aria-hidden="true">&rarr;</span></a>
-          </p>
+          <p class="mt-2 leading-7">forumgiovanielba@gmail.com</p>
         </div>
       </div>
     </div>
       </div>
     
     </main>
-
-    <!-- Footer 
-    <footer class="bg-base-200 -mt-12">
-    <div class="mx-auto max-w-7xl -mt-30 overflow-hidden px-6 py-20 sm:py-24 lg:px-8">
-      <div class="mt-10 flex justify-center space-x-10">
-        <a v-for="item in navigation.social" :key="item.name" :href="item.href" class=" hover:text-gray-500">
-          <span class="sr-only">{{ item.name }}</span>
-          <component :is="item.icon" class="h-6 w-6" aria-hidden="true" />
-        </a>
-      </div>
-      <p class="mt-10 text-center text-xs leading-5 ">&copy; 2023 Riformato Marco. All rights reserved.</p>
-    </div>
-  </footer>-->
   </div>
 </AppLayout>
 </template>

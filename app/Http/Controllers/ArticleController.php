@@ -153,6 +153,6 @@ public function update(Request $request, Article $article)
         $article = Article::find($article_id);
         $article->delete();
 
-        return redirect()->route('articles.index');
+        return redirect()->route('admin.dashboard');
     }
 }
