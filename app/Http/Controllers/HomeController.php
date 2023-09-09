@@ -24,6 +24,6 @@ class HomeController extends Controller
         ]);
     
         $homecontent->update($validatedData);
-        return redirect()->route('admin.dashboard')->with('success', 'Homepage updated successfully.');
+        return redirect()->route('dashboard')->with('success', 'Homepage updated successfully.');
     }
 }

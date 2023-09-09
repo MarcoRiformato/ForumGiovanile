@@ -10,6 +10,9 @@ use App\Models\Question;
 use App\Models\Option;
 use App\Models\Candidate;
 use App\Models\HomeContent;
+use App\Models\Vision;
+use Database\Factories\VisionFactory;
+
 use Illuminate\Database\Seeder;
 use Illuminate\Support\Facades\Hash;
 
@@ -49,6 +52,9 @@ class DatabaseSeeder extends Seeder
             ]);
             Candidate::factory()->count(4)->create(['question_id' => $question->id]);
         }
+
+        $visionFactory = new VisionFactory();
+        $visionFactory->presetVisions();
 
         Article::factory()->count(4)->create();
         Document::factory()->count(4)->create();

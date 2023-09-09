@@ -10,6 +10,7 @@ use App\Http\Controllers\MainDashboard;
 use App\Http\Controllers\DocumentController;
 use App\Http\Controllers\ElectionController;
 use App\Http\Controllers\HomeController;
+use App\Http\Controllers\VisionController;
 
 /*
 |--------------------------------------------------------------------------
@@ -48,6 +49,7 @@ Route::middleware(['auth:sanctum', 'verified'])->get('/dashboard', [MainDashboar
 Route::get('documents/index', [DocumentController::class, 'index'])->name('documents.index');
 Route::get('elections/index', [ElectionController::class, 'index'])->name('elections.index');
 Route::get('elections/{election}', [ElectionController::class, 'show'])->name('elections.show');
+Route::get('visions/{vision}', [VisionController::class, 'show'])->name('visions.show');
 
 Route::middleware(['auth', 'admin'])->group(function () {
     Route::get('/admin/dashboard', [AdminController::class, 'dashboard'])->name('admin.dashboard');
@@ -55,6 +57,13 @@ Route::middleware(['auth', 'admin'])->group(function () {
     //Homepage routes
     Route::get('/admin/homepage.edit', [AdminController::class, 'manageHomepage'])->name('admin.homepage.edit');
     Route::put('/admin/homepages/{homepage}', [HomeController::class, 'update'])->name('admin.homepages.update');
+
+    //Vision routes
+    Route::get('/admin/visions.index', [VisionController::class, 'index'])->name('admin.visions.index');
+    Route::get('/admin/visions/create', [VisionController::class, 'create'])->name('admin.visions.create');
+    Route::post('/admin/visions/store', [VisionController::class, 'store'])->name('admin.visions.store');
+    Route::get('/admin/visions/{vision}/edit', [VisionController::class, 'edit'])->name('admin.visions.edit');
+    Route::put('/admin/visions/{vision}', [VisionController::class, 'update'])->name('admin.visions.update');
 
     // Articles routes
     Route::get('/admin/articles/{article}/edit', [ArticleController::class, 'edit'])->name('admin.articles.edit');

@@ -16,28 +16,19 @@ const formatDate = (dateString) => {
   return date.toLocaleDateString('it-IT', options); // Italian format
 };
 
-const values = [
-  {
-    name: 'Diritto allo studio.',
-    description: 'Sia per le superiori che per le università',
-    icon: AcademicCapIcon,
-  },
-  {
-    name: ' Trasporto pubblico.',
-    description: 'Il diritto a muoversi facilmente, in ogni periodo dell anno e momento della giornata',
-    icon: GlobeEuropeAfricaIcon,
-  },
-  {
-    name: 'Educazione civica.',
-    description: 'Sensibilizzazione sull educazione civica, relazionale e sessuale',
-    icon: BuildingLibraryIcon,
-  },
-  {
-    name: 'Eventi.',
-    description: 'Promozione di eventi ed iniziative per i giovani elbani',
-    icon: UserGroupIcon,
-  },
-]
+const { latestArticles, homepage, visions } = defineProps({
+    latestArticles: Array,
+    homepage: Object,
+    visions: Array
+})
+
+const values = visions.map(vision => ({
+  name: vision.title,
+  description: vision.desc,
+  icon: vision.icon,
+}));
+
+
 const team = [
   {
     name: 'Michael Foster',
@@ -67,14 +58,6 @@ const team = [
   // More people...
 ]
 
-
-
-defineProps({
-    latestArticles: Array,
-    homepage: Object
-})
-
-
 </script>
 
 <template>
@@ -84,7 +67,6 @@ defineProps({
       <div class="relative isolate -z-10">
         <div class="overflow-hidden">
           <!-- Chi siamo -->
-          
           <div class="-mt-10 mx-auto max-w-7xl px-6 pb-16 pt-10 sm:pt-30 lg:px-8 lg:pt-16">
             <div class="mx-auto max-w-2xl gap-x-14 lg:mx-0 lg:flex lg:max-w-none lg:items-center">
               <div class="w-full max-w-xl lg:shrink-0 xl:max-w-2xl">

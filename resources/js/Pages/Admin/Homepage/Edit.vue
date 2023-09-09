@@ -1,7 +1,11 @@
 <template>
     <AppLayout>
       <div class="bg-base-200">
-        <h1 class="text-4xl p-4">Modifica homepage</h1>
+        <h1 class="text-4xl p-2">Modifica homepage</h1>
+        <div class="flex justify-end">
+          <button @click="$inertia.visit(route('admin.visions.index'))" class="btn btn-primary mr-4">Modifica visione</button>
+          <button class="btn btn-secondary">Modifica squadra</button>
+        </div>
         <form class="px-8 bg-base-200 pb-8" @submit.prevent="submit">
           <div class="space-y-12">
             <div class="border-b border-white/10 pb-12">
@@ -84,7 +88,7 @@
         </form>
       </div>
     </AppLayout>
-  </template>
+</template>
   
   <script setup>
   import AppLayout from '@/Layouts/AppLayout.vue';
