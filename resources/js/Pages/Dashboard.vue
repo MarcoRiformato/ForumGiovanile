@@ -70,7 +70,8 @@ const team = [
 
 
 defineProps({
-    latestArticles: Array
+    latestArticles: Array,
+    homepage: Object
 })
 
 
@@ -79,7 +80,6 @@ defineProps({
 <template>
 <AppLayout title="Home">
   <div class="bg-base-200 force-center">
-
     <main class="isolate">
       <div class="relative isolate -z-10">
         <div class="overflow-hidden">
@@ -88,9 +88,9 @@ defineProps({
           <div class="-mt-10 mx-auto max-w-7xl px-6 pb-16 pt-10 sm:pt-30 lg:px-8 lg:pt-16">
             <div class="mx-auto max-w-2xl gap-x-14 lg:mx-0 lg:flex lg:max-w-none lg:items-center">
               <div class="w-full max-w-xl lg:shrink-0 xl:max-w-2xl">
-                <h1 class="text-4xl font-bold tracking-tight  sm:text-6xl">Siamo il forum giovanile elbano</h1>
-                <p class="relative mt-6 text-lg  sm:max-w-md lg:max-w-none"><i>Rappresentiamo tutti gli elbani dai 13 ai 26 anni</i></p>
-                <p class="relative mt-6 text-lg leading-8  sm:max-w-md lg:max-w-none">Il Forum Giovanile dell’Elba è un organo ufficiale, istituito dai 7 comuni ed eletto ogni tre anni da tutti i ragazzi elbani tra i 13 e i 26 anni. Il Forum rappresenta tutti i giovani con i comuni, la Provincia e le altre istituzioni locali e nazionali, per realizzare le richieste e le idee della comunità giovanile. Inoltre organizziamo feste ed eventi per rendere più attiva la vita sociale della nostra isola.
+                <h1 class="text-4xl font-bold tracking-tight  sm:text-6xl">{{ homepage.main_title }}</h1>
+                <p class="relative mt-6 text-lg  sm:max-w-md lg:max-w-none"><i>{{ homepage.sub_title }}</i></p>
+                <p class="relative mt-6 text-lg leading-8  sm:max-w-md lg:max-w-none">{{ homepage.about_us }}
 </p>
               </div>
             </div>
@@ -101,8 +101,8 @@ defineProps({
         </div>
         <div class="mx-auto max-w-7xl px-6 sm:mt-4 lg:px-8">
           <div class="mx-auto max-w-2xl lg:mx-0 lg:max-w-none">
-            <h2 class="text-3xl font-bold tracking-tight sm:text-4xl">Ultime notizie</h2>
-            <p class="mt-2 text-lg leading-8 ">Leggi analisi, sondaggi e notizie del Forum Giovanile Elbano</p>
+            <h2 class="text-3xl font-bold tracking-tight sm:text-4xl">{{ homepage.latest_news_title }}</h2>
+            <p class="mt-2 text-lg leading-8 ">{{ homepage.latest_news_desc }}</p>
           </div>
           <div class="mx-auto mt-16 grid auto-rows-fr grid-cols-2 sm:grid-cols-1 md:grid-cols-1 lg:grid-cols-2 xl:grid-cols-2 gap-8 sm:mt-20">
             <article v-for="(article, index) in latestArticles" :key="index"
@@ -139,8 +139,8 @@ defineProps({
         <div class="mx-auto max-w-7xl px-6 sm:mt-40 lg:px-8" style="margin-top: 5rem !important;">
 
         <div class="mx-auto max-w-2xl lg:mx-0">
-          <h2 class="text-3xl font-bold tracking-tight text-white sm:text-4xl">La nostra visione</h2>
-          <p class="mt-6 text-lg leading-8 text-gray-300">I temi a cui lavoriamo più attivamente sono:</p>
+          <h2 class="text-3xl font-bold tracking-tight text-white sm:text-4xl">{{ homepage.our_vision_title }}</h2>
+          <p class="mt-6 text-lg leading-8 text-gray-300">{{ homepage.our_vision_desc }}</p>
         </div>
         <dl class="mx-auto mt-16 grid max-w-2xl grid-cols-1 gap-8 text-base leading-7 text-gray-300 sm:grid-cols-2 lg:mx-0 lg:max-w-none lg:gap-x-16">
           <div v-for="value in values" :key="value.name" class="relative pl-9">
@@ -162,8 +162,8 @@ defineProps({
       <!-- La squadra -->
       <div class="mx-auto mt-8 max-w-7xl px-6 sm:mt-48 lg:px-8">
         <div class="mx-auto max-w-2xl lg:mx-0">
-          <h2 class="text-3xl font-bold tracking-tight  sm:text-4xl">Our team</h2>
-          <p class="mt-6 text-lg leading-8 ">Sit facilis neque ab nulla vel. Cum eos in laudantium. Temporibus eos totam in dolorum. Nemo vel facere repellendus ut eos dolores similique.</p>
+          <h2 class="text-3xl font-bold tracking-tight  sm:text-4xl">{{ homepage.team_title }}</h2>
+          <p class="mt-6 text-lg leading-8 ">{{ homepage.team_desc }}</p>
         </div>
         <ul role="list" class="mx-auto mt-20 grid max-w-2xl grid-cols-2 gap-x-8 gap-y-16 text-center sm:grid-cols-3 md:grid-cols-4 lg:mx-0 lg:max-w-none lg:grid-cols-5 xl:grid-cols-6">
           <li v-for="person in team" :key="person.name">

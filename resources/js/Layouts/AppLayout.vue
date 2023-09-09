@@ -119,6 +119,9 @@ social: [
                             <NavLink v-if="$page.props.auth.user && $page.props.auth.user.is_admin !== 0" :href="route('admin.elections.index')" :active="route().current('admin.elections.index')">
                                 Admin elezioni
                             </NavLink>
+                            <NavLink v-if="$page.props.auth.user && $page.props.auth.user.is_admin !== 0" :href="route('admin.homepage.edit')" :active="route().current('admin.homepage.edit')">
+                                Admin homepage
+                            </NavLink>
                             <!--
                             <NavLink  :href="route('admin.users.index')" :active="route().current('admin.users.index')">
                                 Riferimenti utili
@@ -247,6 +250,9 @@ social: [
                     </ResponsiveNavLink>
                     <ResponsiveNavLink :href="route('admin.elections.index')" :active="route().current('admin.elections.index')">
                         Admin elezioni
+                    </ResponsiveNavLink>
+                    <ResponsiveNavLink :href="route('admin.homepage.edit')" :active="route().current('admin.homepage.edit')">
+                        Admin homepage
                     </ResponsiveNavLink>
                 </template>
             </div>

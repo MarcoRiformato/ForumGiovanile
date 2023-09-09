@@ -6,6 +6,7 @@ use App\Models\User;
 use App\Models\Article;
 use App\Models\Document;
 use App\Models\Election;
+use App\Models\HomeContent;
 use Inertia\Inertia;
 
 class AdminController extends Controller
@@ -48,6 +49,12 @@ class AdminController extends Controller
     {
         $elections = Election::all();
         return Inertia::render('Admin/Elections/Index', compact('elections'));
+    }
+
+    public function manageHomepage()
+    {
+        $homepages = HomeContent::first();
+        return Inertia::render('Admin/Homepage/Edit', compact('homepages'));
     }
     
 }

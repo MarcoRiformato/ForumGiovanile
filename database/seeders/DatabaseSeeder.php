@@ -9,6 +9,7 @@ use App\Models\Election;
 use App\Models\Question;
 use App\Models\Option;
 use App\Models\Candidate;
+use App\Models\HomeContent;
 use Illuminate\Database\Seeder;
 use Illuminate\Support\Facades\Hash;
 
@@ -51,6 +52,7 @@ class DatabaseSeeder extends Seeder
 
         Article::factory()->count(4)->create();
         Document::factory()->count(4)->create();
+        HomeContent::factory()->create();
     }
 }
 

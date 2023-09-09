@@ -9,6 +9,7 @@ use App\Http\Controllers\UserController;
 use App\Http\Controllers\MainDashboard;
 use App\Http\Controllers\DocumentController;
 use App\Http\Controllers\ElectionController;
+use App\Http\Controllers\HomeController;
 
 /*
 |--------------------------------------------------------------------------
@@ -50,6 +51,10 @@ Route::get('elections/{election}', [ElectionController::class, 'show'])->name('e
 
 Route::middleware(['auth', 'admin'])->group(function () {
     Route::get('/admin/dashboard', [AdminController::class, 'dashboard'])->name('admin.dashboard');
+
+    //Homepage routes
+    Route::get('/admin/homepage.edit', [AdminController::class, 'manageHomepage'])->name('admin.homepage.edit');
+    Route::put('/admin/homepages/{homepage}', [HomeController::class, 'update'])->name('admin.homepages.update');
 
     // Articles routes
     Route::get('/admin/articles/{article}/edit', [ArticleController::class, 'edit'])->name('admin.articles.edit');
