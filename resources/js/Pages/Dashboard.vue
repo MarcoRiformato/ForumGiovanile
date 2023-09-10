@@ -23,10 +23,12 @@ const { latestArticles, homepage, visions } = defineProps({
 })
 
 const values = visions.map(vision => ({
+  id: vision.id,  // assuming the data includes an 'id' field
   name: vision.title,
   description: vision.desc,
   icon: vision.icon,
 }));
+
 
 
 const team = [
@@ -125,14 +127,19 @@ const team = [
           <p class="mt-6 text-lg leading-8 text-gray-300">{{ homepage.our_vision_desc }}</p>
         </div>
         <dl class="mx-auto mt-16 grid max-w-2xl grid-cols-1 gap-8 text-base leading-7 text-gray-300 sm:grid-cols-2 lg:mx-0 lg:max-w-none lg:gap-x-16">
-          <div v-for="value in values" :key="value.name" class="relative pl-9">
+          <a
+          target="_blank"
+          v-for="value in values"
+          :key="value.id" 
+          :href="`/articles/${value.id}`"
+          class="relative pl-9">
             <dt class="inline font-semibold text-white">
               <component :is="value.icon" class="absolute left-1 top-1 h-5 w-5 text-indigo-500" aria-hidden="true" />
               {{ value.name }}
             </dt>
             {{ ' ' }}
             <dd class="inline">{{ value.description }}</dd>
-          </div>
+          </a>
         </dl>
       </div>
       
