@@ -220,23 +220,8 @@ social: [
                 <!-- Admin Section -->
                 <template v-if="$page.props.auth.user && $page.props.auth.user.is_admin !== 0">
                     <div class="border-t"></div>
-                    <div class="text-xl px-4 py-2 text-red-600">
+                    <ResponsiveNavLink class="text-red-600" :href="route('admin.admindashboard')" :active="route().current('admin.admindashboard')">
                         Sezione admin
-                    </div>
-                    <ResponsiveNavLink :href="route('admin.dashboard')" :active="route().current('admin.dashboard')">
-                        Admin notizie
-                    </ResponsiveNavLink>
-                    <!--<ResponsiveNavLink :href="route('admin.users.index')" :active="route().current('admin.users.index')">
-                        Utenti
-                    </ResponsiveNavLink>-->
-                    <ResponsiveNavLink :href="route('admin.documents.index')" :active="route().current('admin.documents.index')">
-                        Admin documenti
-                    </ResponsiveNavLink>
-                    <ResponsiveNavLink :href="route('admin.elections.index')" :active="route().current('admin.elections.index')">
-                        Admin elezioni
-                    </ResponsiveNavLink>
-                    <ResponsiveNavLink :href="route('admin.homepage.edit')" :active="route().current('admin.homepage.edit')">
-                        Admin homepage
                     </ResponsiveNavLink>
                 </template>
             </div>
