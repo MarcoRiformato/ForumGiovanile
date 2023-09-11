@@ -17,7 +17,6 @@
                 </div>
             </div>
             </div>
-    
             <div class="col-span-full">
             <label for="email" class="block text-sm font-medium leading-6 text-white">Email</label>
             <div class="mt-2">
@@ -25,26 +24,32 @@
             </div>
             </div>
             <div class="col-span-full">
-            <label for="email" class="block text-sm font-medium leading-6 text-white">Password</label>
-            <div class="mt-2">
-                <input v-model="form.password" type="password" class="block w-full rounded-md border-0 bg-white/5 py-1.5 text-white shadow-sm ring-1 ring-inset ring-white/10 focus:ring-2 focus:ring-inset focus:ring-indigo-500 sm:text-sm sm:leading-6" />
+                <label for="email" class="block text-sm font-medium leading-6 text-white">Ruolo</label>
+                <div class="mt-2">
+                    <input v-model="form.role" type="email" class="block w-full rounded-md border-0 bg-white/5 py-1.5 text-white shadow-sm ring-1 ring-inset ring-white/10 focus:ring-2 focus:ring-inset focus:ring-indigo-500 sm:text-sm sm:leading-6" />
+                </div>
             </div>
-            <p class="text-xs italic">Hai un grande potere, usalo saggiamente!</p>
+            <div class="col-span-full">
+                <div class="form-control">
+                    <label class="label cursor-pointer">
+                        <span class="label-text">Mostra in homepage</span>
+                        <input type="checkbox" v-model="form.is_team_member" />
+                    </label>
+                </div>
             </div>
-            
         </div>
         </div>
     </div>
     
     <div class="mt-6 flex items-center justify-between gap-x-6">
         <button @click="destroy" type="button" class="btn btn-error">Cancella</button>
-        <button @click="$inertia.visit(route('admin.dashboard'))" type="button" class="btn btn-secondary">Annulla</button>
+        <button @click="$inertia.visit(route('admin.users.index'))" type="button" class="btn btn-secondary">Annulla</button>
         <button @click="submit" type="button" :disabled="form.processing" class="btn btn-primary ">Salva</button>
     </div>
     </form>
     </div>
     </AppLayout>
-    </template>
+</template>
     
     <script setup>
     import AppLayout from '@/Layouts/AppLayout.vue';
@@ -58,14 +63,17 @@
         id: props.user.id,
         name: props.user.name,
         email: props.user.email,
-        password: props.user.password
+        role: props.user.role,
+        is_admin: props.user.is_admin,
+        is_team_member: props.user.is_team_member
     })
     
     const submit = () => {
         const formData = new FormData();
             formData.append('name', form.name);
             formData.append('email', form.email);
-            formData.append('password', form.password);
+            formData.append('email', form.role);
+            formData.append('is_team_member', form.is_team_member);
         form.put(route('users.update', {id: props.user.id}), {
             body: formData
         });

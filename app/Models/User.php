@@ -28,7 +28,15 @@ class User extends Authenticatable
         'email',
         'password',
         'is_admin',
+        'is_team_member',
+        'role'
     ];
+
+    public function scopeIsTeamMember($query)
+    {
+        return $query->where('is_team_member', true);   
+    }
+
 
     /**
      * The attributes that should be hidden for serialization.

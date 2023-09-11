@@ -13,7 +13,7 @@
                 <!-- Main Title -->
                 <div class="sm:col-span-4 grid sm:grid-cols-4 gap-4">
                   <div class="sm:col-span-3">
-                    <label class="block text-sm font-medium leading-6 text-white">Main Title</label>
+                    <label class="block text-sm font-medium leading-6 text-white">Titolo principale</label>
                     <div class="mt-2 flex rounded-md bg-white/5 ring-1 ring-inset ring-white/10 focus-within:ring-2 focus-within:ring-inset focus-within:ring-indigo-500">
                       <input type="text" v-model="form.main_title" class="flex-1 border-0 bg-transparent py-1.5 pl-1 text-white focus:ring-0 sm:text-sm sm:leading-6" />
                     </div>
@@ -22,7 +22,7 @@
                 <!-- Sub Title -->
                 <div class="sm:col-span-4 grid sm:grid-cols-4 gap-4">
                   <div class="sm:col-span-3">
-                    <label class="block text-sm font-medium leading-6 text-white">Sub Title</label>
+                    <label class="block text-sm font-medium leading-6 text-white">Sottotitolo principale</label>
                     <div class="mt-2 flex rounded-md bg-white/5 ring-1 ring-inset ring-white/10 focus-within:ring-2 focus-within:ring-inset focus-within:ring-indigo-500">
                       <input type="text" v-model="form.sub_title" class="flex-1 border-0 bg-transparent py-1.5 pl-1 text-white focus:ring-0 sm:text-sm sm:leading-6" />
                     </div>
@@ -30,14 +30,14 @@
                 </div>
                 <!-- About Us -->
                 <div class="col-span-full">
-                  <label class="block text-sm font-medium leading-6 text-white">About Us</label>
+                  <label class="block text-sm font-medium leading-6 text-white">Chi siamo</label>
                   <div class="mt-2">
                     <textarea rows="3" v-model="form.about_us" class="block w-full rounded-md border-0 bg-white/5 py-1.5 text-white shadow-sm ring-1 ring-inset ring-white/10 focus:ring-2 focus:ring-inset focus:ring-indigo-500 sm:text-sm sm:leading-6"></textarea>
                   </div>
                 </div>
                 <div class="sm:col-span-4 grid sm:grid-cols-4 gap-4">
                   <div class="sm:col-span-3">
-                    <label class="block text-sm font-medium leading-6 text-white">Titolo ultime notiie</label>
+                    <label class="block text-sm font-medium leading-6 text-white">Titolo ultime notizie</label>
                     <div class="mt-2 flex rounded-md bg-white/5 ring-1 ring-inset ring-white/10 focus-within:ring-2 focus-within:ring-inset focus-within:ring-indigo-500">
                       <input type="text" v-model="form.latest_news_title" class="flex-1 border-0 bg-transparent py-1.5 pl-1 text-white focus:ring-0 sm:text-sm sm:leading-6" />
                     </div>
@@ -51,7 +51,7 @@
                 </div>
                 <div class="sm:col-span-4 grid sm:grid-cols-4 gap-4">
                   <div class="sm:col-span-3">
-                    <label class="block text-sm font-medium leading-6 text-white">Titolo: la nostra visione</label>
+                    <label class="block text-sm font-medium leading-6 text-white">Titolo nostra visione</label>
                     <div class="mt-2 flex rounded-md bg-white/5 ring-1 ring-inset ring-white/10 focus-within:ring-2 focus-within:ring-inset focus-within:ring-indigo-500">
                       <input type="text" v-model="form.our_vision_title" class="flex-1 border-0 bg-transparent py-1.5 pl-1 text-white focus:ring-0 sm:text-sm sm:leading-6" />
                     </div>
@@ -65,14 +65,14 @@
                 </div>
                 <div class="sm:col-span-4 grid sm:grid-cols-4 gap-4">
                   <div class="sm:col-span-3">
-                    <label class="block text-sm font-medium leading-6 text-white">La squadra titolo</label>
+                    <label class="block text-sm font-medium leading-6 text-white">Titolo la squadra</label>
                     <div class="mt-2 flex rounded-md bg-white/5 ring-1 ring-inset ring-white/10 focus-within:ring-2 focus-within:ring-inset focus-within:ring-indigo-500">
                       <input type="text" v-model="form.team_title" class="flex-1 border-0 bg-transparent py-1.5 pl-1 text-white focus:ring-0 sm:text-sm sm:leading-6" />
                     </div>
                   </div>
                 </div>
                 <div class="col-span-full">
-                  <label class="block text-sm font-medium leading-6 text-white">La squadra descrizione</label>
+                  <label class="block text-sm font-medium leading-6 text-white">Descrizione la squadra</label>
                   <div class="mt-2">
                     <textarea rows="3" v-model="form.team_desc" class="block w-full rounded-md border-0 bg-white/5 py-1.5 text-white shadow-sm ring-1 ring-inset ring-white/10 focus:ring-2 focus:ring-inset focus:ring-indigo-500 sm:text-sm sm:leading-6"></textarea>
                   </div>

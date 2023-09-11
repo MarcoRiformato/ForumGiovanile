@@ -25,7 +25,6 @@ class UserController extends Controller
 
     public function store(Request $request)
     {
-        // Validation, creation logic...
         return redirect()->route('admin.users.index');
     }
 
@@ -39,15 +38,17 @@ class UserController extends Controller
     public function update(Request $request, User $user)
     {
         $validatedData = $request->validate([
-            'name' => 'required|string|max:255',
-            'email' => 'required|string|max:1000',
-            'password' => 'required|string',
+            'name' => 'nullable|string|max:255',
+            'email' => 'nullable|string|max:1000',
+            'role' => 'nullable|string|max:1000',
+            'is_team_member' => 'nullable|boolean'
         ]);
     
         $user->update([
             'name' => $validatedData['name'],
             'email' => $validatedData['email'],
-            'password' => $validatedData['password']
+            'role' => $validatedData['role'],
+            'is_team_member' => $validatedData['is_team_member']
         ]);
     
         return redirect()->route('admin.users.index')->with('message', 'Articolo modificato');

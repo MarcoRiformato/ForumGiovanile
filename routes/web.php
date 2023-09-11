@@ -42,7 +42,6 @@ Route::get('/dashboard', function () {
 })->name('dashboard');
 });
 
-Route::get('/admindashboard', [AdminController::class, 'index'])->name('admindashboard');
 Route::resource('/articles', ArticleController::class);
 Route::get('/', [MainDashboard::class, 'index'])->name('home');
 Route::middleware(['auth:sanctum', 'verified'])->get('/dashboard', [MainDashboard::class, 'index'])->name('dashboard');
@@ -52,6 +51,9 @@ Route::get('elections/{election}', [ElectionController::class, 'show'])->name('e
 Route::get('visions/{vision}', [VisionController::class, 'show'])->name('visions.show');
 
 Route::middleware(['auth', 'admin'])->group(function () {
+
+    Route::get('admin/admindashboard', [AdminController::class, 'index'])->name('admin.admindashboard');
+
     Route::get('/admin/dashboard', [AdminController::class, 'dashboard'])->name('admin.dashboard');
 
     //Homepage routes

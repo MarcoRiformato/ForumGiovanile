@@ -100,32 +100,16 @@ social: [
 
                             <NavLink :href="route('articles.index')" :active="route().current('articles.index')">
                                 Notizie
-                            </NavLink><!--
-                            <NavLink v-if="$page.props.auth.user && $page.props.auth.user.is_admin !== 0" :href="route('admin.users.index')" :active="route().current('admin.users.index')">
-                                Utenti
-                            </NavLink>-->
+                            </NavLink>
                             <NavLink  :href="route('documents.index')" :active="route().current('documents.index')">
                                 Documenti
                             </NavLink>
                             <NavLink  :href="route('elections.index')" :active="route().current('elections.index')">
                                 Elezioni
                             </NavLink>
-                            <NavLink v-if="$page.props.auth.user && $page.props.auth.user.is_admin !== 0" :href="route('admin.dashboard')" :active="route().current('admin.dashboard')">
-                                Admin notizie
+                            <NavLink v-if="$page.props.auth.user && $page.props.auth.user.is_admin !== 0" :href="route('admin.admindashboard')" :active="route().current('admin.admindashboard')">
+                                Sezione admin
                             </NavLink>
-                            <NavLink v-if="$page.props.auth.user && $page.props.auth.user.is_admin !== 0" :href="route('admin.documents.index')" :active="route().current('admin.documents.index')">
-                                Admin documenti
-                            </NavLink>
-                            <NavLink v-if="$page.props.auth.user && $page.props.auth.user.is_admin !== 0" :href="route('admin.elections.index')" :active="route().current('admin.elections.index')">
-                                Admin elezioni
-                            </NavLink>
-                            <NavLink v-if="$page.props.auth.user && $page.props.auth.user.is_admin !== 0" :href="route('admin.homepage.edit')" :active="route().current('admin.homepage.edit')">
-                                Admin homepage
-                            </NavLink>
-                            <!--
-                            <NavLink  :href="route('admin.users.index')" :active="route().current('admin.users.index')">
-                                Riferimenti utili
-                            </NavLink>-->
                         </div>
                     </div>
 

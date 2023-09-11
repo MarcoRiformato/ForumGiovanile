@@ -16,10 +16,11 @@ const formatDate = (dateString) => {
   return date.toLocaleDateString('it-IT', options); // Italian format
 };
 
-const { latestArticles, homepage, visions } = defineProps({
+const { latestArticles, homepage, visions, users } = defineProps({
     latestArticles: Array,
     homepage: Object,
-    visions: Array
+    visions: Array,
+    users: Array
 })
 
 const values = visions.map(vision => ({
@@ -29,36 +30,13 @@ const values = visions.map(vision => ({
   icon: vision.icon,
 }));
 
-
-
-const team = [
-  {
-    name: 'Michael Foster',
-    role: 'Co-Founder / CTO',
-    imageUrl:
-      'https://images.unsplash.com/photo-1494790108377-be9c29b29330?ixlib=rb-1.2.1&ixid=eyJhcHBfaWQiOjEyMDd9&auto=format&fit=facearea&facepad=8&w=1024&h=1024&q=80',
-  },
-  {
-    name: 'Michael Foster',
-    role: 'Co-Founder / CTO',
-    imageUrl:
-      'https://images.unsplash.com/photo-1494790108377-be9c29b29330?ixlib=rb-1.2.1&ixid=eyJhcHBfaWQiOjEyMDd9&auto=format&fit=facearea&facepad=8&w=1024&h=1024&q=80',
-  },
-  {
-    name: 'Michael Foster',
-    role: 'Co-Founder / CTO',
-    imageUrl:
-      'https://images.unsplash.com/photo-1494790108377-be9c29b29330?ixlib=rb-1.2.1&ixid=eyJhcHBfaWQiOjEyMDd9&auto=format&fit=facearea&facepad=8&w=1024&h=1024&q=80',
-  },
-  {
-    name: 'Michael Foster',
-    role: 'Co-Founder / CTO',
-    imageUrl:
-      'https://images.unsplash.com/photo-1494790108377-be9c29b29330?ixlib=rb-1.2.1&ixid=eyJhcHBfaWQiOjEyMDd9&auto=format&fit=facearea&facepad=8&w=1024&h=1024&q=80',
-  },
-  
-  // More people...
-]
+const team = users
+  .filter(user => user.is_team_member)  // optional: only include team members
+  .map(user => ({
+    name: user.name,
+    role: user.role || "No Role Assigned",  // fallback to "No Role Assigned" if role is null
+    imageUrl: user.profile_photo_url
+  }));
 
 </script>
 

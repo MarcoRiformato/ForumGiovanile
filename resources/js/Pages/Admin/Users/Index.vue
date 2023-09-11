@@ -4,7 +4,7 @@
 <div class="px-4 sm:px-6 lg:px-8">
     <div class="flex flex-col sm:flex-row sm:items-center">
         <div class="flex-auto mb-4 sm:mb-0 mt-8">
-            <h1 class="text-4xl">Gestisci utenti</h1>
+            <h1 class="text-4xl -mt-6">Gestisci utenti</h1>
         </div>
     </div>
     <div class="mt-2">
@@ -14,6 +14,8 @@
                     <th scope="col" class="py-3.5 pl-4 pr-3 text-left text-sm font-semibold sm:pl-0"></th>
                     <th scope="col" class="py-3.5 pl-4 pr-3 text-left text-sm font-semibold sm:pl-0">Nome</th>
                     <th scope="col" class="px-3 py-3.5 text-left text-sm font-semibold">Email</th>
+                    <th scope="col" class="px-3 py-3.5 text-left text-sm font-semibold">Evidenziato</th>
+                    <th scope="col" class="px-3 py-3.5 text-left text-sm font-semibold">Ruolo</th>
                     <th scope="col" class="px-3 py-3.5 text-left text-sm font-semibold">Admin</th>
                 </tr>
             </thead>
@@ -26,6 +28,8 @@
                     </td>
                     <td class="py-4 pl-4 pr-3 text-sm font-medium sm:pl-0">{{ user.name }}</td>
                     <td class="px-3 py-4 text-sm">{{ user.email }}</td>
+                    <td class="px-3 py-4 text-sm">{{ user.is_team_member ? 'Yes' : 'No' }}</td>
+                    <td class="px-3 py-4 text-sm">{{ user.role}}</td>
                     <td class="px-3 py-4 text-sm">{{ user.is_admin ? 'Yes' : 'No' }}</td>
                     <td class="py-4 pl-3 pr-4 text-right text-sm font-medium sm:pr-0">
                         <button @click.stop="$inertia.visit(route('admin.users.edit', user.id))" class="btn btn-secondary">Modifica</button>

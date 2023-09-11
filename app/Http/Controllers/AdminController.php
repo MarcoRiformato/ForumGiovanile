@@ -12,7 +12,7 @@ use Inertia\Inertia;
 class AdminController extends Controller
 {
 
-    public function admindashboard()
+    public function index()
     {
         return Inertia::render('Admin/AdminDashboard');
     }
