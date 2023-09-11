@@ -65,7 +65,7 @@
         email: props.user.email,
         role: props.user.role,
         is_admin: props.user.is_admin,
-        is_team_member: props.user.is_team_member
+        is_team_member: Boolean(props.user.is_team_member)
     })
     
     const submit = () => {

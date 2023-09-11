@@ -23,14 +23,14 @@
                 <tr v-for="user in users" :key="user.id">
                     <td class="py-4 pl-4 pr-3 text-sm font-medium sm:pl-0">
                         <div class="h-11 w-11 flex-shrink-0">
-                            <img class="rounded-full" src="https://picsum.photos/100" />
+                            <img class="rounded-full" :src="user.profile_photo_url" />
                         </div>
                     </td>
                     <td class="py-4 pl-4 pr-3 text-sm font-medium sm:pl-0">{{ user.name }}</td>
                     <td class="px-3 py-4 text-sm">{{ user.email }}</td>
-                    <td class="px-3 py-4 text-sm">{{ user.is_team_member ? 'Yes' : 'No' }}</td>
+                    <td class="px-3 py-4 text-sm">{{ user.is_team_member ? 'Si' : 'No' }}</td>
                     <td class="px-3 py-4 text-sm">{{ user.role}}</td>
-                    <td class="px-3 py-4 text-sm">{{ user.is_admin ? 'Yes' : 'No' }}</td>
+                    <td class="px-3 py-4 text-sm">{{ user.is_admin ? 'Si' : 'No' }}</td>
                     <td class="py-4 pl-3 pr-4 text-right text-sm font-medium sm:pr-0">
                         <button @click.stop="$inertia.visit(route('admin.users.edit', user.id))" class="btn btn-secondary">Modifica</button>
                     </td>

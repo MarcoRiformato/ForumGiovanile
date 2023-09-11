@@ -330,23 +330,15 @@ social: [
         <!-- Ad Container -->
         <aside v-if="!($page.props.auth.user && $page.props.auth.user.is_admin !== 0)"
         class="ads hidden sm:flex sm:w-1/3 p-4 flex flex-col justify-start items-center">
-        <img src="https://picsum.photos/250/200" alt="Ad Image 1" class="ad">
-        <img src="https://picsum.photos/250/200" alt="Ad Image 1" class="ad">
-        <img src="https://picsum.photos/250/200" alt="Ad Image 1" class="ad">
-        <img src="https://picsum.photos/250/200" alt="Ad Image 1" class="ad">
-        <img src="https://picsum.photos/250/200" alt="Ad Image 1" class="ad">
-        <img src="https://picsum.photos/250/200" alt="Ad Image 1" class="ad">
-        <img src="https://picsum.photos/250/200" alt="Ad Image 1" class="ad">
-        <img src="https://picsum.photos/250/200" alt="Ad Image 1" class="ad">
-        <img src="https://picsum.photos/250/200" alt="Ad Image 1" class="ad">
-        <img src="https://picsum.photos/250/200" alt="Ad Image 1" class="ad">
-        <img src="https://picsum.photos/250/200" alt="Ad Image 1" class="ad">
-        <img src="https://picsum.photos/250/200" alt="Ad Image 1" class="ad">
-        <img src="https://picsum.photos/250/200" alt="Ad Image 1" class="ad">
-        <img src="https://picsum.photos/250/200" alt="Ad Image 1" class="ad">
-        <img src="https://picsum.photos/250/200" alt="Ad Image 1" class="ad">
-        <img src="https://picsum.photos/250/200" alt="Ad Image 1" class="ad">
-        <img src="https://picsum.photos/250/200" alt="Ad Image 1" class="ad">
+        <img src="https://picsum.photos/250/350" alt="Ad Image 1" class="ad">
+        <img src="https://picsum.photos/250/350" alt="Ad Image 1" class="ad">
+        <img src="https://picsum.photos/250/350" alt="Ad Image 1" class="ad">
+        <img src="https://picsum.photos/250/350" alt="Ad Image 1" class="ad">
+        <img src="https://picsum.photos/250/350" alt="Ad Image 1" class="ad">
+        <img src="https://picsum.photos/250/350" alt="Ad Image 1" class="ad">
+        <img src="https://picsum.photos/250/350" alt="Ad Image 1" class="ad">
+        <img src="https://picsum.photos/250/350" alt="Ad Image 1" class="ad">
+        <img src="https://picsum.photos/250/350" alt="Ad Image 1" class="ad">
         </aside>
         </div>
     </div>
@@ -373,7 +365,7 @@ border-radius: 0.375rem;
 @media (min-width: 640px) {
 .ad {
 width: 250px;
-height: 200px;
+height: 350px;
 margin-bottom: 1.5rem; /* equivalent to mb-6 in Tailwind */
 }
 }
