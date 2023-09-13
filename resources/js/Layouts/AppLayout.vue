@@ -88,7 +88,7 @@ social: [
                         <!-- Logo -->
                         <div class="shrink-0 flex items-center">
                             <Link :href="route('home')">
-                                <ApplicationMark class="block h-9 w-auto" />
+                                <ApplicationMark class="block h-20 w-auto" />
                             </Link>
                         </div>
 
@@ -330,15 +330,15 @@ social: [
         <!-- Ad Container -->
         <aside v-if="!($page.props.auth.user && $page.props.auth.user.is_admin !== 0)"
         class="ads hidden sm:flex sm:w-1/3 p-4 flex flex-col justify-start items-center">
-        <img src="https://picsum.photos/250/350" alt="Ad Image 1" class="ad">
-        <img src="https://picsum.photos/250/350" alt="Ad Image 1" class="ad">
-        <img src="https://picsum.photos/250/350" alt="Ad Image 1" class="ad">
-        <img src="https://picsum.photos/250/350" alt="Ad Image 1" class="ad">
-        <img src="https://picsum.photos/250/350" alt="Ad Image 1" class="ad">
-        <img src="https://picsum.photos/250/350" alt="Ad Image 1" class="ad">
-        <img src="https://picsum.photos/250/350" alt="Ad Image 1" class="ad">
-        <img src="https://picsum.photos/250/350" alt="Ad Image 1" class="ad">
-        <img src="https://picsum.photos/250/350" alt="Ad Image 1" class="ad">
+        <img src="placeholder.jpg" alt="Ad Image 1" class="ad">
+        <img src="placeholder.jpg" alt="Ad Image 1" class="ad">
+        <img src="placeholder.jpg" alt="Ad Image 1" class="ad">
+        <img src="placeholder.jpg" alt="Ad Image 1" class="ad">
+        <img src="placeholder.jpg" alt="Ad Image 1" class="ad">
+        <img src="placeholder.jpg" alt="Ad Image 1" class="ad">
+        <img src="placeholder.jpg" alt="Ad Image 1" class="ad">
+        <img src="placeholder.jpg" alt="Ad Image 1" class="ad">
+        <img src="placeholder.jpg" alt="Ad Image 1" class="ad">
         </aside>
         </div>
     </div>
@@ -359,6 +359,7 @@ social: [
 <style>
 .ad {
 border-radius: 0.375rem;
+object-fit: cover
 }
 
 /* For larger screens */
