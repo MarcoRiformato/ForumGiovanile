@@ -68,7 +68,8 @@ const team = users
           </div>
           <div class="mx-auto mt-16 grid auto-rows-fr grid-cols-2 sm:grid-cols-1 md:grid-cols-1 lg:grid-cols-2 xl:grid-cols-2 gap-8 sm:mt-20">
             <article v-for="(article, index) in latestArticles" :key="index"
-            class="relative flex flex-col justify-end overflow-hidden rounded-2xl bg-gray-900 px-8 pb-8 pt-80 sm:pt-48 lg:pt-80">
+            @click="$inertia.visit(route('articles.show', article.id))"
+            class="relative flex flex-col justify-end overflow-hidden rounded-2xl bg-gray-900 px-6 pb-8  sm:pt-10 lg:pt-10">
                 <img v-if="article.media && article.media.length > 0" :src="'/storage/' + article.media[0].filepath" alt="" class="absolute inset-0 z-0 h-full w-full object-cover" />
                 <img v-else src="placeholder.jpg" class="object-cover">
                 <div class="absolute inset-0 z-10 bg-gradient-to-t from-gray-900 via-gray-900/40"></div>
