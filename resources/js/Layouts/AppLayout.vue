@@ -67,18 +67,26 @@ social: [
     <Banner />
     <!-- Image for larger screens -->
     <div
+    v-if="!($page.props.auth.user && $page.props.auth.user.is_admin !== 0)"
+    >
+    <div
     v-if="$page.props.ads.some(ad => ad.priority === 0)"
     class="flex justify-center items-center">
     <img :src="'/storage/' + $page.props.ads.find(ad => ad.priority === 0).media.filepath" alt="" style="width: 400px !important; height: 120px !important;" />
     </div>
-
+    </div>
 
     <!-- Image for small screens -->
     <div
-    v-if="$page.props.ads.some(ad => ad.priority === 0)"
-    class="flex justify-center items-center">
-    <img :src="'/storage/' + $page.props.ads.find(ad => ad.priority === 0).media.filepath" alt="" style="width: 000px !important; height: 20px !important;" />
+    v-if="!($page.props.auth.user && $page.props.auth.user.is_admin !== 0)"
+    >
+        <div
+        v-if="$page.props.ads.some(ad => ad.priority === 0)"
+        class="flex justify-center items-center">
+        <img :src="'/storage/' + $page.props.ads.find(ad => ad.priority === 0).media.filepath" alt="" style="width: 000px !important; height: 20px !important;" />
+        </div>
     </div>
+
 
     <div class="min-h-screen bg-base-200">
         <nav class="bg-base-100 border-b border-gray-100">
