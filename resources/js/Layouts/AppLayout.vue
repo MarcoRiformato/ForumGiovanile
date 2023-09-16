@@ -10,7 +10,7 @@ import ResponsiveNavLink from '@/Components/ResponsiveNavLink.vue';
 import { defineComponent, h } from 'vue'
 
 defineProps({
-title: String,
+title: String
 });
 
 const showingNavigationDropdown = ref(false);
@@ -64,21 +64,18 @@ social: [
 <template>
 <div>
     <Head :title="title" />
-
     <Banner />
-<!-- Image for large screens -->
-<div v-if="!($page.props.auth.user && $page.props.auth.user.is_admin !== 0)" class="hidden sm:block overflow-hidden shadow rounded-lg mx-4 my-4 h-40">
-    <div class="relative aspect-[5/2] xl:rounded-3xl overflow-hidden">
-        <img src="https://picsum.photos/850/250" alt="" class="absolute inset-0 w-full h-full object-cover" />
+    <!-- Image for larger screens -->
+    <div class="flex justify-center items-center">
+    <img :src="'/storage/' + $page.props.ads.find(ad => ad.priority === 0).media.filepath" alt="" style="width: 400px !important; height: 120px !important;" />
     </div>
-</div>
 
-<!-- Image for small screens -->
-<div v-if="!($page.props.auth.user && $page.props.auth.user.is_admin !== 0)" class="sm:hidden overflow-hidden shadow rounded-lg mx-4 my-4 h-20 rounded-lg">
-    <div class="relative aspect-[5/2] overflow-hidden">
-        <img src="https://picsum.photos/400/160" alt="" class="absolute inset-0 w-full h-full object-cover" />
+
+    <!-- Image for small screens -->
+    <div class="flex justify-center items-center">
+    <img :src="'/storage/' + $page.props.ads.find(ad => ad.priority === 0).media.filepath" alt="" style="width: 000px !important; height: 20px !important;" />
     </div>
-</div>
+
     <div class="min-h-screen bg-base-200">
         <nav class="bg-base-100 border-b border-gray-100">
             <!-- Primary Navigation Menu -->
@@ -97,7 +94,6 @@ social: [
                             <NavLink :href="route('home')" :active="route().current('home')">
                             Home
                             </NavLink>
-
                             <NavLink :href="route('articles.index')" :active="route().current('articles.index')">
                                 Notizie
                             </NavLink>
@@ -327,20 +323,19 @@ social: [
         <main v-else class="w-full sm:w-2/3 p-4">
             <slot />
         </main>
+
         <!-- Ad Container -->
-        <aside v-if="!($page.props.auth.user && $page.props.auth.user.is_admin !== 0)"
-        class="ads hidden sm:flex sm:w-1/3 p-4 flex flex-col justify-start items-center">
-        <img src="placeholder.jpg" alt="Ad Image 1" class="ad">
-        <img src="placeholder.jpg" alt="Ad Image 1" class="ad">
-        <img src="placeholder.jpg" alt="Ad Image 1" class="ad">
-        <img src="placeholder.jpg" alt="Ad Image 1" class="ad">
-        <img src="placeholder.jpg" alt="Ad Image 1" class="ad">
-        <img src="placeholder.jpg" alt="Ad Image 1" class="ad">
-        <img src="placeholder.jpg" alt="Ad Image 1" class="ad">
-        <img src="placeholder.jpg" alt="Ad Image 1" class="ad">
-        <img src="placeholder.jpg" alt="Ad Image 1" class="ad">
+        <aside v-if="!($page.props.auth.user && $page.props.auth.user.is_admin !== 0)" class="ads hidden sm:flex sm:w-1/3 p-4 flex flex-col justify-start items-center">
+        <template v-for="priority in 9">
+            <template v-if="$page.props.ads.some(ad => ad.priority === priority)">
+            <img :src="'/storage/' + $page.props.ads.find(ad => ad.priority === priority).media.filepath" :alt="'Ad Image ' + priority" class="ad">
+            </template>
+            <template v-else>
+            <img src="placeholder.jpg" :alt="'Ad Image ' + priority" class="ad">
+            </template>
+        </template>
         </aside>
-        </div>
+       </div>
     </div>
 </div>
 <footer class="bg-base-200 -mt-12">
@@ -355,7 +350,6 @@ social: [
 </div>
 </footer>
 </template>
-
 <style>
 .ad {
 border-radius: 0.375rem;

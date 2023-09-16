@@ -11,6 +11,7 @@ use App\Http\Controllers\DocumentController;
 use App\Http\Controllers\ElectionController;
 use App\Http\Controllers\HomeController;
 use App\Http\Controllers\VisionController;
+use App\Http\Controllers\AdController;
 
 /*
 |--------------------------------------------------------------------------
@@ -66,6 +67,14 @@ Route::middleware(['auth', 'admin'])->group(function () {
     Route::post('/admin/visions/store', [VisionController::class, 'store'])->name('admin.visions.store');
     Route::get('/admin/visions/{vision}/edit', [VisionController::class, 'edit'])->name('admin.visions.edit');
     Route::put('/admin/visions/{vision}', [VisionController::class, 'update'])->name('admin.visions.update');
+
+    //Ad routes
+    Route::get('/admin/ads.index', [AdController::class, 'index'])->name('admin.ads.index');
+    Route::get('/admin/ads/create', [AdController::class, 'create'])->name('admin.ads.create');
+    Route::post('/admin/ads/store', [AdController::class, 'store'])->name('admin.ads.store');
+    Route::get('/admin/ads/{ad}/edit', [AdController::class, 'edit'])->name('admin.ads.edit');
+    Route::put('/admin/ads/{ad}', [AdController::class, 'update'])->name('admin.ads.update');
+    Route::delete('/admin/ads/{ad}', [AdController::class, 'destroy'])->name('admin.ads.destroy');
 
     // Articles routes
     Route::get('/admin/articles/{article}/edit', [ArticleController::class, 'edit'])->name('admin.articles.edit');

@@ -10,7 +10,10 @@ class media extends Model
     use HasFactory;
     protected $fillable = ['filename', 'filepath', 'filetype', 'article_id'];
 
-
+    public function ad()
+    {
+        return $this->belongsTo(Ad::class);
+    }
 
     public function articles() {
         return $this->belongsToMany(Article::class);
