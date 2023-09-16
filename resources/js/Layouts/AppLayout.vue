@@ -66,13 +66,17 @@ social: [
     <Head :title="title" />
     <Banner />
     <!-- Image for larger screens -->
-    <div class="flex justify-center items-center">
+    <div
+    v-if="$page.props.ads.some(ad => ad.priority === 0)"
+    class="flex justify-center items-center">
     <img :src="'/storage/' + $page.props.ads.find(ad => ad.priority === 0).media.filepath" alt="" style="width: 400px !important; height: 120px !important;" />
     </div>
 
 
     <!-- Image for small screens -->
-    <div class="flex justify-center items-center">
+    <div
+    v-if="$page.props.ads.some(ad => ad.priority === 0)"
+    class="flex justify-center items-center">
     <img :src="'/storage/' + $page.props.ads.find(ad => ad.priority === 0).media.filepath" alt="" style="width: 000px !important; height: 20px !important;" />
     </div>
 
