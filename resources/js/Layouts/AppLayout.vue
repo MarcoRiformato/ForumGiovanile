@@ -343,7 +343,7 @@ social: [
             <img :src="'/storage/' + $page.props.ads.find(ad => ad.priority === priority).media.filepath" :alt="'Ad Image ' + priority" class="ad">
             </template>
             <template v-else>
-            <img src="placeholder.jpg" :alt="'Ad Image ' + priority" class="ad">
+            <img src="/placeholder.jpg" :alt="'Ad Image ' + priority" class="ad">
             </template>
         </template>
         </aside>

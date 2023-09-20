@@ -36,6 +36,6 @@ import AppLayout from '@/Layouts/AppLayout.vue';
 
 defineProps({
   elections: Object
-})
+});
 
 </script>

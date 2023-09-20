@@ -31,10 +31,10 @@ const values = visions.map(vision => ({
 }));
 
 const team = users
-  .filter(user => user.is_team_member)  // optional: only include team members
+  .filter(user => user.is_team_member) 
   .map(user => ({
     name: user.name,
-    role: user.role || "No Role Assigned",  // fallback to "No Role Assigned" if role is null
+    role: user.role || "Nessun ruolo assegnato",
     imageUrl: user.profile_photo_url
   }));
 
@@ -79,17 +79,18 @@ const team = users
               <div class="-ml-4 flex items-center gap-x-4">
                   <svg viewBox="0 0 2 2" class="-ml-0.5 h-0.5 w-0.5 flex-none fill-white/50"></svg>
                   <div class="flex gap-x-2.5">
-                      <img  src="placeholder.jpg" alt="" class="h-6 w-6 flex-none rounded-full bg-white/10" />
+                    <img v-if="article.user.profile_photo_url" :src="article.user.profile_photo_url" alt="" class="h-6 w-6 flex-none rounded-full bg-white/10" />
+                    <img v-else src="placeholder.jpg" alt="" class="h-6 w-6 flex-none rounded-full bg-white/10" />
                       <p>{{ article.user.name }}</p>
                   </div>
-        </div>
-    </div>
-    <h3 class="mt-3 text-lg font-semibold leading-6 text-white z-20">
-        <p>
-          <span class="absolute inset-0" />
-          {{ article.title }}
-        </p>
-    </h3>
+              </div>
+          </div>
+            <h3 class="mt-3 text-lg font-semibold leading-6 text-white z-20">
+                <p>
+                  <span class="absolute inset-0" />
+                  {{ article.title }}
+                </p>
+            </h3>
             </article>
           </div>
         </div>
