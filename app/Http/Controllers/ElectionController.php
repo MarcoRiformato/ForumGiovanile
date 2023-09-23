@@ -3,6 +3,7 @@
 namespace App\Http\Controllers;
 use Inertia\Inertia;
 use App\Models\Election;
+use App\Models\Vote;
 use Illuminate\Http\Request;
 
 class ElectionController extends Controller
@@ -143,18 +144,48 @@ class ElectionController extends Controller
         ]);
     }
 
+    public function storeVote(Request $request, Election $election)
+    {
+        $votes = $request->votes;
+    
+        foreach ($votes as $voteData) {
+            $questionId = $voteData['questionId'];
+            $type = $voteData['type'];
+            $selectedId = $voteData['selectedId'];
+            
+            $vote = new Vote();
+            $vote->election_id = $election->id;
+    
+            if ($type === 'option') {
+                $vote->option_id = $selectedId;
+            } elseif ($type === 'candidate') {
+                $vote->candidate_id = $selectedId;
+            }
+            $vote->question_id = $questionId;
+            $vote->save();
+        }
+    }
+    
     /**
      * Display the specified resource for admins.
      */
-    public function showForAdmin(string $id)
-    {
-        $election = Election::with('questions.options', 'questions.candidates')
-            ->findOrFail($id);
+public function showForAdmin(string $id)
+{
+    $election = Election::with([
+        'questions.options' => function($query) {
+          $query->withCount('votes');
+        },
+        'questions.candidates' => function($query) {
+          $query->withCount('votes');
+        },
+        'questions.votes'
+      ])->findOrFail($id);      
 
-        return Inertia::render('Admin/Elections/Show', [
-            'election' => $election
-        ]);
-    }
+    return Inertia::render('Admin/Elections/Show', [
+        'election' => $election
+    ]);
+}
+
     
 
     /**

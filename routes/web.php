@@ -51,6 +51,8 @@ Route::get('elections/index', [ElectionController::class, 'index'])->name('elect
 Route::get('elections/{election}', [ElectionController::class, 'show'])->name('elections.show');
 Route::get('visions/{vision}', [VisionController::class, 'show'])->name('visions.show');
 
+Route::post('election/{election}/vote', [ElectionController::class, 'storeVote'])->name('election.vote');
+
 Route::middleware(['auth', 'admin'])->group(function () {
 
     Route::get('admin/admindashboard', [AdminController::class, 'index'])->name('admin.admindashboard');

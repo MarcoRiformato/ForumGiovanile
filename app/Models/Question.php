@@ -26,5 +26,10 @@ public function candidates()
     return $this->hasMany(Candidate::class);
 }
 
+public function votes()
+{
+    return $this->hasMany(Vote::class, 'question_id');
+}
+
 
 }

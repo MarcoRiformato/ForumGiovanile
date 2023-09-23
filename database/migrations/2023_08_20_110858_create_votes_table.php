@@ -17,10 +17,12 @@ return new class extends Migration
             $table->foreign('option_id')->references('id')->on('options');
             $table->unsignedBigInteger('candidate_id')->nullable();
             $table->foreign('candidate_id')->references('id')->on('candidates');
-            $table->unsignedBigInteger('user_id');
-            $table->foreign('user_id')->references('id')->on('users');
+            $table->unsignedBigInteger('user_id')->nullable(); 
+            $table->foreign('user_id')->references('id')->on('users')->onDelete('cascade');
             $table->unsignedBigInteger('election_id');
             $table->foreign('election_id')->references('id')->on('elections');
+            $table->unsignedBigInteger('question_id')->nullable();
+            $table->foreign('question_id')->references('id')->on('questions');
             $table->timestamps();
         });
         

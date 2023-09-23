@@ -23,7 +23,7 @@ class Option extends Model
 
     public function votes()
     {
-        return $this->belongsToMany(Vote::class);
+        return $this->hasMany(Vote::class, 'option_id', 'id');
     }
 }
 
