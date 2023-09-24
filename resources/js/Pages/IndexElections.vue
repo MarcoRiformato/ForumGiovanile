@@ -14,7 +14,7 @@
                 Ti vuoi candidare? <a href="#" class="font-semibold text-white"><span class="absolute inset-0" aria-hidden="true" />Seguici prego <span aria-hidden="true">&rarr;</span></a>
               </div>
             </div>
-            <div class="text-center" v-for="election in elections" @click="$inertia.visit(route('elections.show', election.id))">
+            <div class="text-center" @click="$inertia.visit(route('elections.show', election.id))">
               <h1 class="text-2xl sm:text-4xl font-bold tracking-tight text-white sm:text-6xl">{{ election.name }}</h1>
               <p class="mt-3 sm:mt-6 text-sm sm:text-lg leading-8">{{ election.description }}</p>
               <i class="mt-3 sm:mt-6 text-sm sm:text-lg leading-8">Dal {{ election.start_date }} al {{ election.end_date }}</i>
@@ -35,7 +35,7 @@
 import AppLayout from '@/Layouts/AppLayout.vue';
 
 defineProps({
-  elections: Object
+  election: Object
 });
 
 </script>

@@ -13,12 +13,13 @@ class ElectionController extends Controller
      */
     public function index()
     {
-        $elections = Election::with('user')->orderBy('created_at', 'desc')->get();
+        $election = Election::with('user')->find(1);
+    
         return Inertia::render('IndexElections', [
-            'elections' => $elections
+            'election' => $election
         ]);
     }
-
+    
     /**
      * Show the form for creating a new resource.
      */
