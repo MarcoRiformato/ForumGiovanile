@@ -57,8 +57,10 @@ class DatabaseSeeder extends Seeder
         $visionFactory->presetVisions();
 
         Article::factory()->count(4)->create();
-        Document::factory()->count(4)->create();
         HomeContent::factory()->create();
+
+        $documentFactory = new \Database\Factories\DocumentFactory();
+        $documentFactory->run();
     }
 }
 

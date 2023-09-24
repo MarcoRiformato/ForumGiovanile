@@ -14,7 +14,7 @@ return new class extends Migration
         Schema::create('questions', function (Blueprint $table) {
             $table->id();
             $table->unsignedBigInteger('election_id');
-            $table->foreign('election_id')->references('id')->on('elections');
+            $table->foreign('election_id')->references('id')->on('elections')->onDelete('cascade');
             $table->string('text')->nullable();
             $table->string('type')->nullable();
             $table->timestamps();

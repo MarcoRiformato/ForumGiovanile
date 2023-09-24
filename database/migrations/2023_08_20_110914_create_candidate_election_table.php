@@ -14,9 +14,9 @@ return new class extends Migration
         Schema::create('candidate_election', function (Blueprint $table) {
             $table->id();
             $table->unsignedBigInteger('candidate_id');
-            $table->foreign('candidate_id')->references('id')->on('candidates');
+            $table->foreign('candidate_id')->references('id')->on('candidates')->onDelete('cascade');
             $table->unsignedBigInteger('election_id');
-            $table->foreign('election_id')->references('id')->on('elections');
+            $table->foreign('election_id')->references('id')->on('elections')->onDelete('cascade');
             $table->timestamps();
         });
         

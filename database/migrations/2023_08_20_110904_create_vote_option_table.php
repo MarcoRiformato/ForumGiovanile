@@ -14,12 +14,11 @@ return new class extends Migration
         Schema::create('vote_option', function (Blueprint $table) {
             $table->id();
             $table->unsignedBigInteger('vote_id');
-            $table->foreign('vote_id')->references('id')->on('votes');
+            $table->foreign('vote_id')->references('id')->on('votes')->onDelete('cascade');
             $table->unsignedBigInteger('option_id');
-            $table->foreign('option_id')->references('id')->on('options');
+            $table->foreign('option_id')->references('id')->on('options')->onDelete('cascade');
             $table->timestamps();
-        });
-        
+        });      
     }
 
     /**
