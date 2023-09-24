@@ -168,6 +168,8 @@ class ElectionController extends Controller
     
             $vote->question_id = $questionId;
             $vote->save();
+
+            return redirect()->route('dashboard')->with('message', 'Grazie per aver votato');
         }
     }
     
@@ -185,7 +187,7 @@ class ElectionController extends Controller
               $query->withCount('votes');
             },
             'questions.votes' => function($query) {  
-              $query->select('id', 'question_id', 'written_text'); // Fetch the written_text here
+              $query->select('id', 'question_id', 'written_text');
             },
           ])->findOrFail($id);      
     
