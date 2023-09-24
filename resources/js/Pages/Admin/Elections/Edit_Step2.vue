@@ -18,6 +18,7 @@
                             <select v-model="question.type" class="block w-full rounded-md py-1.5 text-gray-500 shadow-sm sm:text-sm sm:leading-6">
                                 <option value="options">Options</option>
                                 <option value="candidates">Candidates</option>
+                                <option value="writing">Writing</option>
                             </select>
                         </div>
                     </div>
@@ -91,7 +92,8 @@
             text: '',
             type: 'options',
             options: [{ text: '' }],
-            candidates: [{ name: '', description: '' }]
+            candidates: [{ name: '', description: '' }],
+            writing: { text: '' }
         });
     };
     

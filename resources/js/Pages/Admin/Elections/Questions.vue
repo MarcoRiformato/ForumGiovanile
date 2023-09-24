@@ -18,6 +18,7 @@
                                 <select v-model="question.type" class="block w-full rounded-md py-1.5 text-gray-500 shadow-sm sm:text-sm sm:leading-6">
                                     <option value="options">Options</option>
                                     <option value="candidates">Candidates</option>
+                                    <option value="writing">Writing</option>
                                 </select>
                             </div>
                         </div>
@@ -48,6 +49,11 @@
                             <button @click="deleteCandidate(index, candIndex)" type="button" class="absolute right-0 top-0 p-2 text-red-600">❌</button>
                         </div>
                         <button @click="addCandidate(index)" type="button" class="btn btn-secondary mt-4">Aggiungi Candidato</button>
+                    </div>
+
+                    <!-- Writing -->
+                    <div v-if="question.type === 'writing'">
+                        <p class="mt-2 text-gray-500">Users will be able to write their own answers.</p>
                     </div>
                     <hr class="my-8">
                 </div>
@@ -82,7 +88,8 @@ const addQuestion = () => {
         text: '',
         type: 'options',
         options: [{ text: '' }],
-        candidates: [{ name: '', description: '' }]
+        candidates: [{ name: '', description: '' }],
+        textResponses: [] 
     });
 };
 

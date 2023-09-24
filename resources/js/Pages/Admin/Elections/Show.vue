@@ -58,6 +58,13 @@
                             </td>
                           </tr>
                         </template>
+                        <template v-if="question.votes.length">
+                          <tr v-for="vote in question.votes" :key="vote.id" class="border-t border-gray-200">
+                            <td class="whitespace-nowrap px-3 py-4 text-sm flex items-center">
+                              {{ vote.written_text }} <!-- Here's your written text -->
+                            </td>
+                          </tr>
+                        </template>
                       </tbody>
                     </table>
                   </div>

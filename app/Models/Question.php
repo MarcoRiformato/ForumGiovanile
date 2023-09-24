@@ -31,5 +31,10 @@ public function votes()
     return $this->hasMany(Vote::class, 'question_id');
 }
 
+public function textResponses()
+{
+    return $this->hasMany(TextResponse::class);
+}
+
 
 }

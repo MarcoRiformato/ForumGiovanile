@@ -37,6 +37,14 @@
               </label>
             </div>
           </div>
+          <div v-if="question.type === 'writing'">
+            <textarea
+            class="block w-full rounded-md border-0 bg-white/5 py-1.5 text-white shadow-sm ring-1 ring-inset ring-white/10 focus:ring-2 focus:ring-inset focus:ring-indigo-500 sm:text-sm sm:leading-6"
+            rows="3"
+            v-model="selectedVotes[question.id]"
+            placeholder="Scrivi qui"
+            ></textarea>
+          </div>
           <br/><hr/>
         </div>
         <button type="submit" class="btn btn-primary">Vota</button>
@@ -65,9 +73,14 @@ const submitVote = () => {
   for (const [questionId, selectedId] of Object.entries(selectedVotes)) {
     const question = reactiveElection.questions.find(q => q.id === parseInt(questionId));
     if (question) {
+      let type;
+      if (question.type === 'options') type = 'option';
+      else if (question.type === 'candidates') type = 'candidate';
+      else type = 'writing';
+      
       votesArray.push({
         questionId: question.id,
-        type: question.type === 'options' ? 'option' : 'candidate',
+        type,
         selectedId
       });
     }
@@ -76,6 +89,7 @@ const submitVote = () => {
   form.votes = votesArray;
   form.post(route('election.vote', { election: election.id }));
 };
+
 </script>
 
 

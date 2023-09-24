@@ -23,6 +23,7 @@ return new class extends Migration
             $table->foreign('election_id')->references('id')->on('elections');
             $table->unsignedBigInteger('question_id')->nullable();
             $table->foreign('question_id')->references('id')->on('questions');
+            $table->text('written_text')->nullable()->onDelete('cascade'); 
             $table->timestamps();
         });
         

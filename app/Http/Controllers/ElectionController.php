@@ -83,8 +83,8 @@ class ElectionController extends Controller
             'start_date' => 'nullable|date',
             'end_date' => 'nullable|date',
             'status' => 'nullable|string',
-            'questions' => 'nullable|json', 
-        ]);        
+            'questions' => 'nullable|json',
+        ]);
     
         // Decode the JSON string for questions
         $questions = json_decode($data['questions'], true);
@@ -98,7 +98,7 @@ class ElectionController extends Controller
             'status' => $data['status'],
         ]);
     
-        // Handle the questions, options, and candidates
+        // Handle the questions, options, candidates, and writing
         foreach ($questions as $questionData) {
             $question = $election->questions()->create([
                 'text' => $questionData['text'],
@@ -109,13 +109,16 @@ class ElectionController extends Controller
                 foreach ($questionData['options'] as $optionData) {
                     $question->options()->create(['text' => $optionData['text']]);
                 }
-            } else if ($questionData['type'] === 'candidates') {
+            } elseif ($questionData['type'] === 'candidates') {
                 foreach ($questionData['candidates'] as $candidateData) {
                     $question->candidates()->create([
                         'name' => $candidateData['name'],
                         'description' => $candidateData['description']
                     ]);
                 }
+            } elseif ($questionData['type'] === 'writing') {
+                // For writing type, the text of the question is already saved
+                // No need for additional data at this point
             }
         }
     
@@ -125,7 +128,6 @@ class ElectionController extends Controller
         return redirect()->route('admin.elections.index');
     }
     
-
 
     /**
      * Store a newly created resource in storage.
@@ -160,34 +162,38 @@ class ElectionController extends Controller
                 $vote->option_id = $selectedId;
             } elseif ($type === 'candidate') {
                 $vote->candidate_id = $selectedId;
+            } elseif ($type === 'writing') {
+                $vote->written_text = $selectedId;  // Assuming 'written_text' is the new field in 'votes' table for storing text
             }
+    
             $vote->question_id = $questionId;
             $vote->save();
         }
     }
     
+    
     /**
      * Display the specified resource for admins.
      */
-public function showForAdmin(string $id)
-{
-    $election = Election::with([
-        'questions.options' => function($query) {
-          $query->withCount('votes');
-        },
-        'questions.candidates' => function($query) {
-          $query->withCount('votes');
-        },
-        'questions.votes'
-      ])->findOrFail($id);      
-
-    return Inertia::render('Admin/Elections/Show', [
-        'election' => $election
-    ]);
-}
-
+    public function showForAdmin(string $id)
+    {
+        $election = Election::with([
+            'questions.options' => function($query) {
+              $query->withCount('votes');
+            },
+            'questions.candidates' => function($query) {
+              $query->withCount('votes');
+            },
+            'questions.votes' => function($query) {  
+              $query->select('id', 'question_id', 'written_text'); // Fetch the written_text here
+            },
+          ])->findOrFail($id);      
     
-
+        return Inertia::render('Admin/Elections/Show', [
+            'election' => $election
+        ]);
+    }
+    
     /**
      * Show the form for editing the specified resource.
      */
@@ -231,10 +237,10 @@ public function showForAdmin(string $id)
      {
          $election = Election::findOrFail($id);
      
-         // Validate basic election details
+         // Updated validation rules
          $validatedData = $request->validate([
              'questions.*.text' => 'nullable|max:255',
-             'questions.*.type' => 'nullable|in:options,candidates',
+             'questions.*.type' => 'nullable|in:options,candidates,writing',
              'questions.*.options.*.text' => 'required_if:questions.*.type,options|max:255',
              'questions.*.candidates.*.name' => 'required_if:questions.*.type,candidates|max:255',
              'questions.*.candidates.*.description' => 'nullable',
@@ -242,9 +248,9 @@ public function showForAdmin(string $id)
      
          // Delete existing questions and related options and candidates
          $election->questions->each(function ($question) {
-             $question->options()->delete(); // Delete related options
-             $question->candidates()->delete(); // Delete related candidates
-             $question->delete(); // Delete the question itself
+             $question->options()->delete();
+             $question->candidates()->delete();
+             $question->delete();
          });
      
          // Re-insert questions, options, and candidates
@@ -258,18 +264,22 @@ public function showForAdmin(string $id)
                  foreach ($questionData['options'] as $optionData) {
                      $question->options()->create(['text' => $optionData['text']]);
                  }
-             } else if ($questionData['type'] === 'candidates') {
+             } elseif ($questionData['type'] === 'candidates') {
                  foreach ($questionData['candidates'] as $candidateData) {
                      $question->candidates()->create([
                          'name' => $candidateData['name'],
                          'description' => $candidateData['description']
                      ]);
                  }
+             } elseif ($questionData['type'] === 'writing') {
+                 // No need to save additional fields for "writing" type
+                 // You can put any logic here if you want to handle this type differently
              }
          }
      
-         return redirect()->route('admin.elections.index')->with('message', 'Document successfully deleted.');
+         return redirect()->route('admin.elections.index')->with('message', 'Election questions updated successfully.');
      }
+     
      
     
 
