@@ -257,6 +257,7 @@ class ElectionController extends Controller
          });
      
          // Re-insert questions, options, and candidates
+         if (array_key_exists('questions', $validatedData)) {
          foreach ($validatedData['questions'] as $questionData) {
              $question = $election->questions()->create([
                  'text' => $questionData['text'],
@@ -279,13 +280,10 @@ class ElectionController extends Controller
                  // You can put any logic here if you want to handle this type differently
              }
          }
-     
+        }
          return redirect()->route('admin.elections.index')->with('message', 'Election questions updated successfully.');
      }
      
-     
-    
-
     /**
      * Remove the specified resource from storage.
      */
