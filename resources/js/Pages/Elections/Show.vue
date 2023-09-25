@@ -4,10 +4,9 @@
       <!-- Election Details -->
       <div class="border-b-2 border-gray-300 pb-4 mb-6">
         <h1 class="text-xl font-bold">{{ election.name }}</h1>
-        <p class="text-md"><strong>Description:</strong> {{ election.description }}</p>
-        <p><strong>Start Date:</strong> {{ election.start_date }}</p>
-        <p><strong>End Date:</strong> {{ election.end_date }}</p>
-        <p class="pb-2"><strong>Status:</strong> {{ election.status }}</p>
+        <p class="text-md"><strong>Descrizione:</strong> {{ election.description }}</p>
+        <p><strong>Data inizio:</strong> {{ formatDate(election.start_date) }}</p>
+        <p><strong>Data fine:</strong> {{ formatDate(election.end_date) }}</p>
       </div>
 
       <!-- Questions -->
@@ -88,6 +87,12 @@ const submitVote = () => {
 
   form.votes = votesArray;
   form.post(route('election.vote', { election: election.id }));
+};
+
+const formatDate = (dateString) => {
+  const options = { year: 'numeric', month: 'long', day: 'numeric' };
+  const date = new Date(dateString);
+  return date.toLocaleDateString('it-IT', options); // Italian format
 };
 
 </script>
