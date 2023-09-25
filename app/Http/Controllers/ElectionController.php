@@ -170,8 +170,8 @@ class ElectionController extends Controller
             $vote->question_id = $questionId;
             $vote->save();
 
-            return redirect()->route('dashboard')->with('message', 'Grazie per aver votato');
         }
+        return redirect()->route('dashboard')->with('message', 'Grazie per aver votato');
     }
     
     
