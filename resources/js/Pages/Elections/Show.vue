@@ -15,7 +15,6 @@
           
           <h2 class="text-lg pb-4">{{ question.text }}</h2>
           <div v-if="question.type === 'options'">
-            <h3 class="text-md pb-3">Options:</h3>
             <div class="form-control mb-2" v-for="option in question.options" :key="option.id">
               <label class="label cursor-pointer">
                 <span class="label-text">{{ option.text }}</span>
