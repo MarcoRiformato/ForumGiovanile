@@ -13,7 +13,7 @@ class ElectionController extends Controller
      */
     public function index()
     {
-        $election = Election::with('user')->find(1);
+        $election = Election::with('user')->find(2);
     
         return Inertia::render('IndexElections', [
             'election' => $election
