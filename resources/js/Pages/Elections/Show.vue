@@ -1,5 +1,5 @@
 <template>
-  <AppLayout>
+  <AppLayout title="Vota al sondaggio">
     <div class="bg-base-200 p-6">
       <!-- Election Details -->
       <div class="border-b-2 border-gray-300 pb-4 mb-6">

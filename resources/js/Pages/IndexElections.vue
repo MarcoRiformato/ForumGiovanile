@@ -1,5 +1,5 @@
 <template>
-<AppLayout title="Le elezioni">
+<AppLayout title="I sondaggi">
 <div class="bg-base-200">
     <div class="bg-gray-900">
 
