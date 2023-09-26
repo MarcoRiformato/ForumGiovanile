@@ -46,10 +46,10 @@ Route::get('/dashboard', function () {
 Route::resource('/articles', ArticleController::class);
 Route::get('/', [MainDashboard::class, 'index'])->name('home');
 Route::middleware(['auth:sanctum', 'verified'])->get('/dashboard', [MainDashboard::class, 'index'])->name('dashboard');
-Route::get('documents/index', [DocumentController::class, 'index'])->name('documents.index');
-Route::get('elections/index', [ElectionController::class, 'index'])->name('elections.index');
-Route::get('elections/{election}', [ElectionController::class, 'show'])->name('elections.show');
-Route::get('visions/{vision}', [VisionController::class, 'show'])->name('visions.show');
+Route::get('documenti/indice', [DocumentController::class, 'index'])->name('documents.index');
+Route::get('/vota', [ElectionController::class, 'index'])->name('elections.index');
+Route::get('vota/{election}', [ElectionController::class, 'show'])->name('elections.show');
+Route::get('visioni/{vision}', [VisionController::class, 'show'])->name('visions.show');
 
 Route::post('election/{election}/vote', [ElectionController::class, 'storeVote'])->name('election.vote');
 
