@@ -71,7 +71,7 @@ const team = users
             @click="$inertia.visit(route('articles.show', article.id))"
             class="relative flex flex-col justify-end overflow-hidden rounded-2xl bg-gray-900 px-6 pb-8  sm:pt-10 lg:pt-10">
                 <img v-if="article.media && article.media.length > 0" :src="'/storage/' + article.media[0].filepath" alt="" class="absolute inset-0 z-0 h-full w-full object-cover" />
-                <img v-else src="placeholder.jpg" class="object-cover">
+                <img v-else src="placeholder1.webp" class="object-cover">
                 <div class="absolute inset-0 z-10 bg-gradient-to-t from-gray-900 via-gray-900/40"></div>
                 <div class="absolute inset-0 z-10 rounded-2xl ring-1 ring-inset ring-gray-900/10"></div>
                 <div class="flex flex-wrap items-center gap-y-1 overflow-hidden text-sm leading-6 z-20">
@@ -80,7 +80,7 @@ const team = users
                   <svg viewBox="0 0 2 2" class="-ml-0.5 h-0.5 w-0.5 flex-none fill-white/50"></svg>
                   <div class="flex gap-x-2.5">
                     <img v-if="article.user.profile_photo_url" :src="article.user.profile_photo_url" alt="" class="h-6 w-6 flex-none rounded-full bg-white/10" />
-                    <img v-else src="placeholder.jpg" alt="" class="h-6 w-6 flex-none rounded-full bg-white/10" />
+                    <img v-else src="placeholder1.webp" alt="" class="h-6 w-6 flex-none rounded-full bg-white/10" />
                       <p>{{ article.user.name }}</p>
                   </div>
               </div>
@@ -125,8 +125,9 @@ const team = users
       
       <!-- Immagine larga -->
       <div class="mt-12 sm:mt-40 xl:mx-auto xl:max-w-7xl xl:px-8">
-        <img src="https://images.unsplash.com/photo-1529156069898-49953e39b3ac?ixlib=rb-4.0.3&ixid=MnwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8&auto=format&fit=crop&w=2832&q=80" alt="" class="aspect-[5/2] w-full object-cover xl:rounded-3xl" />
-      </div>
+        <img src="forum.jpg" loading="lazy" class="w-full lg:w-3/4 xl:w-3/4 object-cover mx-auto" />
+
+</div>
 
       <!-- La squadra -->
       <div class="mx-auto mt-8 max-w-7xl px-6 sm:mt-48 lg:px-8">
