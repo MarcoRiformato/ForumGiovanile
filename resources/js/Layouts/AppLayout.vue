@@ -6,6 +6,7 @@ import Banner from '@/Components/Banner.vue';
 import Dropdown from '@/Components/Dropdown.vue';
 import DropdownLink from '@/Components/DropdownLink.vue';
 import NavLink from '@/Components/NavLink.vue';
+import LightDarkVue from '@/Components/LightDark.vue';
 import ResponsiveNavLink from '@/Components/ResponsiveNavLink.vue';
 import { defineComponent, h } from 'vue'
 
@@ -59,6 +60,12 @@ social: [
 },
 ],
 }
+
+const currentTheme = ref('synthwave');
+
+const toggleTheme = () => {
+  currentTheme.value = currentTheme.value === 'synthwave' ? 'lemonade' : 'synthwave';
+};
 </script>
 
 <template>
@@ -118,6 +125,7 @@ social: [
                             <NavLink v-if="$page.props.auth.user && $page.props.auth.user.is_admin !== 0" :href="route('admin.admindashboard')" :active="route().current('admin.admindashboard')">
                                 Sezione admin
                             </NavLink>
+                            <LightDarkVue/>
                         </div>
                     </div>
 
