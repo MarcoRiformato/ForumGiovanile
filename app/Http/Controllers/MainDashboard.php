@@ -13,7 +13,7 @@ class MainDashboard extends Controller
 {
     public function index()
     {
-        $articleIds = [5, 9]; 
+        $articleIds = [5, 21]; 
         $latestArticles = Article::with(['media', 'user'])->whereIn('id', $articleIds)->get();
         $homepage = HomeContent::first();
         $visions = Vision::all();

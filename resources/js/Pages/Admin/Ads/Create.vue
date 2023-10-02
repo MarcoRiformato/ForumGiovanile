@@ -8,37 +8,32 @@
               <div class="mt-10 grid grid-cols-1 gap-x-6 gap-y-8 sm:grid-cols-6">
                 <!-- Title -->
                 <div class="sm:col-span-4">
-                  <label class="block text-sm font-medium leading-6 text-white">Titolo</label>
-                  <div class="mt-2 flex rounded-md bg-white/5 ring-1 ring-inset ring-white/10 focus-within:ring-2 focus-within:ring-inset focus-within:ring-indigo-500">
-                    <input v-model="form.title" type="text" class="flex-1 border-0 bg-transparent py-1.5 pl-1 text-white focus:ring-0 sm:text-sm sm:leading-6"/>
-                  </div>
+                  <label class="block text-sm font-medium leading-6">Titolo</label>
+                    <input v-model="form.title" type="text" class="input input-bordered input-primary w-full max-w-xs"/>
                 </div>
                 <!-- Link URL -->
                 <div class="sm:col-span-4">
-                  <label class="block text-sm font-medium leading-6 text-white">Link URL</label>
-                  <div class="mt-2 flex rounded-md bg-white/5 ring-1 ring-inset ring-white/10 focus-within:ring-2 focus-within:ring-inset focus-within:ring-indigo-500">
-                    <input v-model="form.link_url" type="url" class="flex-1 border-0 bg-transparent py-1.5 pl-1 text-white focus:ring-0 sm:text-sm sm:leading-6"/>
-                  </div>
+                  <label class="block text-sm font-medium leading-6">Link URL</label>
+                    <input v-model="form.link_url" type="url" class="input input-bordered input-primary w-full max-w-xs"/>
                 </div>
                 <!-- Start Date -->
                 <div class="sm:col-span-4">
-                  <label class="block text-sm font-medium leading-6 text-white">Data inizio</label>
-                  <div class="mt-2 flex rounded-md bg-white/5 ring-1 ring-inset ring-white/10 focus-within:ring-2 focus-within:ring-inset focus-within:ring-indigo-500">
-                    <input v-model="form.start_date" type="date" class="flex-1 border-0 bg-transparent py-1.5 pl-1 text-white focus:ring-0 sm:text-sm sm:leading-6"/>
+                  <label class="block text-sm font-medium leading-6">Data inizio</label>
+                  <div class="mt-2 flex rounded-md bg-white/5 ring-1 ring-inset ring-red/10 focus-within:ring-2 focus-within:ring-inset focus-within:ring-indigo-500">
+                    <input v-model="form.start_date" type="date" class="flex-1 border-0 bg-transparent py-1.5 pl-1 focus:ring-0 sm:text-sm sm:leading-6"/>
                   </div>
                 </div>
                 <!-- End Date -->
                 <div class="sm:col-span-4">
-                  <label class="block text-sm font-medium leading-6 text-white">Data fine</label>
-                  <div class="mt-2 flex rounded-md bg-white/5 ring-1 ring-inset ring-white/10 focus-within:ring-2 focus-within:ring-inset focus-within:ring-indigo-500">
-                    <input v-model="form.end_date" type="date" class="flex-1 border-0 bg-transparent py-1.5 pl-1 text-white focus:ring-0 sm:text-sm sm:leading-6"/>
+                  <label class="block text-sm font-medium leading-6">Data fine</label>
+                  <div class="mt-2 flex rounded-md bg-white/5 ring-1 ring-inset ring-red/10 focus-within:ring-2 focus-within:ring-inset focus-within:ring-indigo-500">
+                    <input v-model="form.end_date" type="date" class="flex-1 border-0 bg-transparent py-1.5 pl-1 focus:ring-0 sm:text-sm sm:leading-6"/>
                   </div>
                 </div>
                 <!-- Priority -->
                 <div class="sm:col-span-4">
-                  <label class="block text-sm font-medium leading-6 text-white">Priorità</label>
-                  <div class="mt-2 flex rounded-md bg-white/5 ring-1 ring-inset ring-white/10 focus-within:ring-2 focus-within:ring-inset focus-within:ring-indigo-500">
-                    <select v-model="form.priority" class="flex-1 border-0 bg-transparent py-1.5 pl-1 text-black focus:ring-0 sm:text-sm sm:leading-6">
+                  <label class="block text-sm font-medium leading-6">Priorità</label>
+                    <select v-model="form.priority" class="select select-primary w-full max-w-xs">
                       <option value="0">Main nav</option>
                       <option value="1">Primo</option>
                       <option value="2">Secondo</option>
@@ -51,15 +46,14 @@
                       <option value="9">Nono</option>
                       <option value="10">Decimo</option>
                     </select>
-                  </div>
                 </div>
                 <!-- Image Upload -->
                 <div class="col-span-full">
-                  <label for="cover-photo" class="block text-sm font-medium leading-6 text-white">Immagine</label>
+                  <label for="cover-photo" class="block text-sm font-medium leading-6">Immagine</label>
                   <div class="mt-2 flex justify-center rounded-lg border border-dashed border-white/25 px-6 py-10">
                     <div class="text-center">
                       <div class="mt-4 flex text-sm leading-6 text-gray-400">
-                        <label for="image-upload" class="relative cursor-pointer rounded-md bg-gray-900 font-semibold text-white focus-within:outline-none focus-within:ring-2 focus-within:ring-indigo-600 focus-within:ring-offset-2 focus-within:ring-offset-gray-900 hover:text-indigo-500">
+                        <label for="image-upload" class="relative cursor-pointer rounded-md bg-gray-900 font-semibold focus-within:outline-none focus-within:ring-2 focus-within:ring-indigo-600 focus-within:ring-offset-2 focus-within:ring-offset-gray-900 hover:text-indigo-500">
                           <span>Carica una foto</span>
                           <input id="image-upload" name="image" type="file" class="sr-only" @change="form.image = $event.target.files[0]" />
                         </label>

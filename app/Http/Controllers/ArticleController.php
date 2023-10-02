@@ -6,7 +6,7 @@ use App\Models\Article;
 use Illuminate\Http\Request;
 use Inertia\Inertia;
 use App\Models\Media;
-
+use Illuminate\Support\Facades\Log;
 
 class ArticleController extends Controller
 {
@@ -41,8 +41,10 @@ public function store(Request $request)
         'title' => 'nullable|string|max:255',
         'extract' => 'nullable|string|max:1000',
         'body' => 'nullable|string',
-        'media_file' => 'nullable|file|mimes:jpg,jpeg,png,gif,webp,mp4,mp3,pdf|max:10240', // max 10MB
+        'media_file' => 'sometimes|file|mimes:jpg,jpeg,png,gif,webp,mp4,mp3,pdf|max:10240',
     ]);
+
+    //dd($validatedData);
 
     $article = Article::create([
         'title' => $validatedData['title'],
@@ -99,6 +101,7 @@ public function store(Request $request)
      */
     public function edit(Article $article)
     {
+        $article->load('media');
         return Inertia::render('Admin/EditArticle', [
             'article' => $article
         ]);
@@ -110,22 +113,12 @@ public function store(Request $request)
  */
 public function update(Request $request, Article $article)
 {
-    $validatedData = $request->validate([
-        'title' => 'nullable|string|max:255',
-        'extract' => 'nullable|string|max:1000',
-        'body' => 'nullable|string',
-        'media_file' => 'sometimes|file|mimes:jpg,jpeg,png,gif,webp,mp4,mp3,pdf|max:10240', // max 10MB
-    ]);
-
-    $article->update([
-        'title' => $validatedData['title'],
-        'extract' => $validatedData['extract'],
-        'body' => $validatedData['body']
-    ]);
+    $article->title = $request->input('title');
+    $article->extract = $request->input('extract');
+    $article->body = $request->input('body');
+    $article->save();
 
     if ($request->hasFile('media_file')) {
-        // If you want to replace the existing media file, you can delete the old file here.
-
         $file = $request->file('media_file');
         $path = $file->store('media', 'public');
 
@@ -137,13 +130,12 @@ public function update(Request $request, Article $article)
         ]);
 
         $media->save();
-        $article->media()->sync([$media->id]);  // Using sync to replace existing media
+        $article->media()->attach($media);
     }
 
-    return redirect()->route('admin.dashboard')->with('message', 'Articolo modificata');
+    //return redirect()->route('admin.dashboard');
 }
 
-    
 
     /**
      * Remove the specified resource from storage.

@@ -17,8 +17,8 @@
             </div>-->
             <div class="text-center" @click="$inertia.visit(route('elections.show', election.id))">
               <h1 class="text-2xl  sm:text-4xl font-bold tracking-tight text-white sm:text-6xl">{{ election.name }}</h1>
-              <p class="mt-3 sm:mt-6 text-sm sm:text-lg leading-8">{{ election.description }}</p>
-              <i class="mt-3 sm:mt-6 text-sm sm:text-lg leading-8">Dal {{ formatDate(election.start_date) }} al {{ formatDate(election.end_date) }}</i>
+              <p class="mt-3 sm:mt-6 text-white text-sm sm:text-lg leading-8">{{ election.description }}</p>
+              <i class="mt-3 sm:mt-6 text-white text-sm sm:text-lg leading-8">Dal {{ formatDate(election.start_date) }} al {{ formatDate(election.end_date) }}</i>
               <div class="mt-5 sm:mt-10 flex items-center justify-center gap-x-6">
                 <a as="button" href="#" class="btn btn-primary">Vota</a>
               </div>

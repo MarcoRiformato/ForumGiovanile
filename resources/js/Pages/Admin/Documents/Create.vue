@@ -8,27 +8,31 @@
                         <div class="mt-10 grid grid-cols-1 gap-x-6 gap-y-8 sm:grid-cols-6">
                             <!-- Title -->
                             <div class="sm:col-span-4 grid sm:grid-cols-4 gap-4">
-                                <div class="sm:col-span-3">
-                                    <label for="username" class="block text-sm font-medium leading-6 text-white">Titolo</label>
-                                    <div class="mt-2">
-                                        <input v-model="form.title" type="text" class="block w-full rounded-md border-0 bg-white/5 py-1.5 text-white shadow-sm ring-1 ring-inset ring-white/10 focus:ring-2 focus:ring-inset focus:ring-indigo-500 sm:text-sm sm:leading-6" />
-                                    </div>
+                            <div class="sm:col-span-3">
+                                <label for="username" class="block text-sm font-medium leading-6">Titolo</label>
+                                <div class="mt-2">
+                                    <span class="flex select-none
+                                    items-center pl-3 sm:text-sm"> </span>
+                                    <input
+                                    v-model="form.title"
+                                    type="text" placeholder="Scrivo qui" class="input input-bordered input-primary w-full max-w-xs" />
                                 </div>
+                            </div>
                             </div>
 
                             <!-- Description -->
                             <div class="col-span-full">
-                                <label for="description" class="block text-sm font-medium leading-6 text-white">Descrizione</label>
+                                <label for="description" class="block text-sm font-medium leading-6">Descrizione</label>
                                 <div class="mt-2">
-                                    <textarea v-model="form.description" rows="3" class="block w-full rounded-md border-0 bg-white/5 py-1.5 text-white shadow-sm ring-1 ring-inset ring-white/10 focus:ring-2 focus:ring-inset focus:ring-indigo-500 sm:text-sm sm:leading-6"></textarea>
+                                    <textarea v-model="form.description" rows="3" class="block w-full textarea textarea-primary"></textarea>
                                 </div>
                             </div>
 
                             <!-- Embed Link -->
                             <div class="col-span-full">
-                                <label for="link" class="block text-sm font-medium leading-6 text-white">Link Embed</label>
+                                <label for="link" class="block text-sm font-medium leading-6">Link Embed</label>
                                 <div class="mt-2">
-                                    <textarea rows="3" v-model="form.link" type="url" class="block w-full rounded-md border-0 bg-white/5 py-1.5 text-white shadow-sm ring-1 ring-inset ring-white/10 focus:ring-2 focus:ring-inset focus:ring-indigo-500 sm:text-sm sm:leading-6" />
+                                    <textarea rows="3" v-model="form.link" type="url" class="block w-full textarea textarea-primary" />
                                 </div>
                             </div>
                         </div>

@@ -9,24 +9,23 @@
             
             <!-- Title -->
             <div class="sm:col-span-4">
-                <label for="title" class="block text-sm font-medium leading-6 text-white">Titolo</label>
+                <label for="title" class="block text-sm font-medium leading-6">Titolo</label>
                 <div class="mt-2">
-                <input v-model="form.title" type="text" class="block w-full rounded-md border-0 bg-white/5 py-1.5 text-white shadow-sm ring-1 ring-inset ring-white/10 focus:ring-2 focus:ring-inset focus:ring-indigo-500 sm:text-sm sm:leading-6" />
+                <input v-model="form.title" type="text" class="input input-bordered input-primary w-full max-w-xs" />
                 </div>
             </div>
 
             <!-- Link URL -->
             <div class="sm:col-span-4">
-                <label for="link_url" class="block text-sm font-medium leading-6 text-white">Link URL</label>
+                <label for="link_url" class="block text-sm font-medium leading-6">Link URL</label>
                 <div class="mt-2">
-                <input v-model="form.link_url" type="url" class="block w-full rounded-md border-0 bg-white/5 py-1.5 text-white shadow-sm ring-1 ring-inset ring-white/10 focus:ring-2 focus:ring-inset focus:ring-indigo-500 sm:text-sm sm:leading-6" />
+                <input v-model="form.link_url" type="url" class="input input-bordered input-primary w-full max-w-xs" />
                 </div>
             </div>
 
             <div class="sm:col-span-4">
-            <label class="block text-sm font-medium leading-6 text-white">Priorità</label>
-            <div class="mt-2 flex rounded-md bg-white/5 ring-1 ring-inset ring-white/10 focus-within:ring-2 focus-within:ring-inset focus-within:ring-indigo-500">
-                <select v-model="form.priority" class="flex-1 border-0 bg-base-600 py-1.5 pl-1 text-black focus:ring-0 sm:text-sm sm:leading-6">
+            <label class="block text-sm font-medium leading-6">Priorità</label>
+                <select v-model="form.priority" class="select select-primary w-full max-w-xs">
                 <option value="0">Main nav</option>
                 <option value="1">Primo</option>
                 <option value="2">Secondo</option>
@@ -40,21 +39,20 @@
                 <option value="10">Decimo</option>
                 </select>
             </div>
-            </div>
 
             <!-- Start Date -->
             <div class="sm:col-span-4">
-                <label for="start_date" class="block text-sm font-medium leading-6 text-white">Data inizio</label>
+                <label for="start_date" class="block text-sm font-medium leading-6">Data inizio</label>
                 <div class="mt-2">
-                <input v-model="form.start_date" type="date" class="block w-full rounded-md border-0 bg-white/5 py-1.5 text-white shadow-sm ring-1 ring-inset ring-white/10 focus:ring-2 focus:ring-inset focus:ring-indigo-500 sm:text-sm sm:leading-6" />
+                <input v-model="form.start_date" type="date" class="block w-full rounded-md border-0 bg-red/5 py-1.5 shadow-sm ring-1 ring-inset ring-white/10 focus:ring-2 focus:ring-inset focus:ring-indigo-500 sm:text-sm sm:leading-6" />
                 </div>
             </div>
 
             <!-- End Date -->
             <div class="sm:col-span-4">
-                <label for="end_date" class="block text-sm font-medium leading-6 text-white">Data fine</label>
+                <label for="end_date" class="block text-sm font-medium leading-6">Data fine</label>
                 <div class="mt-2">
-                <input v-model="form.end_date" type="date" class="block w-full rounded-md border-0 bg-white/5 py-1.5 text-white shadow-sm ring-1 ring-inset ring-white/10 focus:ring-2 focus:ring-inset focus:ring-indigo-500 sm:text-sm sm:leading-6" />
+                <input v-model="form.end_date" type="date" class="block w-full rounded-md border-0 bg-red/5 py-1.5 shadow-sm ring-1 ring-inset ring-white/10 focus:ring-2 focus:ring-inset focus:ring-indigo-500 sm:text-sm sm:leading-6" />
                 </div>
             </div>
             
