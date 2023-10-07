@@ -59,41 +59,42 @@ const team = users
           </div>
 
           <!-- Preview notizie -->
-        <div class="relative isolate -z-10">
-        </div>
-        <div class="mx-auto max-w-7xl px-6 sm:mt-4 lg:px-8">
-          <div class="mx-auto max-w-2xl lg:mx-0 lg:max-w-none">
-            <h2 class="text-3xl font-bold tracking-tight sm:text-4xl">{{ homepage.latest_news_title }}</h2>
-            <p class="mt-2 text-lg leading-8 ">{{ homepage.latest_news_desc }}</p>
-          </div>
-          <div class="mx-auto mt-16 grid auto-rows-fr grid-cols-2 sm:grid-cols-1 md:grid-cols-1 lg:grid-cols-2 xl:grid-cols-2 gap-8 sm:mt-20">
-            <article v-for="(article, index) in latestArticles" :key="index"
-            @click="$inertia.visit(route('articles.show', article.id))"
-            class="relative flex flex-col justify-end overflow-hidden rounded-2xl bg-gray-900 px-6 pb-8  sm:pt-10 lg:pt-10">
-                <img v-if="article.media && article.media.length > 0" :src="'/storage/' + article.media[0].filepath" alt="" class="absolute inset-0 z-0 h-full w-full object-cover" />
-                <img v-else src="placeholder1.webp" class="object-cover">
-                <div class="absolute inset-0 z-10 bg-gradient-to-t from-gray-900 via-gray-900/40"></div>
-                <div class="absolute inset-0 z-10 rounded-2xl ring-1 ring-inset ring-gray-900/10"></div>
-                <div class="flex flex-wrap items-center gap-y-1 overflow-hidden text-sm leading-6 z-20">
-                <time :created_at="article.created_at" class="mr-8">{{ formatDate(article.created_at) }}</time>
-              <div class="-ml-4 flex items-center gap-x-4">
-                  <svg viewBox="0 0 2 2" class="-ml-0.5 h-0.5 w-0.5 flex-none fill-white/50"></svg>
-                  <div class="flex gap-x-2.5">
-                    <img v-if="article.user.profile_photo_url" :src="article.user.profile_photo_url" alt="" class="h-6 w-6 flex-none rounded-full bg-white/10" />
-                    <img v-else src="placeholder1.webp" alt="" class="h-6 w-6 flex-none rounded-full bg-white/10" />
-                      <p>{{ article.user.name }}</p>
-                  </div>
-              </div>
-          </div>
-            <h3 class="mt-3 text-lg font-semibold leading-6 text-white z-20">
-                <p>
-                  <span class="absolute inset-0" />
-                  {{ article.title }}
-                </p>
-            </h3>
-            </article>
+<div class="mx-auto max-w-7xl px-6 lg:px-8">
+  <div class="mx-auto max-w-2xl text-center">
+    <h2 class="text-3xl font-bold tracking-tight sm:text-4xl">{{ homepage.latest_news_title }}</h2>
+    <p class="mt-2 text-lg leading-8">{{ homepage.latest_news_desc }}</p>
+  </div>
+  <div class="mx-auto mt-16 grid max-w-2xl auto-rows-fr grid-cols-1 gap-8 sm:mt-20 lg:mx-0 lg:max-w-none lg:grid-cols-2">
+    <article v-for="(article, index) in latestArticles" :key="index" @click="$inertia.visit(route('articles.show', article.id))"
+      class="relative flex flex-col justify-end overflow-hidden rounded-2xl px-8 pb-8 pt-80 sm:pt-48 lg:pt-80">
+      <img v-if="article.media && article.media.length > 0" :src="'/storage/' + article.media[0].filepath" alt="" class="absolute inset-0 -z-10 h-full w-full object-cover" />
+      <img v-else src="placeholder1.webp" class="absolute inset-0 z-5 h-full w-full object-cover" />
+      <div class="absolute inset-0 z-10 bg-gradient-to-t from-gray-900 via-gray-900/40"></div>
+      <div class="absolute inset-0 z-10 rounded-2xl ring-1 ring-inset ring-gray-900/10"></div>
+
+      <div class="flex flex-wrap items-center z-20 gap-y-1 overflow-hidden text-sm leading-6">
+        <time :created_at="article.created_at" class="mr-8 text-white">{{ formatDate(article.created_at) }}</time>
+        <div class="-ml-4 flex items-center gap-x-4">
+          <svg viewBox="0 0 2 2" class="-ml-0.5 h-0.5 w-0.5 flex-none">
+            <circle cx="1" cy="1" r="1" />
+          </svg>
+          <div class="flex gap-x-2.5">
+            <img v-if="article.user.profile_photo_url" :src="article.user.profile_photo_url" alt="" class="h-6 w-6 flex-none rounded-full bg-white/10" />
+            <img v-else src="placeholder1.webp" alt="" class=" h-6 w-6 flex-none rounded-full bg-white/10" />
+            <p class="text-white">{{ article.user.name }}</p>
           </div>
         </div>
+      </div>
+      <h3 class="mt-3 text-lg font-semibold leading-6 z-20 text-white">
+        <a :href="route('articles.show', article.id)">
+          <span class="absolute inset-0" />
+          {{ article.title }}
+        </a>
+      </h3>
+    </article>
+  </div>
+</div>
+
         </div>
       </div>
 
@@ -103,17 +104,17 @@ const team = users
         <div class="mx-auto max-w-7xl px-6 sm:mt-40 lg:px-8" style="margin-top: 5rem !important;">
 
         <div class="mx-auto max-w-2xl lg:mx-0">
-          <h2 class="text-3xl font-bold tracking-tight text-white sm:text-4xl">{{ homepage.our_vision_title }}</h2>
-          <p class="mt-6 text-lg leading-8 text-gray-300">{{ homepage.our_vision_desc }}</p>
+          <h2 class="text-3xl font-bold tracking-tight sm:text-4xl">{{ homepage.our_vision_title }}</h2>
+          <p class="mt-6 text-lg leading-8">{{ homepage.our_vision_desc }}</p>
         </div>
-        <dl class="mx-auto mt-16 grid max-w-2xl grid-cols-1 gap-8 text-base leading-7 text-gray-300 sm:grid-cols-2 lg:mx-0 lg:max-w-none lg:gap-x-16">
+        <dl class="mx-auto mt-16 grid max-w-2xl grid-cols-1 gap-8 text-base leading-7 sm:grid-cols-2 lg:mx-0 lg:max-w-none lg:gap-x-16">
           <a
           target="_blank"
           v-for="value in values"
           :key="value.id" 
           :href="`/articles/${value.id}`"
           class="relative pl-9">
-            <dt class="inline font-semibold text-white">
+            <dt class="inline font-semibold">
               <component :is="value.icon" class="absolute left-1 top-1 h-5 w-5 text-indigo-500" aria-hidden="true" />
               {{ value.name }}
             </dt>

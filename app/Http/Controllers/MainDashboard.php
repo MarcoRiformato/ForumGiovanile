@@ -13,11 +13,12 @@ class MainDashboard extends Controller
 {
     public function index()
     {
-        $latestArticles = Article::with(['media', 'user'])->orderBy('created_at', 'desc')->take(2)->get();
+        $articleIds = [5, 21]; 
+        $latestArticles = Article::with(['media', 'user'])->whereIn('id', $articleIds)->get();
         $homepage = HomeContent::first();
         $visions = Vision::all();
         $users = User::all();
-
+    
         return Inertia::render('Dashboard', [
             'latestArticles' => $latestArticles,
             'homepage' => $homepage,
@@ -25,4 +26,5 @@ class MainDashboard extends Controller
             'users' => $users
         ]);
     }
+    
 }

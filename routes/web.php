@@ -81,7 +81,8 @@ Route::middleware(['auth', 'admin'])->group(function () {
     // Articles routes
     Route::get('/admin/articles/{article}/edit', [ArticleController::class, 'edit'])->name('admin.articles.edit');
     Route::get('/admin/articles/create', [ArticleController::class, 'create'])->name('admin.articles.create');
-    Route::post('/admin/articles/{article}/media', [MediaController::class, 'store'])->name('admin.articles.media.store');
+    Route::post('/admin/articles/{article}', [ArticleController::class, 'update'])->name('admin.articles.update');
+
 
     // Users routes
     Route::resource('/admin/users', UserController::class)->names([

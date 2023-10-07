@@ -9,31 +9,29 @@
                             <!-- Title -->
                             <div class="sm:col-span-4 grid sm:grid-cols-4 gap-4">
                                 <div class="sm:col-span-3">
-                                    <label class="block text-sm font-medium leading-6 text-white">Title</label>
-                                    <div class="mt-2 flex rounded-md bg-white/5">
-                                        <input type="text" v-model="form.title" class="flex-1 border-0 bg-transparent py-1.5 pl-1 text-white focus:ring-0 sm:text-sm sm:leading-6" />
-                                    </div>
+                                    <label class="block text-sm font-medium leading-6">Title</label>
+                                    <input type="text" v-model="form.title" class="input input-bordered input-primary w-full max-w-xs" />
                                 </div>
                             </div>
                             <!-- Description -->
                             <div class="col-span-full">
-                                <label class="block text-sm font-medium leading-6 text-white">Description</label>
+                                <label class="block text-sm font-medium leading-6">Description</label>
                                 <div class="mt-2">
-                                    <textarea rows="3" v-model="form.desc" class="block w-full rounded-md border-0 bg-white/5 py-1.5 text-white sm:text-sm sm:leading-6"></textarea>
+                                    <textarea rows="2" v-model="form.desc" class="block w-full textarea textarea-primary"></textarea>
                                 </div>
                             </div>
                             <!-- Icon -->
                             <div class="sm:col-span-4 grid sm:grid-cols-4 gap-4">
                                 <div class="sm:col-span-3">
-                                    <label class="block text-sm font-medium leading-6 text-white">Icon</label>
+                                    <label class="block text-sm font-medium leading-6">Icon</label>
                                     <div class="mt-2 flex rounded-md bg-white/5">
-                                        <input type="text" v-model="form.icon" class="flex-1 border-0 bg-transparent py-1.5 pl-1 text-white focus:ring-0 sm:text-sm sm:leading-6" />
+                                        <input type="text" v-model="form.icon" class="flex-1 border-0 bg-transparent py-1.5 pl-1 focus:ring-0 sm:text-sm sm:leading-6" />
                                     </div>
                                 </div>
                             </div>
                         </div>
                         <div class="mt-6 flex items-center justify-between gap-x-6">
-                            <button @click="$inertia.visit(route('admin.visions/index'))" type="button" class="btn btn-secondary">Cancel</button>
+                            <button @click="$inertia.visit(route('admin.visions.index'))" type="button" class="btn btn-secondary">Annulla</button>
                             <button @click="submit" type="button" class="btn btn-primary">Save</button>
                         </div>
                     </div>

@@ -8,14 +8,14 @@
                         <div class="relative">
                             <label for="question" class="block text-sm font-medium leading-6 text-gray-400">Domanda</label>
                             <div class="mt-2">
-                                <input v-model="question.text" type="text" class="block w-full rounded-md border-0 bg-white/5 py-1.5 text-white shadow-sm ring-1 ring-inset ring-white/10 focus:ring-2 focus:ring-inset focus:ring-indigo-500 sm:text-sm sm:leading-6" />
+                                <input v-model="question.text" type="text" class="input input-bordered input-primary w-full max-w-xs" />
                             </div>
                             <button @click="deleteQuestion(index)" type="button" class="absolute right-0 top-0 p-2 text-red-600">❌</button>
                         </div>
                         <div>
                             <label for="type" class="block text-sm font-medium leading-6 text-gray-400">Tipo</label>
                             <div class="mt-2 pb-6">
-                                <select v-model="question.type" class="block w-full rounded-md py-1.5 text-gray-500 shadow-sm sm:text-sm sm:leading-6">
+                                <select v-model="question.type" class="select select-secondary w-full max-w-xs">
                                     <option value="options">Options</option>
                                     <option value="candidates">Candidates</option>
                                     <option value="writing">Writing</option>
@@ -28,7 +28,7 @@
                     <div v-if="question.type === 'options'">
                         <div v-for="(option, optIndex) in question.options" :key="optIndex" class="relative">
                             <div class="mt-2">
-                                <input v-model="option.text" type="text" class="block w-full rounded-md border-0 bg-white/5 py-1.5 text-white shadow-sm ring-1 ring-inset ring-white/10 focus:ring-2 focus:ring-inset focus:ring-indigo-500 sm:text-sm sm:leading-6" />
+                                <input v-model="option.text" type="text" class="input input-bordered input-info w-full max-w-xs" />
                             </div>
                             <button @click="deleteOption(index, optIndex)" type="button" class="absolute right-0 top-0 p-2 text-red-600">❌</button>
                         </div>
@@ -40,11 +40,11 @@
                         <div v-for="(candidate, candIndex) in question.candidates" :key="candIndex" class="relative pb-20">
                             <label for="name" class="block text-sm font-medium leading-6 text-gray-400">Nome</label>
                             <div class="mt-2">
-                                <input v-model="candidate.name" type="text" class="block w-full rounded-md border-0 bg-white/5 py-1.5 text-white shadow-sm ring-1 ring-inset ring-white/10 focus:ring-2 focus:ring-inset focus:ring-indigo-500 sm:text-sm sm:leading-6" />
+                                <input v-model="candidate.name" type="text" class="input input-bordered input-info w-full max-w-xs" />
                             </div>
                             <label for="description" class="block text-sm font-medium leading-6 text-gray-400">Descrizione</label>
                             <div class="mt-2">
-                                <textarea v-model="candidate.description" rows="3" class="block w-full rounded-md border-0 bg-white/5 py-1.5 text-white shadow-sm ring-1 ring-inset ring-white/10 focus:ring-2 focus:ring-inset focus:ring-indigo-500 sm:text-sm sm:leading-6"></textarea>
+                                <textarea v-model="candidate.description" rows="3" class="block w-full textarea textarea-info"></textarea>
                             </div>
                             <button @click="deleteCandidate(index, candIndex)" type="button" class="absolute right-0 top-0 p-2 text-red-600">❌</button>
                         </div>
@@ -53,7 +53,7 @@
 
                     <!-- Writing -->
                     <div v-if="question.type === 'writing'">
-                        <p class="mt-2 text-gray-500">Users will be able to write their own answers.</p>
+                        <p class="mt-2 text-gray-500">Gli utenti potranno scrivere la loro risposta</p>
                     </div>
                     <hr class="my-8">
                 </div>
