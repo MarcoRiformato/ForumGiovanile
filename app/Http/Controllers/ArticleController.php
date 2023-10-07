@@ -87,11 +87,22 @@ public function store(Request $request)
      */
     public function show($article_id)
     {
-        $article = Article::with('media')->find($article_id); // This will eager load the associated media with the article
+        $article = Article::with('media')->find($article_id);
+    
+        // Fetch 3 random articles, excluding the current one and with media
+        $randomArticles = Article::where('id', '!=', $article_id)
+            ->with('media')
+            ->inRandomOrder()
+            ->limit(3)
+            ->get();
+    
         return Inertia::render('ShowArticle', [
-            'article' => $article
+            'article' => $article,
+            'randomArticles' => $randomArticles
         ]);
     }
+    
+    
     
 
     /**

@@ -175,7 +175,7 @@ social: [
                         <Link :href="route('register')" class="">
                             Registrati
                         </Link>
-                    </div>
+                        </div>
 
                     </div>
 
