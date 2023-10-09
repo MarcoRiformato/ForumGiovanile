@@ -41,7 +41,7 @@ public function store(Request $request)
         'title' => 'nullable|string|max:255',
         'extract' => 'nullable|string|max:1000',
         'body' => 'nullable|string',
-        'media_file' => 'sometimes|file|mimes:jpg,jpeg,png,gif,webp,mp4,mp3,pdf|max:10240',
+        'media_file' => 'nullable|file|mimes:jpg,jpeg,png,gif,webp,mp4,mp3,pdf|max:10240',
     ]);
 
     //dd($validatedData);
