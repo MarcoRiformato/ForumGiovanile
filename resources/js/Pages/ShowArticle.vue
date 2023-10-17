@@ -4,12 +4,12 @@
       <div class=" px-6 py-8 lg:px-8">
     <div class="mx-auto max-w-3xl text-base leading-7 ">
 
-    <div class="relative -mt-10 mb-4 rounded-xl">
-      <template v-if="$page.props.ads.length">
-          <img :src="'/storage/' + $page.props.ads[Math.floor(Math.random() * $page.props.ads.length)].media.filepath" alt="Random Ad Image" class="w-full rounded-xl">
-          <hr class="mt-4 mb-8" />
-      </template>
-    </div>
+      <div class="hide-at-640 relative md:hidden -mt-10 mb-4 rounded-xl h-[200px] overflow-hidden"> <!-- Adjust the h-[200px] as per your desired height -->
+        <template v-if="$page.props.ads.length">
+            <img :src="'/storage/' + $page.props.ads[Math.floor(Math.random() * $page.props.ads.length)].media.filepath" alt="Random Ad Image" class="w-full h-full object-cover rounded-xl">
+            <hr class="mt-4 mb-8" />
+        </template>
+      </div>
 
       
       <p class="text-base font-semibold leading-7 text-indigo-600">Dal blog del forum</p>
@@ -108,6 +108,14 @@ defineProps({
 
 </script>
 <style>
+
+@media (min-width: 640px) {
+    .hide-at-640 {
+        display: none !important;
+    }
+}
+
+
 .quill-content h1 {
   font-size: 38px;
 }
