@@ -144,7 +144,7 @@ public function update(Request $request, Article $article)
         $article->media()->attach($media);
     }
 
-    //return redirect()->route('admin.dashboard');
+    return redirect()->route('admin.dashboard');
 }
 
 

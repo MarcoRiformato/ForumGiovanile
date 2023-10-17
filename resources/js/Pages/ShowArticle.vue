@@ -3,6 +3,15 @@
 <div class="bg-base-200">
       <div class=" px-6 py-8 lg:px-8">
     <div class="mx-auto max-w-3xl text-base leading-7 ">
+
+    <div class="relative -mt-10 mb-4 rounded-xl">
+      <template v-if="$page.props.ads.length">
+          <img :src="'/storage/' + $page.props.ads[Math.floor(Math.random() * $page.props.ads.length)].media.filepath" alt="Random Ad Image" class="w-full rounded-xl">
+          <hr class="mt-4 mb-8" />
+      </template>
+    </div>
+
+      
       <p class="text-base font-semibold leading-7 text-indigo-600">Dal blog del forum</p>
       <h1 class="mt-2 text-3xl font-bold tracking-tight  sm:text-4xl">{{ article.title }}</h1>
       <p class="mt-6 text-xl leading-8">{{ article.extract }}</p>

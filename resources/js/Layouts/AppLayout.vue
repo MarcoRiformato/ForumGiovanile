@@ -365,7 +365,7 @@ onMounted(() => {
         </main>
 
         <!-- Ad Container -->
-        <aside v-if="!($page.props.auth.user && $page.props.auth.user.is_admin !== 0)" class="ads hidden sm:flex sm:w-1/3 p-4 flex flex-col justify-start items-center">
+        <aside class="ads hidden sm:flex sm:w-1/3 p-4 flex flex-col justify-start items-center">
         <template v-for="priority in 9">
             <template v-if="$page.props.ads.some(ad => ad.priority === priority)">
             <img loading="lazy" :src="'/storage/' + $page.props.ads.find(ad => ad.priority === priority).media.filepath" :alt="'Ad Image ' + priority" class="ad">
