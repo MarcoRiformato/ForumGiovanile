@@ -12,7 +12,7 @@
       </div>
 
       <hr/>
-      <div class="bg-gray-900">
+      <div class="">
         <p class="text-base font-semibold leading-7 text-indigo-600">Dal blog del forum</p>
         <h1 class="mt-2 text-3xl font-bold tracking-tight  sm:text-4xl">{{ article.title }}</h1>
         <p class="mt-6 text-xl leading-8">{{ article.extract }}</p>
