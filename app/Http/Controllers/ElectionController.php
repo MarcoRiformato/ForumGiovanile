@@ -130,9 +130,9 @@ class ElectionController extends Controller
     }
     
 
-    /**
-     * Store a newly created resource in storage.
-     */
+    protected function hasVoted($electionId, $ipAddress) {
+        return Vote::where('election_id', $electionId)->where('ip_address', $ipAddress)->exists();
+    }
 
     /**
      * Display the specified resource.
@@ -142,6 +142,11 @@ class ElectionController extends Controller
         $election = Election::with('questions.options', 'questions.candidates')
             ->findOrFail($id);
 
+        // Check if the user has already voted
+        if ($this->hasVoted($election->id, request()->ip())) {
+            return redirect()->route('elections.thanks')->with('error', 'You have already voted in this election.');
+        }
+
         return Inertia::render('Elections/Show', [
             'election' => $election
         ]);
@@ -149,30 +154,40 @@ class ElectionController extends Controller
 
     public function storeVote(Request $request, Election $election)
     {
-        $votes = $request->votes;
+        // Check if the user has already voted
+        if (Vote::where('election_id', $election->id)->where('ip_address', $request->ip())->exists()) {
+            // If they have already voted, redirect them with an error message
+            return redirect()->route('elections.thanks')->with('error', 'You have already voted in this election.');
+        }
     
+        $votes = $request->votes;
         foreach ($votes as $voteData) {
             $questionId = $voteData['questionId'];
             $type = $voteData['type'];
             $selectedId = $voteData['selectedId'];
-            
+    
             $vote = new Vote();
             $vote->election_id = $election->id;
+            $vote->ip_address = $request->ip(); // Save the voter's IP address
     
+            // Check if the vote is for an option, candidate, or written text
             if ($type === 'option') {
                 $vote->option_id = $selectedId;
             } elseif ($type === 'candidate') {
                 $vote->candidate_id = $selectedId;
             } elseif ($type === 'writing') {
-                $vote->written_text = $selectedId;  // Assuming 'written_text' is the new field in 'votes' table for storing text
+                // Assuming 'written_text' is a field in the 'votes' table to store the text
+                $vote->written_text = $selectedId;
             }
     
             $vote->question_id = $questionId;
             $vote->save();
-
         }
-        return redirect()->route('dashboard')->with('message', 'Grazie per aver votato');
+    
+        // Redirect the user to the dashboard with a success message
+        return redirect()->route('elections.thanks')->with('message', 'Thank you for your vote');
     }
+    
     
     
     /**

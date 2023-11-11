@@ -49,6 +49,10 @@ Route::middleware(['auth:sanctum', 'verified'])->get('/dashboard', [MainDashboar
 Route::get('documenti/indice', [DocumentController::class, 'index'])->name('documents.index');
 Route::get('/vota', [ElectionController::class, 'index'])->name('elections.index');
 Route::get('vota/{election}', [ElectionController::class, 'show'])->name('elections.show');
+Route::get('/elections/thanks', function () {
+    return Inertia::render('Elections/Thanks');
+})->name('elections.thanks');
+
 Route::get('visioni/{vision}', [VisionController::class, 'show'])->name('visions.show');
 
 Route::post('election/{election}/vote', [ElectionController::class, 'storeVote'])->name('election.vote');
