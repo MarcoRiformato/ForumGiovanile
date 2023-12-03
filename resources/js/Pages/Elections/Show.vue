@@ -28,7 +28,7 @@
             <h3 class="text-md pb-3">Candidates:</h3>
             <div class="form-control mb-2" v-for="candidate in question.candidates" :key="candidate.id">
               <label class="label cursor-pointer">
-                <span class="label-text">{{ candidate.name }} - {{ candidate.description }}</span>
+                <span class="label-text">{{ candidate.name }} {{ candidate.description }}</span>
                 <input type="radio" 
                 v-model="selectedVotes[question.id]"
                 :value="candidate.id" class="radio radio-secondary" />
