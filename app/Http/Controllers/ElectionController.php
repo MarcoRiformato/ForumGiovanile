@@ -13,7 +13,7 @@ class ElectionController extends Controller
      */
     public function index()
     {
-        $election = Election::with('user')->find(2);
+        $election = Election::with('user')->find(4);
     
         return Inertia::render('IndexElections', [
             'election' => $election
@@ -137,15 +137,34 @@ class ElectionController extends Controller
     /**
      * Display the specified resource.
      */
+    public function showDynamic(string $id)
+    {
+        $election = Election::with('questions.options', 'questions.candidates')
+            ->findOrFail($id);
+
+        // Check if the user has already voted
+        /*
+        if ($this->hasVoted($election->id, request()->ip())) {
+            return redirect()->route('elections.thanks')->with('error', 'You have already voted in this election.');
+        }
+        */
+
+        return Inertia::render('Elections/Show', [
+            'election' => $election
+        ]);
+    }
+
     public function show(string $id)
     {
         $election = Election::with('questions.options', 'questions.candidates')
             ->findOrFail($id);
 
         // Check if the user has already voted
+        /*
         if ($this->hasVoted($election->id, request()->ip())) {
             return redirect()->route('elections.thanks')->with('error', 'You have already voted in this election.');
         }
+        */
 
         return Inertia::render('Elections/Show', [
             'election' => $election
@@ -154,12 +173,14 @@ class ElectionController extends Controller
 
     public function storeVote(Request $request, Election $election)
     {
+
         // Check if the user has already voted
+        /*
         if (Vote::where('election_id', $election->id)->where('ip_address', $request->ip())->exists()) {
             // If they have already voted, redirect them with an error message
             return redirect()->route('elections.thanks')->with('error', 'You have already voted in this election.');
-        }
-    
+        }*/
+
         $votes = $request->votes;
         foreach ($votes as $voteData) {
             $questionId = $voteData['questionId'];
@@ -168,26 +189,22 @@ class ElectionController extends Controller
     
             $vote = new Vote();
             $vote->election_id = $election->id;
-            $vote->ip_address = $request->ip(); // Save the voter's IP address
+            $vote->question_id = $questionId;
+            //$vote->ip_address = $request->ip(); // Save the voter's IP address
     
-            // Check if the vote is for an option, candidate, or written text
-            if ($type === 'option') {
-                $vote->option_id = $selectedId;
-            } elseif ($type === 'candidate') {
+            if ($type === 'candidate') {
                 $vote->candidate_id = $selectedId;
             } elseif ($type === 'writing') {
-                // Assuming 'written_text' is a field in the 'votes' table to store the text
                 $vote->written_text = $selectedId;
+            } elseif ($type === 'option') {
+                $vote->option_id = $selectedId;
             }
     
-            $vote->question_id = $questionId;
             $vote->save();
         }
     
-        // Redirect the user to the dashboard with a success message
         return redirect()->route('elections.thanks')->with('message', 'Thank you for your vote');
     }
-    
     
     
     /**

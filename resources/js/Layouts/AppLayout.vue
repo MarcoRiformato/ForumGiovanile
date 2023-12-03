@@ -128,7 +128,7 @@ onMounted(() => {
                                 Documenti
                             </NavLink>
                             <NavLink  :href="route('elections.index')" :active="route().current('elections.index')">
-                                Sondaggi
+                                Elezioni suppletive
                             </NavLink>
                             <NavLink v-if="$page.props.auth.user && $page.props.auth.user.is_admin !== 0" :href="route('admin.admindashboard')" :active="route().current('admin.admindashboard')">
                                 Sezione admin
@@ -251,7 +251,7 @@ onMounted(() => {
                     Documenti
                 </ResponsiveNavLink>
                 <ResponsiveNavLink :href="route('elections.index')" :active="route().current('elections.index')">
-                    Sondaggi
+                    Elezioni suppletive
                 </ResponsiveNavLink>
                 <!-- Admin Section -->
                 <template v-if="$page.props.auth.user && $page.props.auth.user.is_admin !== 0">

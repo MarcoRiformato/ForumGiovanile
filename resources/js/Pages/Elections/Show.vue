@@ -9,42 +9,34 @@
         <p><strong>Data fine:</strong> {{ formatDate(election.end_date) }}</p>
       </div>
 
-      <!-- Questions -->
+      <!-- Voting Form -->
       <form @submit.prevent="submitVote">
-        <div v-for="question in election.questions" :key="question.id" class="mb-10">
-          
-          <h2 class="text-lg pb-4">{{ question.text }}</h2>
-          <div v-if="question.type === 'options'">
-            <div class="form-control mb-2" v-for="option in question.options" :key="option.id">
-              <label class="label cursor-pointer">
-                <span class="label-text">{{ option.text }}</span>
-                <input type="radio"
-                v-model="selectedVotes[question.id]"
-                :value="option.id" class="radio radio-secondary" />
-              </label>
-            </div>
+        <div class="mb-10">
+
+          <div class="form-control mb-4">
+          <label class="label">
+            <span class="label-text">Scrivi il tuo nome e cognome</span>
+          </label>
+          <input type="text" placeholder="Nome e cognome" class="input input-bordered" v-model="voter.full_name" />
+
+          <div class="form-control mb-20">
+            <label class="label">
+              <span class="label-text">Data di Nascita</span>
+            </label>
+            <input type="text" class="input input-bordered" placeholder="gg/mm/aa" v-model="voter.dateOfBirth" />
           </div>
-          <div v-if="question.type === 'candidates'">
-            <div class="form-control mb-2" v-for="candidate in question.candidates" :key="candidate.id">
-              <label class="label cursor-pointer">
-                <span class="label-text">{{ candidate.name }} {{ candidate.description }}</span>
-                <input type="radio" 
-                v-model="selectedVotes[question.id]"
-                :value="candidate.id" class="radio radio-secondary" />
-              </label>
-            </div>
+
+          <h2 class="text-lg pb-4">Seleziona fino a 3 candidati</h2>
+          <div class="form-control mb-2" v-for="candidate in candidates" :key="candidate.id">
+            <label class="label cursor-pointer">
+              <span class="label-text">{{ candidate.name }}</span>
+              <input type="checkbox" v-model="selectedCandidates" :value="candidate.id" class="checkbox checkbox-secondary" />
+            </label>
           </div>
-          <div v-if="question.type === 'writing'">
-            <textarea
-            class="block w-full rounded-md border-0 bg-white/5 py-1.5 text-white shadow-sm ring-1 ring-inset ring-white/10 focus:ring-2 focus:ring-inset focus:ring-indigo-500 sm:text-sm sm:leading-6"
-            rows="3"
-            v-model="selectedVotes[question.id]"
-            placeholder="Scrivi qui"
-            ></textarea>
-          </div>
-          <br/><hr/>
+
         </div>
-        <button type="submit" class="btn btn-primary">Vota</button>
+        </div>
+        <button type="submit" class="btn btn-primary" :disabled="selectedCandidates.length > 3">Vota</button>
       </form>
     </div>
   </AppLayout>
@@ -52,7 +44,7 @@
 
 <script setup>
 import AppLayout from '@/Layouts/AppLayout.vue';
-import { ref, reactive } from 'vue';
+import { ref, computed, reactive, watch } from 'vue';
 import { useForm } from '@inertiajs/vue3';
 
 const { election } = defineProps({
@@ -60,39 +52,66 @@ const { election } = defineProps({
 });
 
 const reactiveElection = reactive({ ...election });
-const selectedVotes = reactive({});
+const selectedCandidates = ref([]);
+
+const voter = reactive({
+  full_name: '',
+  dateOfBirth: ''
+});
+
+const candidates = computed(() => [
+  { id: 34, name: 'Antonio Ferrini', description: '...' },
+  { id: 35, name: 'Mario Scelza', description: '...' },
+  { id: 36, name: 'Ilaria De Palma', description: '...' },
+  { id: 37, name: 'Giuditta Sgherri', description: '...' },
+]);
+
 const form = useForm({
   votes: []
 });
 
-const submitVote = () => {
-  const votesArray = [];
-  for (const [questionId, selectedId] of Object.entries(selectedVotes)) {
-    const question = reactiveElection.questions.find(q => q.id === parseInt(questionId));
-    if (question) {
-      let type;
-      if (question.type === 'options') type = 'option';
-      else if (question.type === 'candidates') type = 'candidate';
-      else type = 'writing';
-      
-      votesArray.push({
-        questionId: question.id,
-        type,
-        selectedId
-      });
-    }
+watch(selectedCandidates, (newVal, oldVal) => {
+  if (newVal.length > 3) {
+    selectedCandidates.value = oldVal;
   }
-
-  form.votes = votesArray;
-  form.post(route('election.vote', { election: election.id }));
-};
+});
 
 const formatDate = (dateString) => {
   const options = { year: 'numeric', month: 'long', day: 'numeric' };
   const date = new Date(dateString);
-  return date.toLocaleDateString('it-IT', options); // Italian format
+  return date.toLocaleDateString('it-IT', options);
 };
 
+const submitVote = () => {
+  const votesToSend = selectedCandidates.value.map(candidateId => ({
+    election_id: election.id,
+    type: 'candidate',
+    questionId: 13,
+    candidate_id: candidateId,
+    written_text: '',
+    selectedId: candidateId
+  }));
+
+  votesToSend.push({
+    election_id: election.id,
+    questionId: 14,
+    candidate_id: null,
+    type: 'writing',
+    written_text: voter.full_name,
+    selectedId: voter.full_name
+  });
+
+  votesToSend.push({
+    election_id: election.id,
+    questionId: 15,
+    candidate_id: null,
+    type: 'writing',
+    written_text: voter.dateOfBirth,
+    selectedId: voter.dateOfBirth
+  });
+
+  form.votes = votesToSend;
+  console.log(votesToSend)
+  form.post(route('election.vote', { election: election.id }));
+};
 </script>
-
-

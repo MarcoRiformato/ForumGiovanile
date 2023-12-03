@@ -52,7 +52,7 @@
                 <tr>
                   <th scope="col" class="py-3.5 pl-4 pr-3 text-left text-sm font-semibold sm:pl-0">Opzione / Candidato</th>
                   <th scope="col" class="px-3 py-3.5 text-left text-sm font-semibold">Voti</th>
-                  <th scope="col" class="px-3 py-3.5 text-left text-sm font-semibold">Percentuale</th>
+                  <!--<th scope="col" class="px-3 py-3.5 text-left text-sm font-semibold">Percentuale</th>-->
                 </tr>
               </thead>
               <tbody class="divide-y divide-gray-500">
@@ -73,9 +73,9 @@
                                 <tr v-for="candidate in question.candidates.sort((a, b) => b.votes_count - a.votes_count)" :key="candidate.id">
                                   <td class="whitespace-nowrap py-4 pl-4 pr-3 text-sm font-medium sm:pl-0">{{ candidate.name }}</td>
                                   <td class="whitespace-nowrap px-3 py-4 text-sm">Voti: {{ candidate.votes_count }}</td>
-                                  <td class="whitespace-nowrap px-3 py-4 text-sm">
+                                  <!--<td class="whitespace-nowrap px-3 py-4 text-sm">
                                     {{ ((candidate.votes_count / totalVotes(question, 'candidates')) * 100).toFixed(2) }}%
-                                  </td>
+                                  </td>-->
                                   <td>
                                     <div :style="{width: `${candidate.votes_count * 10}px`}" class="bg-blue-500 h-4 ml-2"></div>
                                   </td>
