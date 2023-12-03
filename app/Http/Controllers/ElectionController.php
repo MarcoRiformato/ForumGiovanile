@@ -160,11 +160,9 @@ class ElectionController extends Controller
             ->findOrFail($id);
 
         // Check if the user has already voted
-        /*
         if ($this->hasVoted($election->id, request()->ip())) {
             return redirect()->route('elections.thanks')->with('error', 'You have already voted in this election.');
         }
-        */
 
         return Inertia::render('Elections/Show', [
             'election' => $election
@@ -175,11 +173,10 @@ class ElectionController extends Controller
     {
 
         // Check if the user has already voted
-        /*
         if (Vote::where('election_id', $election->id)->where('ip_address', $request->ip())->exists()) {
             // If they have already voted, redirect them with an error message
             return redirect()->route('elections.thanks')->with('error', 'You have already voted in this election.');
-        }*/
+        }
 
         $votes = $request->votes;
         foreach ($votes as $voteData) {
@@ -190,7 +187,7 @@ class ElectionController extends Controller
             $vote = new Vote();
             $vote->election_id = $election->id;
             $vote->question_id = $questionId;
-            //$vote->ip_address = $request->ip(); // Save the voter's IP address
+            $vote->ip_address = $request->ip(); 
     
             if ($type === 'candidate') {
                 $vote->candidate_id = $selectedId;
