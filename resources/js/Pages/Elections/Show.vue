@@ -60,10 +60,10 @@ const voter = reactive({
 });
 
 const candidates = computed(() => [
-  { id: 34, name: 'Antonio Ferrini', description: '...' },
-  { id: 35, name: 'Mario Scelza', description: '...' },
-  { id: 36, name: 'Ilaria De Palma', description: '...' },
-  { id: 37, name: 'Giuditta Sgherri', description: '...' },
+  { id: 13, name: 'Antonio Ferrini', description: '...' },
+  { id: 14, name: 'Mario Scelza', description: '...' },
+  { id: 15, name: 'Ilaria De Palma', description: '...' },
+  { id: 16, name: 'Giuditta Sgherri', description: '...' },
 ]);
 
 const form = useForm({
@@ -86,7 +86,7 @@ const submitVote = () => {
   const votesToSend = selectedCandidates.value.map(candidateId => ({
     election_id: election.id,
     type: 'candidate',
-    questionId: 13,
+    questionId: 35,
     candidate_id: candidateId,
     written_text: '',
     selectedId: candidateId
@@ -94,7 +94,7 @@ const submitVote = () => {
 
   votesToSend.push({
     election_id: election.id,
-    questionId: 14,
+    questionId: 36,
     candidate_id: null,
     type: 'writing',
     written_text: voter.full_name,
@@ -103,7 +103,7 @@ const submitVote = () => {
 
   votesToSend.push({
     election_id: election.id,
-    questionId: 15,
+    questionId: 37,
     candidate_id: null,
     type: 'writing',
     written_text: voter.dateOfBirth,
