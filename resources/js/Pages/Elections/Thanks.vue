@@ -1,5 +1,5 @@
 <template>
-    <AppLayout>
+    <AppLayout title="Grazie">
         <div class="bg-base-200">
             <p>Grazie per aver votato!</p>
         </div>
