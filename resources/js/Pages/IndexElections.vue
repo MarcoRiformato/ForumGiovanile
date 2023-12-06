@@ -1,8 +1,20 @@
 <template>
 <AppLayout title="I sondaggi">
 <div class="bg-base-200">
-    <div class="bg-gray-900">
 
+  <div v-if="!isAccepted" class="fixed z-50 inset-0 overflow-y-auto bg-gray-900 bg-opacity-90 backdrop-filter backdrop-blur-lg flex items-center justify-center max-w-6xl mx-auto p-4 rounded-lg shadow-lg text-white">
+    <div class="flex flex-col items-center justify-between w-full max-w-md mx-auto">
+      <p class="text-xl font-bold mb-4 text-primary">Utilizziamo cookie per migliorare la tua esperienza sul nostro sito web.</p>
+      <p class="mb-4">Continuando a navigare sul sito accetti l'utilizzo dei cookie.<br/> Per maggiori informazioni, consulta la nostra <a href="#" class="underline">Informativa sulla privacy</a>.</p>
+      <div class="flex items-center justify-between w-full">
+        <p @click="declineCookies" class="text-accent">Non accetto</p>
+        <button @click="acceptCookies" class="btn btn-primary">Accetta</button>
+      </div>
+    </div>
+  </div>
+
+
+    <div class="bg-gray-900">
     <div class="relative isolate overflow-hidden">
       <img src="vota.jpg" alt="" class="absolute inset-0 -z-10 h-full w-full object-cover" />
       <div class="absolute inset-x-0 -top-40 -z-10 transform-gpu overflow-hidden blur-3xl sm:-top-80" aria-hidden="true">
@@ -28,6 +40,22 @@
 </template>
 <script setup>
 import AppLayout from '@/Layouts/AppLayout.vue';
+import { ref, onMounted } from 'vue';
+
+const isAccepted = ref(false);
+
+onMounted(() => {
+  isAccepted.value = localStorage.getItem('cookiesAccepted') === 'true';
+});
+
+function acceptCookies() {
+  localStorage.setItem('cookiesAccepted', 'true');
+  isAccepted.value = true;
+}
+
+function declineCookies() {
+  window.location.href = 'https://www.google.com';
+}
 
 defineProps({
   election: Object

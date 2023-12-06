@@ -43,6 +43,10 @@ Route::get('/dashboard', function () {
 })->name('dashboard');
 });
 
+Route::get('/privacy', function () {
+    return Inertia::render(('Privacy'));
+});
+
 Route::resource('/articles', ArticleController::class);
 Route::get('/', [MainDashboard::class, 'index'])->name('home');
 Route::middleware(['auth:sanctum', 'verified'])->get('/dashboard', [MainDashboard::class, 'index'])->name('dashboard');

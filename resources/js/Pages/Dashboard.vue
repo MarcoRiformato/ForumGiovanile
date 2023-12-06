@@ -9,6 +9,7 @@ import {
   UserGroupIcon,
   BugAntIcon, ChatBubbleLeftRightIcon, GlobeEuropeAfricaIcon
 } from '@heroicons/vue/20/solid'
+import Modal from '@/Components/Modal.vue';
 
 const formatDate = (dateString) => {
   const options = { year: 'numeric', month: 'long', day: 'numeric' };
@@ -52,11 +53,11 @@ const team = users
               <div class="w-full max-w-xl lg:shrink-0 xl:max-w-2xl">
                 <h1 class="text-4xl font-bold tracking-tight  sm:text-6xl">{{ homepage.main_title }}</h1>
                 <p class="relative mt-6 text-lg  sm:max-w-md lg:max-w-none"><i>{{ homepage.sub_title }}</i></p>
-                <p class="relative mt-6 text-lg leading-8  sm:max-w-md lg:max-w-none">{{ homepage.about_us }}
-</p>
+                <p class="relative mt-6 text-lg leading-8  sm:max-w-md lg:max-w-none">{{ homepage.about_us }}</p>
               </div>
             </div>
           </div>
+
 
           <!-- Preview notizie -->
 <div class="mx-auto max-w-7xl px-6 lg:px-8">
@@ -94,10 +95,8 @@ const team = users
     </article>
   </div>
 </div>
-
-        </div>
-      </div>
-
+</div>
+</div>
       <!-- La nostra visione -->
       <div class="relative isolate -z-10">
         </div>
