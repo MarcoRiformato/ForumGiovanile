@@ -27,6 +27,12 @@
             <input type="text" class="input input-bordered" placeholder="gg/mm/aa" v-model="voter.dateOfBirth" />
           </div>
 
+          <div v-if="errors.length > 0" class="bg-red-100 border border-red-400 text-red-700 px-4 py-3 rounded relative mb-4" role="alert">
+            <ul>
+              <li v-for="error in errors" :key="error">{{ error }}</li>
+            </ul>
+          </div>
+
           <h2 class="text-lg pb-4">Seleziona fino a 3 candidati</h2>
           <div class="form-control mb-2" v-for="candidate in candidates" :key="candidate.id">
             <label class="label cursor-pointer">
@@ -47,6 +53,8 @@
 import AppLayout from '@/Layouts/AppLayout.vue';
 import { ref, computed, reactive, watch } from 'vue';
 import { useForm } from '@inertiajs/vue3';
+
+const errors = ref([]);
 
 const { election } = defineProps({
   election: Object,
@@ -84,6 +92,23 @@ const formatDate = (dateString) => {
 };
 
 const submitVote = () => {
+
+    errors.value = []; // Reset errors
+
+    // Validate input fields
+    if (!voter.full_name.trim()) {
+      errors.value.push('Per favore, inserisci il tuo nome e cognome.');
+    }
+
+    if (!voter.dateOfBirth.trim()) {
+      errors.value.push('Per favore, inserisci la tua data di nascita.');
+    }
+
+    // If there are errors, stop the submission process
+    if (errors.value.length > 0) {
+      return;
+    }
+
   const votesToSend = selectedCandidates.value.map(candidateId => ({
     election_id: election.id,
     type: 'candidate',
