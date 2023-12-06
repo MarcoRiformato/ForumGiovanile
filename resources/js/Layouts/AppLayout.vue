@@ -8,7 +8,6 @@ import DropdownLink from '@/Components/DropdownLink.vue';
 import NavLink from '@/Components/NavLink.vue';
 import LightDarkVue from '@/Components/LightDark.vue';
 import ResponsiveNavLink from '@/Components/ResponsiveNavLink.vue';
-import Modal from '@/Components/Modal.vue';
 import { defineComponent, h } from 'vue'
 
 defineProps({
@@ -358,7 +357,6 @@ onMounted(() => {
         <!-- Page Content -->
         <div class="min-h-screen bg-base-200 flex flex-col sm:flex-row">
         <!-- Page Content -->
-        <Modal/>
         <main v-if="$page.props.auth.user && $page.props.auth.user.is_admin !== 0" class="w-full p-4">
             <slot />
         </main>
