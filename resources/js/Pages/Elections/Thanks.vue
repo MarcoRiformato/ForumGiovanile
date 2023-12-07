@@ -16,7 +16,7 @@ onMounted(() => {
 
 function onBackButtonEvent(e) {
   e.preventDefault();
-  window.location.href = '/elections.thanks';
+  window.location.href = '/elections/thanks';
 }
 
 </script>
