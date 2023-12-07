@@ -7,5 +7,16 @@
 </template>
 <script setup>
 import AppLayout from '@/Layouts/AppLayout.vue';
+import { onMounted } from 'vue';
+
+onMounted(() => {
+  window.history.pushState(null, null, window.location.href);
+  window.addEventListener('popstate', onBackButtonEvent);
+});
+
+function onBackButtonEvent(e) {
+  e.preventDefault();
+  window.location.href = '/thanks';
+}
 
 </script>
