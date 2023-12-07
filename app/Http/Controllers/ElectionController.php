@@ -158,22 +158,16 @@ class ElectionController extends Controller
     {
         $election = Election::with('questions.options', 'questions.candidates')
             ->findOrFail($id);
-    
+
         // Check if the user has already voted
         if ($this->hasVoted($election->id, request()->ip())) {
             return redirect()->route('elections.thanks')->with('error', 'You have already voted in this election.');
         }
-    
-        $response = Inertia::render('Elections/Show', [
+
+        return Inertia::render('Elections/Show', [
             'election' => $election
         ]);
-    
-        // Prevent browser caching
-        return $response->header('Cache-Control', 'no-cache, no-store, must-revalidate')
-                        ->header('Pragma', 'no-cache')
-                        ->header('Expires', '0');
     }
-    
 
     public function storeVote(Request $request, Election $election)
     {
