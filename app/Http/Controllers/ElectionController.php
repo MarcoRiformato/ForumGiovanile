@@ -15,9 +15,7 @@ class ElectionController extends Controller
     {
         $election = Election::with('user')->find(4);
     
-        return Inertia::render('IndexElections', [
-            'election' => $election
-        ]);
+        return Inertia::render('/');
     }
     
     /**
@@ -156,17 +154,20 @@ class ElectionController extends Controller
 
     public function show(string $id)
     {
-        $election = Election::with('questions.options', 'questions.candidates')
-            ->findOrFail($id);
+        /*$election = Election::with('questions.options', 'questions.candidates')
+            ->findOrFail($id);*/
+
+        return Inertia::render('/');
 
         // Check if the user has already voted
+        /*
         if ($this->hasVoted($election->id, request()->ip())) {
             return redirect()->route('elections.thanks')->with('error', 'You have already voted in this election.');
         }
 
         return Inertia::render('Elections/Show', [
             'election' => $election
-        ]);
+        ]);*/
     }
 
     public function storeVote(Request $request, Election $election)
