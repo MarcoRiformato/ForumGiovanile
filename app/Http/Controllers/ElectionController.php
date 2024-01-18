@@ -157,7 +157,7 @@ class ElectionController extends Controller
         $election = Election::with('questions.options', 'questions.candidates')
             ->findOrFail($id);
 
-        return Inertia::render('Elections/Show', ['election'=> $election]);
+        return Inertia::render('Elections/ShowDynamic', ['election'=> $election]);
 
         // Check if the user has already voted
         /*
