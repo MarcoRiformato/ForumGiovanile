@@ -156,7 +156,7 @@ const team = users
           <ChatBubbleLeftRightIcon class="h-6 w-6 text-white" aria-hidden="true" />
         </div>
         <div>
-          <h3 class="text-base font-semibold leading-7">Scrivici su whatsapp al 3899435368 </h3>
+          <h3 class="text-base font-semibold leading-7">Scrivici su whatsapp al 3899435367 </h3>
           <p class="mt-4">
             <a target="_blank"  href="https://wa.me/393899435367" class="text-sm font-semibold leading-6 ">Clicca qui <span aria-hidden="true">&rarr;</span></a>
           </p>
