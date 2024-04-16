@@ -12,7 +12,7 @@ import '@vueup/vue-quill/dist/vue-quill.snow.css';
 const appName = import.meta.env.VITE_APP_NAME;
 
 createInertiaApp({
-    title: (title) => appName ? `${title} - ${appName}` : title,
+    title: (title) => `${title} - Forum Giovanile Elbano`,
     resolve: (name) => resolvePageComponent(`./Pages/${name}.vue`, import.meta.glob('./Pages/**/*.vue')),
     setup({ el, App, props, plugin }) {
         const app = createApp({ render: () => h(App, props) })
