@@ -1,13 +1,74 @@
 <template>
 <AppLayout title="LavorElba">
-
-<p>Lavori in corso</p>
+  <ul role="list" class="grid grid-cols-1 gap-x-6 gap-y-8 lg:grid-cols-3 xl:gap-x-8">
+    <li v-for="job in jobs" :key="job.id" class="overflow-hidden rounded-xl border border-gray-200">
+      <div class="flex items-center gap-x-4 border-b border-gray-900/5 p-6 mb-4">
+        <img :src="job.imageUrl" :alt="job.lavoro" class="h-12 w-12 flex-none rounded-lg object-cover ring-1 ring-gray-900/10" />
+        <div class="text-sm font-medium leading-6">{{ job.lavoro }}</div>
+      </div>
+      <dl class="-mt-8 px-6 py-4 text-sm leading-6">
+        <div class="flex justify-between py-1">
+          <p>📍 {{ job.luogo }}</p>
+        </div>
+        <div class="flex justify-between py-1">
+          <p>💼 {{ job.azienda }}</p>
+        </div>
+        <div class="flex justify-between py-1 divide-y">
+          <p>💶 € {{ job.stipendio }}</p>
+        </div>
+        <p class="pt-4 pb-6">{{ jobs.descrizione }}</p>
+        <div class="flex justify-between items-center">
+          <button class="btn btn-primary btn-sm">Candidati</button>
+          <p class="text-gray-500">Pubblicato<br/> 3 giorni fa</p>
+        </div>
+      </dl>
+    </li>
+  </ul>
 
 </AppLayout>
 </template>
 
 <script setup>
 import AppLayout from '@/Layouts/AppLayout.vue';
+
+
+defineProps({
+  jobs: Object
+})
+
+const clients = [
+  {
+    id: 1,
+    lavoro: 'Cameriere',
+    imageUrl: 'https://tailwindui.com/img/logos/48x48/tuple.svg',
+    azienda: 'Ristorante Il Garibaldino',
+    luogo: 'Capoliveri',
+    stipendio: '1400-1600',
+    data_pubblicazione: 'Ieri'
+
+  },
+  {
+    id: 2,
+    lavoro: 'Addetto/a di segreteria',
+    imageUrl: 'https://tailwindui.com/img/logos/48x48/savvycal.svg',
+    azienda: 'Rosselba le Palme',
+    luogo: 'Capoliveri',
+    stipendio: '1400-1600',
+    data_pubblicazione: 'Ieri'
+
+  },
+  {
+    id: 3,
+    lavoro: 'Sviluppatore Web',
+    imageUrl: 'https://tailwindui.com/img/logos/48x48/reform.svg',
+    azienda: 'Infoelba',
+    luogo: 'Capoliveri',
+    stipendio: '1400-1600',
+    data_pubblicazione: 'Ieri'
+
+  },
+]
+
 </script>
 
 <style>

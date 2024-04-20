@@ -10,7 +10,7 @@ use App\Models\Question;
 use App\Models\Option;
 use App\Models\Candidate;
 use App\Models\HomeContent;
-use App\Models\Vision;
+use App\Models\Jobs;
 use Database\Factories\VisionFactory;
 
 use Illuminate\Database\Seeder;
@@ -58,6 +58,7 @@ class DatabaseSeeder extends Seeder
 
         Article::factory()->count(4)->create();
         HomeContent::factory()->create();
+        Jobs::factory()->count(5)->create();
 
         $documentFactory = new \Database\Factories\DocumentFactory();
         $documentFactory->run();
