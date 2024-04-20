@@ -12,7 +12,7 @@ use App\Http\Controllers\ElectionController;
 use App\Http\Controllers\HomeController;
 use App\Http\Controllers\VisionController;
 use App\Http\Controllers\AdController;
-
+use App\Http\Controllers\JobsController;
 /*
 |--------------------------------------------------------------------------
 | Web Routes
@@ -48,6 +48,7 @@ Route::get('/privacy', function () {
 });
 
 Route::resource('/articles', ArticleController::class);
+Route::resource('/jobs', JobsController::class);
 Route::get('/', [MainDashboard::class, 'index'])->name('home');
 Route::middleware(['auth:sanctum', 'verified'])->get('/dashboard', [MainDashboard::class, 'index'])->name('dashboard');
 Route::get('documenti/indice', [DocumentController::class, 'index'])->name('documents.index');

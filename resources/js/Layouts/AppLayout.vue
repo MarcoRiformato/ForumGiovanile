@@ -127,9 +127,12 @@ onMounted(() => {
                             <NavLink  :href="route('documents.index')" :active="route().current('documents.index')">
                                 Documenti
                             </NavLink>
-                            <NavLink  :href="route('elections.index')" :active="route().current('elections.index')">
-                                Sondaggi
+                            <NavLink  :href="route('jobs.index')" :active="route().current('jobs.index')">
+                                LavorElba
                             </NavLink>
+                            <!--<NavLink  :href="route('elections.index')" :active="route().current('elections.index')">
+                                Sondaggi
+                            </NavLink>-->
                             <NavLink v-if="$page.props.auth.user && $page.props.auth.user.is_admin !== 0" :href="route('admin.admindashboard')" :active="route().current('admin.admindashboard')">
                                 Sezione admin
                             </NavLink>
@@ -250,9 +253,12 @@ onMounted(() => {
                 <ResponsiveNavLink :href="route('documents.index')" :active="route().current('documents.index')">
                     Documenti
                 </ResponsiveNavLink>
-                <ResponsiveNavLink :href="route('elections.index')" :active="route().current('elections.index')">
-                    Sondaggi
+                <ResponsiveNavLink :href="route('jobs.index')" :active="route().current('jobs.index')">
+                    LavorElba
                 </ResponsiveNavLink>
+                <!--<ResponsiveNavLink :href="route('elections.index')" :active="route().current('elections.index')">
+                    Sondaggi
+                </ResponsiveNavLink>-->
                 <!-- Admin Section -->
                 <template v-if="$page.props.auth.user && $page.props.auth.user.is_admin !== 0">
                     <div class="border-t"></div>
@@ -365,13 +371,10 @@ onMounted(() => {
         </main>
 
         <!-- Ad Container -->
-        <aside class="ads hidden sm:flex sm:w-1/3 p-4 flex flex-col justify-start items-center">
+        <aside v-if="$page.props.ads.some(ad => ad.priority === priority)" class="ads hidden sm:flex sm:w-1/3 p-4 flex flex-col justify-start items-center">
         <template v-for="priority in 9">
-            <template v-if="$page.props.ads.some(ad => ad.priority === priority)">
+            <template>
             <img loading="lazy" :src="'/storage/' + $page.props.ads.find(ad => ad.priority === priority).media.filepath" :alt="'Ad Image ' + priority" class="ad">
-            </template>
-            <template v-else>
-            <img src="/placeholder1.webp" loading="lazy" :alt="'Ad Image ' + priority" class="ad">
             </template>
         </template>
         </aside>
