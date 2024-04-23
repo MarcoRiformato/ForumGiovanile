@@ -1,5 +1,5 @@
 <template>
-<AppLayout>
+<AppLayout title="Sezione admin">
     <div class="bg-base-200">
         <div class="grid gap-4 grid-cols-2">
         <p><a class="link link-primary" @click="$inertia.visit(route('admin.dashboard'))" >Notizie</a></p>
@@ -9,6 +9,7 @@
         <p><a class="link link-primary" @click="$inertia.visit(route('admin.homepage.edit'))">Homepage</a></p>
         <p><a class="link link-primary" @click="$inertia.visit(route('admin.users.index'))">Utenti</a></p>
         <p><a class="link link-primary" @click="$inertia.visit(route('admin.ads.index'))">Pubblicità</a></p>
+        <p><a class="link link-primary" @click="$inertia.visit(route('admin.jobs.index'))">Lavoro</a></p>
         </div>
     </div>
 </AppLayout>

@@ -13,13 +13,13 @@ return new class extends Migration
     {
         Schema::create('jobs', function (Blueprint $table) {
             $table->id();
-            $table->string('lavoro');
-            $table->string('imageUrl');
-            $table->string('azienda');
-            $table->string('luogo');
-            $table->string('stipendio');
+            $table->string('lavoro')->nullable();
+            $table->string('imageUrl')->nullable();
+            $table->string('azienda')->nullable();
+            $table->string('luogo')->nullable();
+            $table->string('stipendio')->nullable();
             $table->timestamp('data_pubblicazione')->nullable();
-            $table->text('descrizione')->nullable(); // Assuming you might want to store job descriptions
+            $table->text('descrizione')->nullable(); 
             $table->timestamps();
         });
     }

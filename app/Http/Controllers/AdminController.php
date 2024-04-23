@@ -7,6 +7,7 @@ use App\Models\Article;
 use App\Models\Document;
 use App\Models\Election;
 use App\Models\HomeContent;
+use App\Models\Jobs;
 use Inertia\Inertia;
 
 class AdminController extends Controller
@@ -55,6 +56,12 @@ class AdminController extends Controller
     {
         $homepages = HomeContent::first();
         return Inertia::render('Admin/Homepage/Edit', compact('homepages'));
+    }
+
+    public function manageJobs()
+    {
+        $jobs = Jobs::all();
+        return Inertia::render('Admin/Jobs/Index', compact('jobs'));
     }
     
 }

@@ -92,7 +92,6 @@ Route::middleware(['auth', 'admin'])->group(function () {
     Route::get('/admin/articles/create', [ArticleController::class, 'create'])->name('admin.articles.create');
     Route::post('/admin/articles/{article}', [ArticleController::class, 'update'])->name('admin.articles.update');
 
-
     // Users routes
     Route::resource('/admin/users', UserController::class)->names([
         'index' => 'admin.users.index',
@@ -106,6 +105,14 @@ Route::middleware(['auth', 'admin'])->group(function () {
     Route::post('/admin/documents/store', [DocumentController::class, 'store'])->name('admin.documents.store');
     Route::put('/admin/documents/{document}', [DocumentController::class, 'update'])->name('admin.documents.update');
     Route::delete('/admin/documents/{document}', [DocumentController::class, 'destroy'])->name('admin.documents.destroy');
+
+    //Jobs Routes
+    Route::get('/admin/jobs.index', [AdminController::class, 'manageJobs'])->name('admin.jobs.index');
+    Route::get('/admin/jobs/{job}/edit', [JobsController::class, 'edit'])->name('admin.jobs.edit');
+    Route::get('/admin/jobs/create', [JobsController::class, 'create'])->name('admin.jobs.create');
+    Route::post('/admin/jobs/store', [JobsController::class, 'store'])->name('admin.jobs.store');
+    Route::put('/admin/jobs/{job}', [JobsController::class, 'update'])->name('admin.jobs.update');
+    Route::delete('/admin/jobs/{document}', [JobsController::class, 'destroy'])->name('admin.jobs.destroy');
 
     // Elections routes
     Route::get('/admin/elections/create', [ElectionController::class, 'createElectionDetails'])->name('admin.elections.create');
