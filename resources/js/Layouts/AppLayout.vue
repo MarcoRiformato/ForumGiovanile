@@ -130,9 +130,9 @@ onMounted(() => {
                             <NavLink  :href="route('jobs.index')" :active="route().current('jobs.index')">
                                 LavorElba
                             </NavLink>
-                            <NavLink  :href="route('elections.index')" :active="route().current('elections.index')">
+                            <!--<NavLink  :href="route('elections.index')" :active="route().current('elections.index')">
                                 Sondaggi
-                            </NavLink>
+                            </NavLink>-->
                             <NavLink v-if="$page.props.auth.user && $page.props.auth.user.is_admin !== 0" :href="route('admin.admindashboard')" :active="route().current('admin.admindashboard')">
                                 Sezione admin
                             </NavLink>
@@ -256,9 +256,9 @@ onMounted(() => {
                 <ResponsiveNavLink :href="route('jobs.index')" :active="route().current('jobs.index')">
                     LavorElba
                 </ResponsiveNavLink>
-                <ResponsiveNavLink :href="route('elections.index')" :active="route().current('elections.index')">
+                <!--<ResponsiveNavLink :href="route('elections.index')" :active="route().current('elections.index')">
                     Sondaggi
-                </ResponsiveNavLink>
+                </ResponsiveNavLink>-->
                 <!-- Admin Section -->
                 <template v-if="$page.props.auth.user && $page.props.auth.user.is_admin !== 0">
                     <div class="border-t"></div>

@@ -25,7 +25,7 @@ const { latestArticles, homepage, visions, users } = defineProps({
 })
 
 const values = visions.map(vision => ({
-  id: vision.id,  // assuming the data includes an 'id' field
+  id: vision.id,  
   name: vision.title,
   description: vision.desc,
   icon: vision.icon,
@@ -107,11 +107,9 @@ const team = users
           <p class="mt-6 text-lg leading-8">{{ homepage.our_vision_desc }}</p>
         </div>
         <dl class="mx-auto mt-16 grid max-w-2xl grid-cols-1 gap-8 text-base leading-7 sm:grid-cols-2 lg:mx-0 lg:max-w-none lg:gap-x-16">
-          <a
-          target="_blank"
+          <p
           v-for="value in values"
           :key="value.id" 
-          :href="`/articles/${value.id}`"
           class="relative pl-9">
             <dt class="inline font-semibold">
               <component :is="value.icon" class="absolute left-1 top-1 h-5 w-5 text-indigo-500" aria-hidden="true" />
@@ -119,15 +117,14 @@ const team = users
             </dt>
             {{ ' ' }}
             <dd class="inline">{{ value.description }}</dd>
-          </a>
+          </p>
         </dl>
       </div>
       
       <!-- Immagine larga -->
       <div class="mt-12 sm:mt-40 xl:mx-auto xl:max-w-7xl xl:px-8">
         <img src="forum.jpg" loading="lazy" class="w-full lg:w-3/4 xl:w-3/4 object-cover mx-auto" />
-
-</div>
+      </div>
 
       <!-- La squadra -->
       <div class="mx-auto mt-8 max-w-7xl px-6 sm:mt-48 lg:px-8">
