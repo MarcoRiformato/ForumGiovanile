@@ -378,7 +378,8 @@ onMounted(() => {
         <aside class="ads hidden sm:flex sm:w-1/3 p-4 flex flex-col justify-start items-center">
         <template v-for="priority in 9">
             <template v-if="$page.props.ads.some(ad => ad.priority === priority)">
-            <img loading="lazy" :src="'/storage/' + $page.props.ads.find(ad => ad.priority === priority).media.filepath" :alt="'Ad Image ' + priority" class="ad">
+                <img loading="lazy" :src="'/storage/' + $page.props.ads.find(ad => ad.priority === priority).media.filepath" :alt="'Ad Image ' + priority" class="ad" style="width: 100%; height: auto; max-width: 100%; object-fit: contain;">
+
             </template>
         </template>
         </aside>
