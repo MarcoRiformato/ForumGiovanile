@@ -27,6 +27,7 @@
       </div>
     </div>
   </div>
+  
 
   <div class="flex flex-wrap justify-between md:space-x-4 space-y-2 md:space-y-0">
   <button 
@@ -84,6 +85,10 @@
 
 import AppLayout from '@/Layouts/AppLayout.vue';
 import { ref } from 'vue';
+import { useAttrs } from 'vue';
+
+const attrs = useAttrs();
+const ads = ref(attrs.ads || []);
 
 const currentArticleUrl = ref(window.location.href);
 

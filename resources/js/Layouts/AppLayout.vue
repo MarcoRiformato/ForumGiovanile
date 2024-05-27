@@ -9,6 +9,10 @@ import NavLink from '@/Components/NavLink.vue';
 import LightDarkVue from '@/Components/LightDark.vue';
 import ResponsiveNavLink from '@/Components/ResponsiveNavLink.vue';
 import { defineComponent, h } from 'vue'
+import { useAttrs } from 'vue';
+
+const attrs = useAttrs();
+const ads = ref(attrs.ads || []);
 
 defineProps({
 title: String
@@ -371,13 +375,14 @@ onMounted(() => {
         </main>
 
         <!-- Ad Container -->
-        <aside v-if="$page.props.ads.some(ad => ad.priority === priority)" class="ads hidden sm:flex sm:w-1/3 p-4 flex flex-col justify-start items-center">
+        <aside v-if="$page.props.ads.some(ad => ad.priority === priority)" class="ads sm:flex sm:w-1/3 p-4 flex flex-col justify-start items-center">
         <template v-for="priority in 9">
             <template>
             <img loading="lazy" :src="'/storage/' + $page.props.ads.find(ad => ad.priority === priority).media.filepath" :alt="'Ad Image ' + priority" class="ad">
             </template>
         </template>
         </aside>
+        
        </div>
     </div>
 </div>
