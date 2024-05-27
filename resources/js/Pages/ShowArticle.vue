@@ -4,14 +4,21 @@
       <div class=" px-6 py-8 lg:px-8">
     <div class="mx-auto max-w-3xl text-base leading-7 ">
 
-      <div class="hide-at-640 relative md:hidden -mt-10 mb-4 rounded-xl h-[200px] overflow-hidden"> <!-- Adjust the h-[200px] as per your desired height -->
+      <div class="hide-at-640 relative md:hidden -mt-10 mb-4 rounded-xl overflow-hidden">
         <template v-if="$page.props.ads.length">
-          <div v-for="(ad, index) in $page.props.ads" :key="index" class="relative -mt-10 mb-4 rounded-xl h-[200px] overflow-hidden">
-            <img :src="'/storage/' + ad.media.filepath" :alt="'Ad Image ' + index" class="w-full h-full object-cover rounded-xl">
-            <hr class="mt-4 mb-8" />
-          </div>
+          <template v-for="priority in 9">
+            <template v-if="$page.props.ads.some(ad => ad.priority === priority)">
+              <img
+                loading="lazy"
+                :src="'/storage/' + $page.props.ads.find(ad => ad.priority === priority).media.filepath"
+                :alt="'Ad Image ' + priority"
+                class="w-full h-full object-cover rounded-xl mb-4"
+              >
+            </template>
+          </template>
         </template>
       </div>
+
 
       <hr/>
       <div class="">
