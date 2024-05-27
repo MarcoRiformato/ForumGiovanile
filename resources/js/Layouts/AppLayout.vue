@@ -380,9 +380,6 @@ onMounted(() => {
             <template v-if="$page.props.ads.some(ad => ad.priority === priority)">
             <img loading="lazy" :src="'/storage/' + $page.props.ads.find(ad => ad.priority === priority).media.filepath" :alt="'Ad Image ' + priority" class="ad">
             </template>
-            <template v-else>
-            <img src="/placeholder1.webp" loading="lazy" :alt="'Ad Image ' + priority" class="ad">
-            </template>
         </template>
         </aside>
         

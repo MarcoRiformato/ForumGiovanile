@@ -6,8 +6,10 @@
 
       <div class="hide-at-640 relative md:hidden -mt-10 mb-4 rounded-xl h-[200px] overflow-hidden"> <!-- Adjust the h-[200px] as per your desired height -->
         <template v-if="$page.props.ads.length">
-            <img :src="'/storage/' + $page.props.ads[Math.floor(Math.random() * $page.props.ads.length)].media.filepath" alt="Random Ad Image" class="w-full h-full object-cover rounded-xl">
+          <template v-for="(ad, index) in $page.props.ads" :key="index">
+            <img :src="'/storage/' + ad.media.filepath" :alt="'Ad Image ' + index" class="w-full h-full object-cover rounded-xl">
             <hr class="mt-4 mb-8" />
+          </template>
         </template>
       </div>
 
