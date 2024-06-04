@@ -131,9 +131,9 @@ onMounted(() => {
                             <NavLink  :href="route('documents.index')" :active="route().current('documents.index')">
                                 Documenti
                             </NavLink>
-                            <NavLink  :href="route('jobs.index')" :active="route().current('jobs.index')">
+                            <!--<NavLink  :href="route('jobs.index')" :active="route().current('jobs.index')">
                                 LavorElba
-                            </NavLink>
+                            </NavLink>-->
                             <!--<NavLink  :href="route('elections.index')" :active="route().current('elections.index')">
                                 Sondaggi
                             </NavLink>-->
@@ -257,9 +257,9 @@ onMounted(() => {
                 <ResponsiveNavLink :href="route('documents.index')" :active="route().current('documents.index')">
                     Documenti
                 </ResponsiveNavLink>
-                <ResponsiveNavLink :href="route('jobs.index')" :active="route().current('jobs.index')">
+                <!--<ResponsiveNavLink :href="route('jobs.index')" :active="route().current('jobs.index')">
                     LavorElba
-                </ResponsiveNavLink>
+                </ResponsiveNavLink>-->
                 <!--<ResponsiveNavLink :href="route('elections.index')" :active="route().current('elections.index')">
                     Sondaggi
                 </ResponsiveNavLink>-->
