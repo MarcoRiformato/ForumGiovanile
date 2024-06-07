@@ -7,7 +7,7 @@
 </div>
 
 <ul role="list" class="grid grid-cols-1 gap-x-6 gap-y-8 lg:grid-cols-3 xl:gap-x-8">
-  <li v-for="job in jobs" :key="job.id" class="overflow-hidden rounded-xl border border-gray-200" @click="$inertia.visit(route('jobs.show', job.id))">
+  <li v-for="job in jobs" :key="job.id" class="overflow-hidden rounded-xl border border-gray-200" >
     <div class="flex items-center gap-x-4 border-b border-gray-900/5 p-6 mb-4">
       <img :src="job.imageUrl" :alt="job.lavoro" class="h-12 w-12 flex-none rounded-lg object-cover ring-1 ring-gray-900/10" />
       <div class="text-sm font-medium leading-6">{{ job.lavoro }}</div>
@@ -24,7 +24,7 @@
       </div>
       <p class="pt-4 pb-6">{{ job.descrizione }}</p>
       <div class="flex justify-between items-center">
-        <button class="btn btn-primary btn-sm">Candidati</button>
+        <button @click="openWhatsApp(job)" class="btn btn-primary btn-sm">Candidati</button>
         <p class="text-gray-500">Pubblicato<br/> 3 giorni fa</p>
       </div>
     </dl>
@@ -40,6 +40,13 @@ import AppLayout from '@/Layouts/AppLayout.vue';
 defineProps({
   jobs: Object
 })
+
+const openWhatsApp = (job) => {
+    const phoneNumber = "393773024349";
+    const message = `Ciao, sono interessato/a alla posizione di ${job.lavoro} presso ${job.azienda} a ${job.luogo}.`;
+    const url = `https://wa.me/${phoneNumber}?text=${encodeURIComponent(message)}`;
+    window.open(url, '_blank');
+};
 
 </script>
 
