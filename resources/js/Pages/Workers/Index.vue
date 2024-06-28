@@ -6,7 +6,8 @@
         </div>
       </div>
   
-      <ul role="list" class="grid grid-cols-1 gap-x-6 gap-y-8 lg:grid-cols-3 xl:gap-x-8">
+      <!--
+            <ul role="list" class="grid grid-cols-1 gap-x-6 gap-y-8 lg:grid-cols-3 xl:gap-x-8">
         <li class="overflow-hidden rounded-xl border border-gray-200">
           <div class="relative text-center p-1">
             <img src="https://picsum.photos/100" alt="Maria Rossi" class="w-full h-auto object-cover rounded-lg" />
@@ -82,6 +83,8 @@
           </div>
         </li>
       </ul>
+      -->
+
     </AppLayout>
   </template>
   
