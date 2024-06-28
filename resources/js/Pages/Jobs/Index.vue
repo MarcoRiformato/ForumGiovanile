@@ -2,7 +2,7 @@
 <AppLayout title="ElbaJobz">
 <div class="flex justify-end items-center w-full py-4 pb-6">
   <div class="relative rounded-full px-3 text-sm leading-6 text-gray-600 ring-1 ring-gray-900/10 hover:ring-gray-900/20">
-    Sei un azienda? <a @click="$inertia.visit(route('workers.index'))" class="font-semibold text-secondary"><span class="absolute inset-0" aria-hidden="true" />Trova dipendenti<span aria-hidden="true">&rarr;</span></a>
+    Sei un azienda? <a @click="$inertia.visit(route('workers.index'))" class="font-semibold text-secondary"><span class="absolute inset-0" aria-hidden="true" />Trova collaboratori<span aria-hidden="true">&rarr;</span></a>
   </div>
 </div>
 
