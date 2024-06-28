@@ -116,6 +116,9 @@ Route::middleware(['auth', 'admin'])->group(function () {
     Route::put('/admin/jobs/{job}', [JobsController::class, 'update'])->name('admin.jobs.update');
     Route::delete('/admin/jobs/{document}', [JobsController::class, 'destroy'])->name('admin.jobs.destroy');
 
+    //Workers Routes
+    Route::get('/admin/workers.index', [AdminController::class, 'manageWorkers'])->name('admin.workers.index');
+
     // Elections routes
     Route::get('/admin/elections/create', [ElectionController::class, 'createElectionDetails'])->name('admin.elections.create');
     Route::post('/admin/elections/create', [ElectionController::class, 'storeElectionDetails']);

@@ -66,17 +66,21 @@ import AppLayout from '@/Layouts/AppLayout.vue';
 import { useForm } from '@inertiajs/vue3';
 
 const props = defineProps({
-    job: Object
-})
+    job: {
+        type: Object,
+        required: false,
+        default: () => ({})
+    }
+});
 
 let form = useForm({
-    id: props.job.id,
-    lavoro: props.job.lavoro,
-    azienda: props.job.azienda,
-    luogo: props.job.luogo,
-    descrizione: props.job.descrizione,
-    stipendio: props.job.stipendio
-})
+    id: props.job.id || null,
+    lavoro: props.job.lavoro || '',
+    azienda: props.job.azienda || '',
+    luogo: props.job.luogo || '',
+    descrizione: props.job.descrizione || '',
+    stipendio: props.job.stipendio || ''
+});
 
 const submit = () => {
     form.put(route('admin.jobs.update', {id: form.id}), {
@@ -84,10 +88,11 @@ const submit = () => {
             $inertia.visit(route('admin.jobs.index'));
         }
     });
-}
+};
 
 const destroy = () => {
     form.delete(route('admin.jobs.destroy', {id: form.id}));
-}
+};
 </script>
+
 

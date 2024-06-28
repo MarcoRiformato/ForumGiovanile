@@ -10,7 +10,7 @@
         <p><a class="link link-primary" @click="$inertia.visit(route('admin.users.index'))">Utenti</a></p>
         <p><a class="link link-primary" @click="$inertia.visit(route('admin.ads.index'))">Pubblicità</a></p>
         <p><a class="link link-primary" @click="$inertia.visit(route('admin.jobs.index'))">Offerte di lavoro</a></p>
-        <p><a class="link link-primary" @click="$inertia.visit(route('admin.jobs.index'))">Lavoratori disponibili</a></p>
+        <p><a class="link link-primary" @click="$inertia.visit(route('admin.workers.index'))">Lavoratori disponibili</a></p>
         </div>
     </div>
 </AppLayout>

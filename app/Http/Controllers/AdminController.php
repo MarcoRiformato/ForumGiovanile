@@ -8,6 +8,7 @@ use App\Models\Document;
 use App\Models\Election;
 use App\Models\HomeContent;
 use App\Models\Jobs;
+use App\Models\Worker;
 use Inertia\Inertia;
 
 class AdminController extends Controller
@@ -62,6 +63,12 @@ class AdminController extends Controller
     {
         $jobs = Jobs::all();
         return Inertia::render('Admin/Jobs/Index', compact('jobs'));
+    }
+
+    public function manageWorkers()
+    {
+        $workers = Worker::all();
+        return Inertia::render('Admin/Workers/Index', compact('workers'));
     }
     
 }
