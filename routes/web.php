@@ -110,7 +110,7 @@ Route::middleware(['auth', 'admin'])->group(function () {
 
     //Jobs Routes
     Route::get('/admin/jobs/index', [AdminController::class, 'manageJobs'])->name('admin.jobs.index');
-    Route::resource('/admin/jobs', JobsController::class)->names([
+    Route::resource('/admin/jobs', JobsController::class)->except(['index'])->names([
         'create' => 'admin.jobs.create',
         'store' => 'admin.jobs.store',
         'edit' => 'admin.jobs.edit',
