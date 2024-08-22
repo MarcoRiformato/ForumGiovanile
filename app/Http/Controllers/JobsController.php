@@ -65,7 +65,7 @@ class JobsController extends Controller
         $job = Jobs::findOrFail($id);
         $job->delete();
 
-        return redirect()->route('jobs.index')->with('message', 'job successfully deleted.');
+        return redirect()->route('admin.jobs.index')->with('message', 'Job successfully deleted.');
     }
 
 }

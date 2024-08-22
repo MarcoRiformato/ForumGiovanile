@@ -109,12 +109,15 @@ Route::middleware(['auth', 'admin'])->group(function () {
     Route::delete('/admin/documents/{document}', [DocumentController::class, 'destroy'])->name('admin.documents.destroy');
 
     //Jobs Routes
-    Route::get('/admin/jobs.index', [AdminController::class, 'manageJobs'])->name('admin.jobs.index');
-    Route::get('/admin/jobs/{job}/edit', [JobsController::class, 'edit'])->name('admin.jobs.edit');
-    Route::get('/admin/jobs/create', [JobsController::class, 'create'])->name('admin.jobs.create');
-    Route::post('/admin/jobs/store', [JobsController::class, 'store'])->name('admin.jobs.store');
-    Route::put('/admin/jobs/{job}', [JobsController::class, 'update'])->name('admin.jobs.update');
-    Route::delete('/admin/jobs/{document}', [JobsController::class, 'destroy'])->name('admin.jobs.destroy');
+    Route::get('/admin/jobs/index', [AdminController::class, 'manageJobs'])->name('admin.jobs.index');
+    Route::resource('/admin/jobs', JobsController::class)->names([
+        'create' => 'admin.jobs.create',
+        'store' => 'admin.jobs.store',
+        'edit' => 'admin.jobs.edit',
+        'update' => 'admin.jobs.update',
+        'destroy' => 'admin.jobs.destroy',
+    ]);
+    
 
     //Workers Routes
     Route::get('/admin/workers.index', [AdminController::class, 'manageWorkers'])->name('admin.workers.index');

@@ -83,7 +83,7 @@ let form = useForm({
 });
 
 const submit = () => {
-    form.put(route('admin.jobs.store', {id: form.id}), {
+    form.post(route('admin.jobs.store', {id: form.id}), {
         onSuccess: () => {
             $inertia.visit(route('admin.jobs.index'));
         }
