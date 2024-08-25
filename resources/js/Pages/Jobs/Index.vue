@@ -9,7 +9,6 @@
 <ul role="list" class="grid grid-cols-1 gap-x-6 gap-y-8 lg:grid-cols-3 xl:gap-x-8">
   <li v-for="job in jobs" :key="job.id" class="overflow-hidden rounded-xl border border-gray-200" >
     <div class="flex items-center gap-x-4 border-b border-gray-900/5 p-6 mb-4">
-      <img :src="job.imageUrl" :alt="job.lavoro" class="h-12 w-12 flex-none rounded-lg object-cover ring-1 ring-gray-900/10" />
       <div class="text-sm font-medium leading-6">{{ job.lavoro }}</div>
     </div>
     <dl class="-mt-8 px-6 py-4 text-sm leading-6">
