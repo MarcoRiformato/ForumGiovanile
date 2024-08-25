@@ -24,7 +24,7 @@
       <p class="pt-4 pb-6">{{ job.descrizione }}</p>
       <div class="flex justify-between items-center">
         <button @click="openWhatsApp(job)" class="btn btn-primary btn-sm">Candidati</button>
-        <p class="text-gray-500">Nuovo annuncio! 🆕</p>
+        <p class="text-gray-500">Nuovo annuncio! <br/> 🆕</p>
       </div>
     </dl>
   </li>
