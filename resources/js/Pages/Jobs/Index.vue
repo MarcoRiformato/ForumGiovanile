@@ -6,9 +6,7 @@
   </div>
 </div>
 <Banner 
-  message="La piattaforma lavoro del Forum Giovanile dell’Elba nasce per aiutare la conoscenza reciproca di domanda/offerta nel mondo del lavoro ma soprattutto per far si che ciò avvenga nel rispetto dei principi di: trasparenza legalità rispetto dei diritti dei lavoratori reciproca buona fede che tutti gli utenti,aziende e lavoratori, si impegnano a rispettare - Il Forum Giovanile dell’Elba" 
-  actionText="Learn more" 
-  actionUrl="#"
+  message="La piattaforma lavoro del Forum Giovanile dell’Elba nasce per aiutare la conoscenza reciproca di domanda/offerta nel mondo del lavoro ma soprattutto per far si che ciò avvenga nel rispetto dei principi di: trasparenza legalità rispetto dei diritti dei lavoratori reciproca buona fede che tutti gli utenti,aziende e lavoratori, si impegnano a rispettare - Il Forum Giovanile dell’Elba"
   class="m-4 rounded-xl"
 />
 <ul role="list" class="grid grid-cols-1 gap-x-6 gap-y-8 lg:grid-cols-3 xl:gap-x-8">
