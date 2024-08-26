@@ -24,7 +24,7 @@ class WorkerController extends Controller
     {
         $validatedData = $request->validate([
             'name' => 'nullable|string|max:255',
-            'profile_picture' => 'nullable|file|mimes:jpg,jpeg,png,gif,webp|max:10240',
+            'profile_picture' => 'nullable|file|mimes:jpg,jpeg,png,gif,webp|max:102400',
             'contract_type' => 'nullable|string|max:255',
             'job_titles' => 'nullable|string|max:255',
             'description' => 'nullable|string',

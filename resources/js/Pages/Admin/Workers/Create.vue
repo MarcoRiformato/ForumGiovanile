@@ -195,7 +195,8 @@ const form = useForm({
     residence: '',
     availability: '',
     has_car: false,
-    selected_languages: [],
+    work_experience: '',
+    languages: '',
     has_hccp_certificate: false,
     education: '',
 });
