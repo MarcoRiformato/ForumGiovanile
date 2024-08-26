@@ -2,7 +2,7 @@
     <AppLayout title="Crea nuovo collaboratore">
         <div class="bg-base-200">
             <h1 class="text-4xl p-4">Crea nuovo collaboratore</h1>
-            <form class="px-8 bg-base-200 pb-8" @submit.prevent="submit">
+            <form class="px-8 bg-base-200 pb-8" @submit.prevent="submit" enctype="multipart/form-data">
                 <div class="space-y-12">
                     <div class="border-b border-white/10 pb-12">
                         <div class="mt-10 grid grid-cols-1 gap-x-6 gap-y-8 sm:grid-cols-6">
@@ -16,9 +16,18 @@
 
                             <!-- Profile Picture -->
                             <div class="sm:col-span-3">
-                                <label for="profile_picture" class="block text-sm font-medium leading-6">Foto profilo</label>
-                                <div class="mt-2">
-                                    <input v-model="form.profile_picture" type="text" class="input input-bordered input-primary w-full max-w-xs" />
+                                <label for="cover-photo" class="block text-sm font-medium leading-6">Foto profilo</label>
+                                <div class="mt-2 flex justify-center rounded-lg border border-dashed border-white/25 px-6 py-10">
+                                    <div class="text-center">
+                                        <div class="mt-4 flex text-sm leading-6 text-gray-400">
+                                            <label for="image-upload" class="relative cursor-pointer rounded-md bg-gray-900 font-semibold focus-within:outline-none focus-within:ring-2 focus-within:ring-indigo-600 focus-within:ring-offset-2 focus-within:ring-offset-gray-900 hover:text-indigo-500">
+                                                <span>Carica una foto</span>
+                                                <input id="image-upload" name="image" type="file" class="sr-only" @change="form.profile_picture = $event.target.files[0]" />
+                                            </label>
+                                            <p class="pl-1">oppure trascinala qui</p>
+                                        </div>
+                                        <p class="text-xs leading-5 text-gray-400">PNG o JPG fino a 10MB</p>
+                                    </div>
                                 </div>
                             </div>
 
@@ -120,7 +129,7 @@ import { useForm } from '@inertiajs/vue3';
 
 const form = useForm({
     name: '',
-    profile_picture: '',
+    profile_picture: null,
     contract_type: '',
     job_titles: '',
     description: '',
@@ -134,8 +143,19 @@ const form = useForm({
 });
 
 const submit = () => {
+    const formData = new FormData();
+    for (const key in form) {
+        if (key === 'profile_picture' && form[key]) {
+            formData.append(key, form[key]);
+        } else {
+            formData.append(key, form[key]);
+        }
+    }
+
     form.post(route('admin.workers.store'), {
+        body: formData,
         onSuccess: () => {
+            form.reset();
             $inertia.visit(route('admin.workers.index'));
         }
     });

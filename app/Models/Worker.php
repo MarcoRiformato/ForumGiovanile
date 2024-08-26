@@ -11,7 +11,8 @@ class Worker extends Model
 
     protected $fillable = [
         'name',
-        'profile_picture',
+        'contract_type',
+        'job_titles',
         'description',
         'residence',
         'availability',
@@ -19,6 +20,17 @@ class Worker extends Model
         'work_experience',
         'languages',
         'has_hccp_certificate',
-        'education'
+        'education',
     ];
+
+    protected $casts = [
+        'availability' => 'date',
+        'has_car' => 'boolean',
+        'has_hccp_certificate' => 'boolean',
+    ];
+
+    public function media()
+    {
+        return $this->belongsToMany(Media::class);
+    }
 }
