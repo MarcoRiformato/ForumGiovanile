@@ -1,5 +1,5 @@
 <template>
-    <AppLayout title="Lista offerte di lavoro">
+    <AppLayout title="Lista collaboratori">
         <div class="bg-base-200">
             <div class="px-4 sm:px-6 lg:px-8">
                 <div class="flex flex-col sm:flex-row sm:items-center">
@@ -7,35 +7,32 @@
                         <h1 class="text-4xl">Gestisci i collaboratori</h1>
                     </div>
                     <div class="mt-12 sm:ml-16 sm:mt-0 sm:flex-none">
-                        <button type="button" @click="$inertia.visit(route('admin.workers.create'))" class="btn btn-primary">Nuovo collaboratore (non attivo)</button>
+                        <button type="button" @click="$inertia.visit(route('admin.workers.create'))" class="btn btn-primary">Nuovo collaboratore</button>
                     </div>
                 </div>
                 <div class="mt-8">
                     <table class="min-w-full divide-y divide-gray-300">
                         <thead>
                             <tr>
-                                <th scope="col" class="py-3.5 px-4 text-left text-lg text-info font-semibold">Titolo</th>
-                                <th scope="col" class="py-3.5 px-4 text-left text-lg text-info font-semibold">Azienda</th>
-                                <th scope="col" class="py-3.5 px-4 text-left text-lg text-info font-semibold">Luogo</th>
-                                <th scope="col" class="py-3.5 px-4 text-left text-lg text-info font-semibold">Stipendio</th>
-                                <th scope="col" class="py-3.5 px-4 text-left text-lg text-info font-semibold">Descrizione</th>
-                                <th scope="col" class="py-3.5 px-4 text-left text-lg text-info font-semibold">Data pubblicazione</th>
+                                <th scope="col" class="py-3.5 px-4 text-left text-lg text-info font-semibold">Nome</th>
+                                <th scope="col" class="py-3.5 px-4 text-left text-lg text-info font-semibold">Tipo di contratto</th>
+                                <th scope="col" class="py-3.5 px-4 text-left text-lg text-info font-semibold">Titoli di lavoro</th>
+                                <th scope="col" class="py-3.5 px-4 text-left text-lg text-info font-semibold">Residenza</th>
+                                <th scope="col" class="py-3.5 px-4 text-left text-lg text-info font-semibold">Disponibilità</th>
+                                <th scope="col" class="py-3.5 px-4 text-left text-lg text-info font-semibold">Azioni</th>
                             </tr>
                         </thead>
                         <tbody class="divide-y divide-gray-200">
-                            <tr
-                            @click="$inertia.visit(route('jobs.index'))"
-                             v-for="job in jobs" :key="job.id">
-                                <td class="py-4 px-4 text-sm font-medium">{{ job.lavoro }}</td>
-                                <td class="py-4 px-4 text-sm">{{ job.azienda }}</td>
-                                <td class="py-4 px-4 text-sm">{{ job.luogo }}</td>
-                                <td class="py-4 px-4 text-sm">{{ job.stipendio }}</td>
-                                <td class="py-4 px-4 text-sm">{{ job.descrizione }}</td>
+                            <tr v-for="worker in workers" :key="worker.id">
+                                <td class="py-4 px-4 text-sm font-medium">{{ worker.name }}</td>
+                                <td class="py-4 px-4 text-sm">{{ worker.contract_type }}</td>
+                                <td class="py-4 px-4 text-sm">{{ worker.job_titles }}</td>
+                                <td class="py-4 px-4 text-sm">{{ worker.residence }}</td>
                                 <td class="py-4 px-4 text-sm">
-                                {{ new Date(job.data_pubblicazione).toLocaleDateString('it-IT', { month: 'short', day: 'numeric' }) }}
+                                    {{ worker.availability ? new Date(worker.availability).toLocaleDateString('it-IT', { year: 'numeric', month: 'short', day: 'numeric' }) : 'N/A' }}
                                 </td>
                                 <td class="py-4 px-4 text-sm">
-                                    <button class="btn btn-secondary" @click.stop="$inertia.visit(route('admin.jobs.edit', job.id))">Modifica</button>
+                                    <button class="btn btn-secondary" @click="$inertia.visit(route('admin.workers.edit', worker.id))">Modifica</button>
                                 </td>
                             </tr>
                         </tbody>
@@ -50,6 +47,6 @@
 import AppLayout from '@/Layouts/AppLayout.vue';
 
 defineProps({
-    jobs: Object
+    workers: Object
 })
 </script>
