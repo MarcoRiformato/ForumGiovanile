@@ -3,6 +3,7 @@
 namespace App\Http\Controllers;
 use App\Http\Controllers\Controller;
 use App\Models\Worker;
+use App\Models\Media;
 use Inertia\Inertia;
 use Illuminate\Http\Request;
 
@@ -11,7 +12,7 @@ class WorkerController extends Controller
     public function index()
     {
         $workers = Worker::orderBy('created_at', 'desc')->get();
-        return Inertia::render('Admin/Workers/Index', ['workers' => $workers]);
+        return Inertia::render('Workers/Index', ['workers' => $workers]);
     }
 
     public function create()
@@ -21,24 +22,29 @@ class WorkerController extends Controller
 
     public function store(Request $request)
     {
-        $validated = $request->validate([
-            'name' => 'nullable|string|max:255',
-            'profile_picture' => 'nullable|string|max:255',
-            'contract_type' => 'nullable|string|max:255',
-            'job_titles' => 'nullable|string|max:255',
-            'description' => 'nullable|string',
-            'residence' => 'nullable|string|max:255',
-            'availability' => 'nullable|date',
-            'has_car' => 'nullable|boolean',
-            'work_experience' => 'nullable|string',
-            'languages' => 'nullable|string|max:255',
-            'has_hccp_certificate' => 'nullable|boolean',
-            'education' => 'nullable|string|max:255',
+        $validatedData = $request->validate([
+            'name' => 'required|string|max:255',
+            'profile_picture' => 'nullable|file|mimes:jpg,jpeg,png,gif|max:10240',
+            // Add validation rules for other fields
         ]);
 
-        Worker::create($validated);
+        $worker = Worker::create($validatedData);
 
-        return redirect()->route('admin.workers.index')->with('success', 'Collaboratore creato con successo.');
+        if ($request->hasFile('profile_picture')) {
+            $file = $request->file('profile_picture');
+            $path = $file->store('workers', 'public');
+
+            $media = new Media([
+                'filepath' => $path,
+                'filetype' => 'image',
+                'filename' => $file->getClientOriginalName(),
+                'worker_id' => $worker->id,
+            ]);
+
+            $worker->media()->save($media);
+        }
+
+        return redirect()->route('admin.workers.index');
     }
 
     // Implement edit, update, and destroy methods here
