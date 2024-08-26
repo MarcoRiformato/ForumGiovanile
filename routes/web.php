@@ -121,6 +121,13 @@ Route::middleware(['auth', 'admin'])->group(function () {
 
     //Workers Routes
     Route::get('/admin/workers.index', [AdminController::class, 'manageWorkers'])->name('admin.workers.index');
+    Route::resource('/admin/workers', WorkerController::class)->except(['index'])->names([
+        'create' => 'admin.workers.create',
+        'store' => 'admin.workers.store',
+        'edit' => 'admin.workers.edit',
+        'update' => 'admin.workers.update',
+        'destroy' => 'admin.workers.destroy',
+    ]);
 
     // Elections routes
     Route::get('/admin/elections/create', [ElectionController::class, 'createElectionDetails'])->name('admin.elections.create');

@@ -7,7 +7,7 @@
                         <h1 class="text-4xl">Gestisci i collaboratori</h1>
                     </div>
                     <div class="mt-12 sm:ml-16 sm:mt-0 sm:flex-none">
-                        <button type="button" @click="$inertia.visit(route('admin.jobs.create'))" class="btn btn-disabled">Nuovo collaboratore (non attivo)</button>
+                        <button type="button" @click="$inertia.visit(route('admin.workers.create'))" class="btn btn-primary">Nuovo collaboratore (non attivo)</button>
                     </div>
                 </div>
                 <div class="mt-8">

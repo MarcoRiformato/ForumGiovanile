@@ -1,7 +1,7 @@
 <template>
-    <AppLayout title="Modifica posizione">
+    <AppLayout title="Crea nuova posizione">
         <div class="bg-base-200">
-            <h1 class="text-4xl p-4">Modifica posizione</h1>
+            <h1 class="text-4xl p-4">Crea nuova posizione</h1>
             <form class="px-8 bg-base-200 pb-8" @submit.prevent="submit">
                 <div class="space-y-12">
                     <div class="border-b border-white/10 pb-12">
