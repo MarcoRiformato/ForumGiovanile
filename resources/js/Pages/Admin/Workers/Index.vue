@@ -14,6 +14,7 @@
                     <table class="min-w-full divide-y divide-gray-300">
                         <thead>
                             <tr>
+                                <th scope="col" class="py-3.5 px-4 text-left text-lg text-info font-semibold">Immagine</th>
                                 <th scope="col" class="py-3.5 px-4 text-left text-lg text-info font-semibold">Nome</th>
                                 <th scope="col" class="py-3.5 px-4 text-left text-lg text-info font-semibold">Tipo di contratto</th>
                                 <th scope="col" class="py-3.5 px-4 text-left text-lg text-info font-semibold">Titoli di lavoro</th>
@@ -24,6 +25,14 @@
                         </thead>
                         <tbody class="divide-y divide-gray-200">
                             <tr v-for="worker in workers" :key="worker.id">
+                                <p>{{ worker }}</p>
+                                <td class="py-4 px-4 text-sm">
+                                    <img 
+                                        :src="'/storage/' + worker.media.filepath" 
+                                        :alt="worker.name + ' Image'" 
+                                        class="h-12 w-12 rounded-full object-cover" 
+                                    />
+                                </td>
                                 <td class="py-4 px-4 text-sm font-medium">{{ worker.name }}</td>
                                 <td class="py-4 px-4 text-sm">{{ worker.contract_type }}</td>
                                 <td class="py-4 px-4 text-sm">{{ worker.job_titles }}</td>

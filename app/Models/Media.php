@@ -5,7 +5,7 @@ namespace App\Models;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
 
-class media extends Model
+class Media extends Model
 {
     use HasFactory;
     protected $fillable = ['filename', 'filepath', 'filetype', 'article_id'];
@@ -13,6 +13,11 @@ class media extends Model
     public function ad()
     {
         return $this->belongsTo(Ad::class);
+    }
+
+    public function worker()
+    {
+        return $this->belongsTo(Worker::class);
     }
 
     public function articles() {

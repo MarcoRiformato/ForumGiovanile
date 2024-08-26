@@ -19,6 +19,7 @@ return new class extends Migration
             $table->timestamps();
             $table->foreignId('ad_id')->nullable()->constrained('ads')->onDelete('cascade');
             $table->foreignId('article_id')->nullable()->constrained('articles')->onDelete('cascade');
+            $table->foreignId('worker_id')->nullable()->constrained('workers')->onDelete('cascade');
         });
     }    
     

@@ -9,28 +9,11 @@ class Worker extends Model
 {
     use HasFactory;
 
-    protected $fillable = [
-        'name',
-        'contract_type',
-        'job_titles',
-        'description',
-        'residence',
-        'availability',
-        'has_car',
-        'work_experience',
-        'languages',
-        'has_hccp_certificate',
-        'education',
-    ];
-
-    protected $casts = [
-        'availability' => 'date',
-        'has_car' => 'boolean',
-        'has_hccp_certificate' => 'boolean',
-    ];
+    protected $table = 'workers';
+    protected $guarded = [];
 
     public function media()
     {
-        return $this->belongsToMany(Media::class);
+        return $this->hasOne(Media::class);
     }
 }

@@ -14,17 +14,17 @@ return new class extends Migration
         Schema::create('workers', function (Blueprint $table) {
             $table->id();
             $table->string('name')->nullable();
-            $table->string('profile_picture')->nullable();
             $table->string('contract_type')->nullable();
             $table->string('job_titles')->nullable();
             $table->text('description')->nullable();
             $table->string('residence')->nullable();
-            $table->date('availability')->nullable();
-            $table->boolean('has_car')->nullable();
-            $table->text('work_experience')->nullable();
-            $table->string('languages')->nullable();
-            $table->boolean('has_hccp_certificate')->nullable();
+            $table->date('availability_start')->nullable();
+            $table->date('availability_end')->nullable();
+            $table->boolean('has_car')->default(false);
+            $table->json('languages')->nullable();
+            $table->boolean('has_hccp_certificate')->default(false);
             $table->string('education')->nullable();
+            $table->text('work_experience')->nullable();
             $table->timestamps();
         });
         

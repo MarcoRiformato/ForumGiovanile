@@ -102,7 +102,7 @@
                                     </div>
                                 </div>
 
-                                <!-- Languages -->
+                                <!-- Languages
                                 <div>
                                     <Listbox v-model="form.selected_languages" multiple>
                                         <ListboxLabel class="block text-sm font-medium leading-6 mb-2">Lingue</ListboxLabel>
@@ -133,7 +133,7 @@
                                         </div>
                                     </Listbox>
                                     <div v-if="form.errors.selected_languages" class="text-error text-sm mt-1">{{ form.errors.selected_languages }}</div>
-                                </div>
+                                </div>-->
                             </div>
 
                             <!-- Has HCCP Certificate -->
@@ -186,19 +186,20 @@ const languages = [
     { id: 10, name: 'Polski', flag: '🇵🇱' },
 ];
 
-const form = useForm({
+let form = useForm({
     name: '',
     profile_picture: null,
     contract_type: '',
     job_titles: '',
     description: '',
     residence: '',
-    availability: '',
+    availability_start: '',
+    availability_end: '',
     has_car: false,
-    work_experience: '',
-    languages: '',
+    languages: [],
     has_hccp_certificate: false,
     education: '',
+    work_experience: ''
 });
 
 const submit = () => {
@@ -206,29 +207,19 @@ const submit = () => {
     for (const key in form) {
         if (key === 'profile_picture' && form[key]) {
             formData.append(key, form[key]);
+        } else if (key === 'languages') {
+            formData.append('languages', JSON.stringify([])); // Always send an empty array
         } else {
             formData.append(key, form[key]);
         }
     }
 
-    // Convert selected languages to the desired format before submitting
-    const formattedLanguages = form.selected_languages.map(lang => ({
-        language_id: lang.id,
-        proficiency: 1 // You can set a default proficiency or add a separate field for this
-    }));
-
     form.post(route('admin.workers.store'), {
         body: formData,
-        data: {
-            language_ratings: formattedLanguages,
-        },
         onSuccess: () => {
             form.reset();
             $inertia.visit(route('admin.workers.index'));
         },
-        onError: (errors) => {
-            console.error('Form submission errors:', errors);
-        }
     });
 };
 </script>

@@ -18,15 +18,15 @@ class WorkerFactory extends Factory
     {
         return [
             'name' => $this->faker->name(),
-            'profile_picture' => $this->faker->imageUrl(640, 480, 'people'),
             'contract_type' => $this->faker->randomElement(['Tempo pieno', 'Part time', 'Collaborazione a partita IVA']),
             'job_titles' => $this->faker->randomElement(['Bagnino', 'Cameriere', 'Cuoco', 'Architetto', 'Sviluppatore web']),
             'description' => $this->faker->text(200),
             'residence' => $this->faker->city() . ', Elba',
-            'availability' => $this->faker->date(),
+            'availability_start' => $this->faker->date(),
+            'availability_end' => $this->faker->date(),
             'has_car' => $this->faker->boolean(50),
             'work_experience' => $this->faker->sentence(10),
-            'languages' => 'Italiano',
+            'languages' => json_encode([$this->faker->randomElement(['Italiano', 'English', 'Deutsch', 'Français', 'Nederlands', 'Español', 'Русский', 'Svenska', 'Dansk', 'Polski'])]),
             'has_hccp_certificate' => $this->faker->boolean(30),
             'education' => $this->faker->randomElement(['Diploma scuola superiore', 'Laurea', 'Magistrale'])
         ];
