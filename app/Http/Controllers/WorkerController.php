@@ -23,7 +23,7 @@ class WorkerController extends Controller
     public function store(Request $request)
     {
         $validatedData = $request->validate([
-            'name' => 'required|string|max:255',
+            'name' => 'nullable|string|max:255',
             'profile_picture' => 'nullable|file|mimes:jpg,jpeg,png,gif,webp|max:10240',
             'contract_type' => 'nullable|string|max:255',
             'job_titles' => 'nullable|string|max:255',
@@ -46,7 +46,7 @@ class WorkerController extends Controller
             'availability' => $validatedData['availability'],
             'has_car' => $validatedData['has_car'],
             'work_experience' => $validatedData['work_experience'],
-            'languages' => $validatedData['languages'],
+            'languages' => json_encode($validatedData['languages']),
             'has_hccp_certificate' => $validatedData['has_hccp_certificate'],
             'education' => $validatedData['education'],
         ]);

@@ -91,33 +91,49 @@
                                 </div>
                             </div>
 
-                            <!-- Has Car -->
-                            <div class="sm:col-span-3">
-                                <label for="has_car" class="block text-sm font-medium leading-6">Ha un'auto</label>
-                                <div class="mt-2">
-                                    <input v-model="form.has_car" type="checkbox" class="checkbox checkbox-primary" />
-                                    <div v-if="form.errors.has_car" class="text-error text-sm mt-1">{{ form.errors.has_car }}</div>
-                                </div>
-                            </div>
-
-                            <!-- Languages -->
-                            <div class="sm:col-span-full">
-                                <label class="block text-sm font-medium leading-6 mb-2">Lingue</label>
-                                <div class="grid grid-cols-1 md:grid-cols-2 gap-4">
-                                    <div v-for="language in languages" :key="language.id" class="flex items-center space-x-2">
-                                        <span class="w-24">{{ language.flag }} {{ language.name }}</span>
-                                        <div class="rating rating-md">
-                                            <div class="rating">
-                                                <input type="radio" :name="`rating-${language.id}`" class="mask mask-star" :value="1" v-model="form.language_ratings[language.id]" />
-                                                <input type="radio" :name="`rating-${language.id}`" class="mask mask-star" :value="2" v-model="form.language_ratings[language.id]" />
-                                                <input type="radio" :name="`rating-${language.id}`" class="mask mask-star" :value="3" v-model="form.language_ratings[language.id]" />
-                                                <input type="radio" :name="`rating-${language.id}`" class="mask mask-star" :value="4" v-model="form.language_ratings[language.id]" />
-                                                <input type="radio" :name="`rating-${language.id}`" class="mask mask-star" :value="5" v-model="form.language_ratings[language.id]" />
-                                            </div>
-                                        </div>
+                            <!-- Has Car and Languages -->
+                            <div class="sm:col-span-full grid grid-cols-1 sm:grid-cols-2 gap-6">
+                                <!-- Has Car -->
+                                <div>
+                                    <label for="has_car" class="block text-sm font-medium leading-6">Ha un'auto</label>
+                                    <div class="mt-2">
+                                        <input v-model="form.has_car" type="checkbox" class="checkbox checkbox-primary" />
+                                        <div v-if="form.errors.has_car" class="text-error text-sm mt-1">{{ form.errors.has_car }}</div>
                                     </div>
                                 </div>
-                                <div v-if="form.errors.language_ratings" class="text-error text-sm mt-1">{{ form.errors.language_ratings }}</div>
+
+                                <!-- Languages -->
+                                <div>
+                                    <Listbox v-model="form.selected_languages" multiple>
+                                        <ListboxLabel class="block text-sm font-medium leading-6 mb-2">Lingue</ListboxLabel>
+                                        <div class="relative mt-2">
+                                            <ListboxButton class="relative w-full cursor-default rounded-md bg-white py-1.5 pl-3 pr-10 text-left text-gray-900 shadow-sm ring-1 ring-inset ring-gray-300 focus:outline-none focus:ring-2 focus:ring-indigo-600 sm:text-sm sm:leading-6">
+                                                <span class="block truncate">
+                                                    {{ form.selected_languages.map(lang => lang.name).join(', ') || 'Seleziona le lingue' }}
+                                                </span>
+                                                <span class="pointer-events-none absolute inset-y-0 right-0 flex items-center pr-2">
+                                                    <ChevronUpDownIcon class="h-5 w-5 text-gray-400" aria-hidden="true" />
+                                                </span>
+                                            </ListboxButton>
+
+                                            <transition leave-active-class="transition ease-in duration-100" leave-from-class="opacity-100" leave-to-class="opacity-0">
+                                                <ListboxOptions class="absolute z-10 mt-1 max-h-60 w-full overflow-auto rounded-md bg-white py-1 text-base shadow-lg ring-1 ring-black ring-opacity-5 focus:outline-none sm:text-sm">
+                                                    <ListboxOption v-for="language in languages" :key="language.id" :value="language" v-slot="{ active, selected }">
+                                                        <li :class="[active ? 'bg-indigo-600 text-white' : 'text-gray-900', 'relative cursor-default select-none py-2 pl-3 pr-9']">
+                                                            <span :class="[selected ? 'font-semibold' : 'font-normal', 'block truncate']">
+                                                                {{ language.flag }} {{ language.name }}
+                                                            </span>
+                                                            <span v-if="selected" :class="[active ? 'text-white' : 'text-indigo-600', 'absolute inset-y-0 right-0 flex items-center pr-4']">
+                                                                <CheckIcon class="h-5 w-5" aria-hidden="true" />
+                                                            </span>
+                                                        </li>
+                                                    </ListboxOption>
+                                                </ListboxOptions>
+                                            </transition>
+                                        </div>
+                                    </Listbox>
+                                    <div v-if="form.errors.selected_languages" class="text-error text-sm mt-1">{{ form.errors.selected_languages }}</div>
+                                </div>
                             </div>
 
                             <!-- Has HCCP Certificate -->
@@ -154,6 +170,8 @@
 import AppLayout from '@/Layouts/AppLayout.vue';
 import { useForm } from '@inertiajs/vue3';
 import { ref } from 'vue';
+import { Listbox, ListboxButton, ListboxLabel, ListboxOption, ListboxOptions } from '@headlessui/vue'
+import { CheckIcon, ChevronUpDownIcon } from '@heroicons/vue/20/solid'
 
 const languages = [
     { id: 1, name: 'Italiano', flag: '🇮🇹' },
@@ -177,15 +195,9 @@ const form = useForm({
     residence: '',
     availability: '',
     has_car: false,
-    work_experience: '',
-    language_ratings: {},
+    selected_languages: [],
     has_hccp_certificate: false,
     education: '',
-});
-
-// Initialize language ratings to 0
-languages.forEach(lang => {
-    form.language_ratings[lang.id] = 0;
 });
 
 const submit = () => {
@@ -198,16 +210,16 @@ const submit = () => {
         }
     }
 
-    // Convert language ratings to the desired format before submitting
-    const formattedLanguageRatings = Object.entries(form.language_ratings).map(([id, rating]) => ({
-        language_id: parseInt(id),
-        proficiency: rating
+    // Convert selected languages to the desired format before submitting
+    const formattedLanguages = form.selected_languages.map(lang => ({
+        language_id: lang.id,
+        proficiency: 1 // You can set a default proficiency or add a separate field for this
     }));
 
     form.post(route('admin.workers.store'), {
         body: formData,
         data: {
-            language_ratings: formattedLanguageRatings,
+            language_ratings: formattedLanguages,
         },
         onSuccess: () => {
             form.reset();
