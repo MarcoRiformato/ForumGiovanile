@@ -12,7 +12,7 @@ class WorkerController extends Controller
     public function index()
     {
         $workers = Worker::with('media')->orderBy('created_at', 'desc')->get();
-        return Inertia::render('Admin/Workers/Index', ['workers' => $workers]);
+        return Inertia::render('Workers/Index', ['workers' => $workers]);
     }
 
     public function create()

@@ -25,10 +25,9 @@
                         </thead>
                         <tbody class="divide-y divide-gray-200">
                             <tr v-for="worker in workers" :key="worker.id">
-                                <p>{{ worker }}</p>
                                 <td class="py-4 px-4 text-sm">
                                     <img 
-                                        :src="'/storage/' + worker.media.filepath" 
+                                        :src="worker.media ? '/storage/' + worker.media.filepath : ''" 
                                         :alt="worker.name + ' Image'" 
                                         class="h-12 w-12 rounded-full object-cover" 
                                     />
