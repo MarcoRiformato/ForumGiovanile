@@ -1,37 +1,42 @@
 <template>
 <AppLayout title="ElbaJobz">
-<div class="flex justify-end items-center w-full py-4 pb-6">
-  <div class="relative rounded-full px-3 text-sm leading-6 text-gray-600 ring-1 ring-gray-900/10 hover:ring-gray-900/20">
-    Sei un azienda? <a @click="$inertia.visit(route('workers.index'))" class="font-semibold text-secondary"><span class="absolute inset-0" aria-hidden="true" />Trova collaboratori<span aria-hidden="true">&rarr;</span></a>
-  </div>
-</div>
-<Banner 
-  message="La piattaforma lavoro del Forum Giovanile dell’Elba nasce per aiutare la conoscenza reciproca di domanda/offerta nel mondo del lavoro ma soprattutto per far si che ciò avvenga nel rispetto dei principi di: trasparenza legalità rispetto dei diritti dei lavoratori reciproca buona fede che tutti gli utenti,aziende e lavoratori, si impegnano a rispettare - Il Forum Giovanile dell’Elba"
-  class="m-4 rounded-xl"
-/>
-<ul role="list" class="grid grid-cols-1 gap-x-6 gap-y-8 lg:grid-cols-3 xl:gap-x-8">
-  <li v-for="job in jobs" :key="job.id" class="overflow-hidden rounded-xl border border-gray-200" >
-    <div class="flex items-center gap-x-4 border-b border-gray-900/5 p-6 mb-4">
-      <div class="text-sm font-medium leading-6">{{ job.lavoro }}</div>
+  <div class="flex justify-end items-center w-full py-4 pb-6">
+    <div class="relative rounded-full px-3 text-sm leading-6 text-gray-600 ring-1 ring-gray-900/10 hover:ring-gray-900/20">
+      Sei un azienda? <a @click="$inertia.visit(route('workers.index'))" class="font-semibold text-secondary"><span class="absolute inset-0" aria-hidden="true" />Trova collaboratori<span aria-hidden="true">&rarr;</span></a>
     </div>
-    <dl class="-mt-8 px-6 py-4 text-sm leading-6">
-      <div class="flex justify-between py-1">
-        <p>📍 {{ job.luogo }}</p>
+  </div>
+  <Banner 
+    message="La piattaforma lavoro del Forum Giovanile dell'Elba nasce per aiutare la conoscenza reciproca di domanda/offerta nel mondo del lavoro ma soprattutto per far si che ciò avvenga nel rispetto dei principi di: trasparenza legalità rispetto dei diritti dei lavoratori reciproca buona fede che tutti gli utenti,aziende e lavoratori, si impegnano a rispettare - Il Forum Giovanile dell'Elba"
+    class="m-4 rounded-xl"
+  />
+  
+  <div v-if="jobs.length === 0" class="text-center py-8">
+    <p class="text-xl text-gray-600">Al momento non ci sono offerte di lavoro disponibili, riprova più tardi 😕</p>
+  </div>
+
+  <ul v-else role="list" class="grid grid-cols-1 gap-x-6 gap-y-8 lg:grid-cols-3 xl:gap-x-8">
+    <li v-for="job in jobs" :key="job.id" class="overflow-hidden rounded-xl border border-gray-200" >
+      <div class="flex items-center gap-x-4 border-b border-gray-900/5 p-6 mb-4">
+        <div class="text-sm font-medium leading-6">{{ job.lavoro }}</div>
       </div>
-      <div class="flex justify-between py-1">
-        <p>💼 {{ job.azienda }}</p>
-      </div>
-      <div class="flex justify-between py-1 divide-y">
-        <p>💶 € {{ job.stipendio }}</p>
-      </div>
-      <p class="pt-4 pb-6">{{ job.descrizione }}</p>
-      <div class="flex justify-between items-center">
-        <button @click="openWhatsApp(job)" class="btn btn-primary btn-sm">Candidati</button>
-        <p class="text-gray-500">Nuovo annuncio! <br/> 🆕</p>
-      </div>
-    </dl>
-  </li>
-</ul>
+      <dl class="-mt-8 px-6 py-4 text-sm leading-6">
+        <div class="flex justify-between py-1">
+          <p>📍 {{ job.luogo }}</p>
+        </div>
+        <div class="flex justify-between py-1">
+          <p>💼 {{ job.azienda }}</p>
+        </div>
+        <div class="flex justify-between py-1 divide-y">
+          <p>💶 € {{ job.stipendio }}</p>
+        </div>
+        <p class="pt-4 pb-6">{{ job.descrizione }}</p>
+        <div class="flex justify-between items-center">
+          <button @click="openWhatsApp(job)" class="btn btn-primary btn-sm">Candidati</button>
+          <p class="text-gray-500">Nuovo annuncio! <br/> 🆕</p>
+        </div>
+      </dl>
+    </li>
+  </ul>
 
 </AppLayout>
 </template>
