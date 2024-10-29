@@ -20,9 +20,9 @@ return new class extends Migration
             $table->string('residence')->nullable();
             $table->date('availability_start')->nullable();
             $table->date('availability_end')->nullable();
-            $table->boolean('has_car')->default(false);
+            $table->boolean('has_car')->default(false)->nullable();
             $table->json('languages')->nullable();
-            $table->boolean('has_hccp_certificate')->default(false);
+            $table->boolean('has_hccp_certificate')->default(false)->nullable();
             $table->string('education')->nullable();
             $table->text('work_experience')->nullable();
             $table->timestamps();

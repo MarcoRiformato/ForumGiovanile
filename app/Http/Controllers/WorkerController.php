@@ -6,6 +6,7 @@ use App\Models\Worker;
 use App\Models\Media;
 use Inertia\Inertia;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Storage;
 
 class WorkerController extends Controller
 {
@@ -31,11 +32,20 @@ class WorkerController extends Controller
             'residence' => 'nullable|string|max:255',
             'availability_start' => 'nullable|date',
             'availability_end' => 'nullable|date',
-            'has_car' => 'boolean',
+            'has_car' => 'nullable|boolean',
             'work_experience' => 'nullable|string',
             'languages' => 'nullable|string|max:255',
-            'has_hccp_certificate' => 'boolean',
+            'has_hccp_certificate' => 'nullable|boolean',
             'education' => 'nullable|string|max:255',
+        ], [
+            'profile_picture.max' => 'L\'immagine non può superare i 10MB',
+            'profile_picture.mimes' => 'Il file deve essere un\'immagine (jpg, jpeg, png, gif, webp)',
+            'name.max' => 'Il nome non può superare i 255 caratteri',
+            'contract_type.max' => 'Errore nel tipo di contratto',
+            'job_titles.max' => 'I titoli di lavoro non possono superare i 255 caratteri',
+            'residence.max' => 'La residenza non può superare i 255 caratteri',
+            'languages.max' => 'Le lingue non possono superare i 255 caratteri',
+            'education.max' => 'L\'istruzione non può superare i 255 caratteri',
         ]);
 
         $worker = Worker::create([
@@ -54,24 +64,15 @@ class WorkerController extends Controller
         ]);
 
         if ($request->hasFile('profile_picture')) {
-            $file = $request->file('profile_picture');
-            $path = $file->store('workers', 'public');
-
-            $media = new Media([
-                'filepath' => $path,
-                'filetype' => $this->determineFileType($file->getClientMimeType()),
-                'filename' => $file->getClientOriginalName(),
-                'worker_id' => $worker->id,
-            ]);
-            
-            $worker->media()->save($media);
+            $this->handleProfilePicture($worker, $request->file('profile_picture'));
         }
 
-        return redirect()->route('admin.workers.index');
+        return redirect()->route('admin.workers.index')->with('message', 'Worker created successfully');
     }
 
     public function edit(Worker $worker)
     {
+        $worker->load('media');
         return Inertia::render('Admin/Workers/Edit', [
             'worker' => $worker
         ]);
@@ -85,7 +86,8 @@ class WorkerController extends Controller
             'job_titles' => 'nullable|string|max:255',
             'description' => 'nullable|string',
             'residence' => 'nullable|string|max:255',
-            'availability' => 'nullable|date',
+            'availability_start' => 'nullable|date',
+            'availability_end' => 'nullable|date',
             'has_car' => 'boolean',
             'work_experience' => 'nullable|string',
             'languages' => 'nullable|string|max:255',
@@ -94,6 +96,12 @@ class WorkerController extends Controller
         ]);
 
         $worker->update($validatedData);
+
+        if ($request->hasFile('profile_picture')) {
+            $this->handleProfilePicture($worker, $request->file('profile_picture'));
+        } elseif ($request->boolean('remove_existing_image')) {
+            $this->removeProfilePicture($worker);
+        }
 
         return redirect()->route('admin.workers.index')->with('message', 'Worker updated successfully');
     }
@@ -113,6 +121,36 @@ class WorkerController extends Controller
             return 'video';
         } else {
             return 'document';
+        }
+    }
+
+    private function handleProfilePicture(Worker $worker, $file)
+    {
+        // Delete existing profile picture if any
+        if ($worker->media()->exists()) {
+            $existingMedia = $worker->media()->first();
+            Storage::disk('public')->delete($existingMedia->filepath);
+            $existingMedia->delete();
+        }
+
+        // Store new profile picture
+        $path = $file->store('workers', 'public');
+
+        $media = new Media([
+            'filepath' => $path,
+            'filetype' => $this->determineFileType($file->getClientMimeType()),
+            'filename' => $file->getClientOriginalName(),
+        ]);
+        
+        $worker->media()->save($media);
+    }
+
+    private function removeProfilePicture(Worker $worker)
+    {
+        if ($worker->media()->exists()) {
+            $existingMedia = $worker->media()->first();
+            Storage::disk('public')->delete($existingMedia->filepath);
+            $existingMedia->delete();
         }
     }
 }

@@ -68,7 +68,9 @@ class AdminController extends Controller
     public function manageWorkers()
     {
         $workers = Worker::all();
-        return Inertia::render('Admin/Workers/Index', compact('workers'));
+        return Inertia::render('Admin/Workers/Index', [
+            'workers' => Worker::with('media')->orderBy('created_at', 'desc')->get()
+        ]);
     }
     
 }

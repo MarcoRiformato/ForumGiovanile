@@ -27,9 +27,16 @@
                             <tr v-for="worker in workers" :key="worker.id">
                                 <td class="py-4 px-4 text-sm">
                                     <img 
-                                        :src="worker.media ? '/storage/' + worker.media.filepath : ''" 
-                                        :alt="worker.name + ' Image'" 
+                                    v-if="worker.media && worker.media.filepath"
+                                    :src="`/storage/${worker.media.filepath}`"
+                                    :alt="worker.name"
                                         class="h-12 w-12 rounded-full object-cover" 
+                                    />
+                                    <img 
+                                        v-else
+                                        src="/storage/media/blank_avatar.webp"
+                                        :alt="worker.name"
+                                        class="h-12 w-12 rounded-full object-cover"
                                     />
                                 </td>
                                 <td class="py-4 px-4 text-sm font-medium">{{ worker.name }}</td>

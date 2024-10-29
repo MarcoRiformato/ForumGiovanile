@@ -2,96 +2,55 @@
   <AppLayout title="ElbaJobz">
     <div class="flex justify-end items-center w-full py-4 pb-6">
       <div class="relative rounded-full px-3 text-sm leading-6 text-gray-600 ring-1 ring-gray-900/10 hover:ring-gray-900/20">
-        Cerchi lavoro o formazione? <a @click="$inertia.visit(route('jobs.index'))" class="font-semibold text-secondary"><span class="absolute inset-0" aria-hidden="true" />Vedi le offerte<span aria-hidden="true">&rarr;</span></a>
+        Cerchi lavoro o formazione? <a @click="$inertia.visit(route('jobs.index'))" class="font-semibold text-secondary"><span class="absolute inset-0" aria-hidden="true" />Vai alle offerte di lavoro<span aria-hidden="true">&rarr;</span></a>
       </div>
     </div>
 
     <Banner 
-      message="La piattaforma lavoro del Forum Giovanile dell'Elba nasce per aiutare la conoscenza reciproca di domanda/offerta nel mondo del lavoro ma soprattutto per far si che ciò avvenga nel rispetto dei principi di: trasparenza legalità rispetto dei diritti dei lavoratori reciproca buona fede che tutti gli utenti,aziende e lavoratori, si impegnano a rispettare - Il Forum Giovanile dell'Elba" 
+      message="La piattaforma lavoro del Forum Giovanile dell'Elba nasce per aiutare la conoscenza reciproca di domanda/offerta nel mondo del lavoro ma soprattutto per far si che ciò avvenga nel rispetto dei principi di: trasparenza legalità rispetto dei diritti dei lavoratori reciproca buona fede che tutti gli utenti,aziende e lavoratori, si impegnano a rispettare - Il Forum Giovanile dell'Elba"
       class="m-4 rounded-xl"
     />
-
+    
     <div v-if="workers.length === 0" class="text-center py-8">
       <p class="text-xl text-gray-600">Al momento non ci sono lavoratori disponibili, riprova più tardi 😕</p>
     </div>
 
     <ul v-else role="list" class="grid grid-cols-1 gap-x-6 gap-y-8 lg:grid-cols-3 xl:gap-x-8">
-      <li class="overflow-hidden rounded-xl border border-gray-200">
+      <li v-for="worker in workers" :key="worker.id" class="overflow-hidden rounded-xl border border-gray-200">
         <div class="relative text-center p-1">
-          <img src="https://picsum.photos/100" alt="Maria Rossi" class="w-full h-auto object-cover rounded-lg" />
+          <img 
+            v-if="worker.media && worker.media.filepath"
+            :src="`/storage/${worker.media.filepath}`"
+            :alt="worker.name"
+            class="w-full h-auto object-cover rounded-lg"
+          />
+          <img 
+            v-else
+            src="/storage/media/blank_avatar.webp"
+            :alt="worker.name"
+            class="w-full h-auto object-cover rounded-lg"
+          />
           <div class="absolute top-2 left-2 flex">
             <p class="w-5 h-4 ml-2">🇮🇹</p>
           </div>
-          <div class="absolute bottom-2 left-2 bg-green-600 text-white py-1 px-2 rounded">
+          <!--<div class="absolute bottom-2 left-2 bg-green-600 text-white py-1 px-2 rounded">
             Disponibile da subito
-          </div>
+          </div>-->
         </div>
         <div class="p-4 text-center">
-          <h3 class="text-xl mb-2">Maria Rossi</h3>
-          <p class="text-sm mb-2">Esperienza in ristorazione</p>
-          <div class="flex justify-center flex-wrap mb-4">
-            <span class="bg-violet-800 rounded-full px-3 py-1 m-1 text-sm">Barista</span>
-            <span class="bg-violet-800 rounded-full px-3 py-1 m-1 text-sm">Cuoca</span>
+          <h3 class="text-xl mb-2">{{ worker.name }}</h3>
+          <p class="text-sm mb-2">{{ worker.work_experience }}</p>
+          <div v-if="worker.job_titles" class="flex justify-center flex-wrap mb-4">
+            <span v-for="(jobTitle, index) in worker.job_titles.split(',')" :key="index" class="bg-violet-800 rounded-full px-3 py-1 m-1 text-sm text-white">{{ jobTitle.trim() }}</span>
           </div>
           <div class="flex justify-between text-sm mb-4">
-            <span>📍Portoferraio</span>
-            <span>📅15/06-14/09</span>
+            <span>📍{{ worker.residence }}</span>
+            <span>📅{{ formatDateRange(worker.availability_start, worker.availability_end) }}</span>
           </div>
-          <button @click="openWhatsApp('Maria Rossi', 'Esperienza in ristorazione')" class="bg-blue-500 text-white py-2 px-4 rounded">Contatta ora</button>
-        </div>
-      </li>
-
-      <li class="overflow-hidden rounded-xl border border-gray-200">
-        <div class="relative text-center p-1">
-          <img src="https://picsum.photos/100" alt="Giovanni Bonomelli" class="w-full h-auto object-cover rounded-lg" />
-          <div class="absolute top-2 left-2 flex">
-            <p class="w-5 h-4 ml-2">🇮🇹</p>
-          </div>
-          <div class="absolute bottom-2 left-2 bg-green-600 text-white py-1 px-2 rounded">
-            Disponibile da subito
-          </div>
-        </div>
-        <div class="p-4 text-center">
-          <h3 class="text-xl mb-2">Giovanni Bonomelli</h3>
-          <p class="text-sm mb-2">Esperienza in alberghi</p>
-          <div class="flex justify-center flex-wrap mb-4">
-            <span class="bg-violet-800 rounded-full px-3 py-1 m-1 text-sm">Cameriera ai piani</span>
-            <span class="bg-violet-800 rounded-full px-3 py-1 m-1 text-sm">Front Desk</span>
-          </div>
-          <div class="flex justify-between text-sm mb-4">
-            <span>📍Porto azzurro</span>
-            <span>📅11/06-14/08</span>
-          </div>
-          <button @click="openWhatsApp('Giovanni Bonomelli', 'Esperienza in alberghi')" class="bg-blue-500 text-white py-2 px-4 rounded">Contatta ora</button>
-        </div>
-      </li>
-
-      <li class="overflow-hidden rounded-xl border border-gray-200">
-        <div class="relative text-center p-1">
-          <img src="https://picsum.photos/100" alt="Luca Gori" class="w-full h-auto object-cover rounded-lg" />
-          <div class="absolute top-2 left-2 flex">
-            <p class="w-5 h-4 ml-2">🇮🇹</p>
-          </div>
-          <div class="absolute bottom-2 left-2 bg-green-600 text-white py-1 px-2 rounded">
-            Disponibile da subito
-          </div>
-        </div>
-        <div class="p-4 text-center">
-          <h3 class="text-xl mb-2">Luca Gori</h3>
-          <p class="text-sm mb-2">Diplomato in ragioneria</p>
-          <div class="flex justify-center flex-wrap mb-4">
-            <span class="bg-violet-800 rounded-full px-3 py-1 m-1 text-sm">Contabilità</span>
-            <span class="bg-violet-800 rounded-full px-3 py-1 m-1 text-sm">Ufficio paghe</span>
-          </div>
-          <div class="flex justify-between text-sm mb-4">
-            <span>📍Capoliveri</span>
-            <span>📅15/05-14/12</span>
-          </div>
-          <button @click="openWhatsApp('Luca Gori', 'Diplomato in ragioneria')" class="bg-blue-500 text-white py-2 px-4 rounded">Contatta ora</button>
+          <button @click="openWhatsApp(worker)" class="bg-blue-500 text-white py-2 px-4 rounded">Contatta ora</button>
         </div>
       </li>
     </ul>
-
   </AppLayout>
 </template>
 
@@ -100,15 +59,22 @@ import AppLayout from '@/Layouts/AppLayout.vue';
 import Banner from '@/Components/Banner.vue';
 import { ref } from 'vue';
 
-defineProps({
-  workers: Object
+const props = defineProps({
+  workers: Array
 })
 
-const openWhatsApp = (name, experience) => {
+const openWhatsApp = (worker) => {
   const phoneNumber = "393773024349";
-  const message = `Ciao, sono interessato/a al profilo di ${name} con esperienza in ${experience}.`;
+  const message = `Ciao, sono interessato/a al profilo di ${worker.name} con esperienza in ${worker.work_experience}.`;
   const url = `https://wa.me/${phoneNumber}?text=${encodeURIComponent(message)}`;
   window.open(url, '_blank');
+};
+
+const formatDateRange = (start, end) => {
+  if (!start || !end) return 'Date non disponibili';
+  const startDate = new Date(start);
+  const endDate = new Date(end);
+  return `${startDate.getDate()}/${startDate.getMonth() + 1}-${endDate.getDate()}/${endDate.getMonth() + 1}`;
 };
 </script>
 
@@ -163,3 +129,4 @@ const openWhatsApp = (name, experience) => {
   }
 }
 </style>
+
