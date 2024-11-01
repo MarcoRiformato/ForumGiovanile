@@ -45,7 +45,8 @@
           </div>
           <div class="flex justify-between text-sm mb-4">
             <span>📍{{ worker.residence }}</span>
-            <span>📅{{ formatDateRange(worker.availability_start, worker.availability_end) }}</span>
+            <span v-if="worker.availability_start && worker.availability_end">📅{{ formatDateRange(worker.availability_start, worker.availability_end) }}</span>
+            <span>{{ formatContractType(worker.contract_type) }}</span>
           </div>
           <button @click="openWhatsApp(worker)" class="bg-blue-500 text-white py-2 px-4 rounded">Contatta ora</button>
         </div>
@@ -65,13 +66,25 @@ const props = defineProps({
 
 const openWhatsApp = (worker) => {
   const phoneNumber = "393773024349";
-  const message = `Ciao, sono interessato/a al profilo di ${worker.name} con esperienza in ${worker.work_experience}.`;
+  const message = `Ciao, sono interessato/a al profilo di ${worker.name}.`;
   const url = `https://wa.me/${phoneNumber}?text=${encodeURIComponent(message)}`;
   window.open(url, '_blank');
 };
 
+const formatContractType = (contractType) => {
+  if (!contractType) return 'Informazioni non disponibili';
+  
+  const contractEmoji = {
+    'Tempo pieno': '🌕',
+    'Tempo parziale': '🌗',
+    'A chiamata': '📞',
+    'Partita IVA': '🤝🏻',
+  };
+  return `${contractEmoji[contractType] || '🗂️'} ${contractType}`;
+};
+
 const formatDateRange = (start, end) => {
-  if (!start || !end) return 'Date non disponibili';
+  if (!start || !end) return null;
   const startDate = new Date(start);
   const endDate = new Date(end);
   return `${startDate.getDate()}/${startDate.getMonth() + 1}-${endDate.getDate()}/${endDate.getMonth() + 1}`;
