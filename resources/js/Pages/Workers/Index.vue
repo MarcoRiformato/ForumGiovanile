@@ -15,40 +15,85 @@
       <p class="text-xl text-gray-600">Al momento non ci sono lavoratori disponibili, riprova più tardi 😕</p>
     </div>
 
-    <ul v-else role="list" class="grid grid-cols-1 gap-x-6 gap-y-8 lg:grid-cols-3 xl:gap-x-8">
-      <li v-for="worker in workers" :key="worker.id" class="overflow-hidden rounded-xl border border-gray-200">
-        <div class="relative text-center p-1">
-          <img 
-            v-if="worker.media && worker.media.filepath"
-            :src="`/storage/${worker.media.filepath}`"
-            :alt="worker.name"
-            class="w-full h-auto object-cover rounded-lg"
-          />
-          <img 
-            v-else
-            src="/storage/media/blank_avatar.webp"
-            :alt="worker.name"
-            class="w-full h-auto object-cover rounded-lg"
-          />
-          <div class="absolute top-2 left-2 flex">
-            <p class="w-5 h-4 ml-2">🇮🇹</p>
+    <ul role="list" class="grid grid-cols-1 gap-x-6 gap-y-8 lg:grid-cols-3 xl:gap-x-8">
+      <li v-for="worker in workers" 
+          :key="worker.id" 
+          class="overflow-hidden rounded-xl border border-gray-200 cursor-pointer transition-all duration-300"
+          :class="{ 'lg:col-span-3': expandedCard === worker.id }"
+          @click="toggleCard(worker.id)">
+        <div class="flex" :class="{ 'flex-col lg:flex-row': expandedCard === worker.id }">
+          <!-- Basic Card Info -->
+          <div class="flex-1">
+            <div class="relative text-center p-1">
+              <img 
+                v-if="worker.media && worker.media.filepath"
+                :src="`/storage/${worker.media.filepath}`"
+                :alt="worker.name"
+                class="w-full h-auto object-cover rounded-lg"
+                :class="{ 'lg:max-w-xs': expandedCard === worker.id }"
+              />
+              <img 
+                v-else
+                src="/storage/media/blank_avatar.webp"
+                :alt="worker.name"
+                class="w-full h-auto object-cover rounded-lg"
+                :class="{ 'lg:max-w-xs': expandedCard === worker.id }"
+              />
+              <div class="absolute top-2 left-2 flex">
+                <p class="w-5 h-4 ml-2">🇮🇹</p>
+              </div>
+            </div>
+            <div class="p-4 text-center">
+              <h3 class="text-xl mb-2">{{ worker.name }}</h3>
+              <p class="text-sm mb-2">{{ worker.work_experience }}</p>
+              <div v-if="worker.job_titles" class="flex justify-center flex-wrap mb-4">
+                <span v-for="(jobTitle, index) in worker.job_titles.split(',')" 
+                      :key="index" 
+                      class="bg-violet-800 rounded-full px-3 py-1 m-1 text-sm text-white">
+                  {{ jobTitle.trim() }}
+                </span>
+              </div>
+              <div class="flex justify-between text-sm mb-4">
+                <span>📍{{ worker.residence }}</span>
+                <span v-if="worker.availability_start && worker.availability_end">
+                  📅{{ formatDateRange(worker.availability_start, worker.availability_end) }}
+                </span>
+                <span>{{ formatContractType(worker.contract_type) }}</span>
+              </div>
+              <button @click.stop="openWhatsApp(worker)" class="bg-primary text-primary-content py-2 px-4 rounded">
+                Contatta ora
+              </button>
+            </div>
           </div>
-          <!--<div class="absolute bottom-2 left-2 bg-green-600 text-white py-1 px-2 rounded">
-            Disponibile da subito
-          </div>-->
-        </div>
-        <div class="p-4 text-center">
-          <h3 class="text-xl mb-2">{{ worker.name }}</h3>
-          <p class="text-sm mb-2">{{ worker.work_experience }}</p>
-          <div v-if="worker.job_titles" class="flex justify-center flex-wrap mb-4">
-            <span v-for="(jobTitle, index) in worker.job_titles.split(',')" :key="index" class="bg-violet-800 rounded-full px-3 py-1 m-1 text-sm text-white">{{ jobTitle.trim() }}</span>
+
+          <!-- Extended Info (shown when expanded) -->
+          <div v-if="expandedCard === worker.id" 
+               class="flex-1 p-6 border-t lg:border-l lg:border-t-0">
+            <div class="space-y-4">
+              <div>
+                <h4 class="font-semibold text-secondary">Descrizione</h4>
+                <p>{{ worker.description || 'Nessuna descrizione disponibile' }}</p>
+              </div>
+              <div>
+                <h4 class="font-semibold text-secondary">Istruzione</h4>
+                <p>{{ worker.education || 'Non specificato' }}</p>
+              </div>
+              <div>
+                <h4 class="font-semibold text-secondary">Lingue</h4>
+                <p>{{ worker.languages ? JSON.parse(worker.languages).join(', ') : 'Non specificate' }}</p>
+              </div>
+              <div class="space-y-2">
+                <div class="flex items-center">
+                  <span class="mr-2 text-secondary">🚗 Auto/moto:</span>
+                  <span>{{ worker.has_car ? '✅' : '❌' }}</span>
+                </div>
+                <div class="flex items-center text-secondary">
+                  <span class="mr-2">📜 Certificato HACCP:</span>
+                  <span>{{ worker.has_hccp_certificate ? '✅' : '❌' }}</span>
+                </div>
+              </div>
+            </div>
           </div>
-          <div class="flex justify-between text-sm mb-4">
-            <span>📍{{ worker.residence }}</span>
-            <span v-if="worker.availability_start && worker.availability_end">📅{{ formatDateRange(worker.availability_start, worker.availability_end) }}</span>
-            <span>{{ formatContractType(worker.contract_type) }}</span>
-          </div>
-          <button @click="openWhatsApp(worker)" class="bg-blue-500 text-white py-2 px-4 rounded">Contatta ora</button>
         </div>
       </li>
     </ul>
@@ -62,7 +107,13 @@ import { ref } from 'vue';
 
 const props = defineProps({
   workers: Array
-})
+});
+
+const expandedCard = ref(null);
+
+const toggleCard = (workerId) => {
+  expandedCard.value = expandedCard.value === workerId ? null : workerId;
+};
 
 const openWhatsApp = (worker) => {
   const phoneNumber = "393773024349";
@@ -140,6 +191,13 @@ const formatDateRange = (start, end) => {
   #td-5 {
     width: auto !important; display: none !important;
   }
+}
+
+/* Add these new styles */
+.transition-all {
+  transition-property: all;
+  transition-timing-function: cubic-bezier(0.4, 0, 0.2, 1);
+  transition-duration: 300ms;
 }
 </style>
 
