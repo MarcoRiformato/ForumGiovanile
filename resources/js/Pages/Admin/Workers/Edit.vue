@@ -110,14 +110,14 @@
                                 </div>
                             </div>
 
-                            <!-- Languages -->
+                            <!-- Languages 
                             <div class="sm:col-span-3">
                                 <label for="languages" class="block text-sm font-medium leading-6">Lingue</label>
                                 <div class="mt-2">
                                     <input v-model="form.languages" type="text" placeholder="es: Italiano, Inglese, Tedesco" class="input input-bordered input-primary w-full max-w-xs" />
                                     <div v-if="form.errors.languages" class="text-error text-sm mt-1">{{ form.errors.languages }}</div>
                                 </div>
-                            </div>
+                            </div>-->
 
                             <!-- Has HACCP Certificate -->
                             <div class="sm:col-span-3">
