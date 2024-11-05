@@ -16,6 +16,7 @@ class Jobs extends Model
         'luogo',
         'stipendio',
         'data_pubblicazione',
-        // Add any other fields that you want to be mass-assignable.
+        'descrizione',
+        'isCorso'
     ];
 }

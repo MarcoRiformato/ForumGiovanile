@@ -25,7 +25,8 @@
                         <tbody class="divide-y divide-gray-200">
                             <tr
                             @click="$inertia.visit(route('jobs.index'))"
-                             v-for="job in jobs" :key="job.id">
+                             v-for="job in jobs" :key="job.id"
+                             :class="job.isCorso ? 'bg-secondary/10' : ''">
                                 <td class="py-4 px-4 text-sm font-medium">{{ job.lavoro }}</td>
                                 <td class="py-4 px-4 text-sm">{{ job.azienda }}</td>
                                 <td class="py-4 px-4 text-sm">{{ job.luogo }}</td>

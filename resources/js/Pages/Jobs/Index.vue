@@ -10,31 +10,100 @@
     class="m-4 rounded-xl"
   />
   
-  <div v-if="jobs.length === 0" class="text-center py-8">
-    <p class="text-xl text-gray-600">Al momento non ci sono offerte di lavoro disponibili, riprova più tardi 😕</p>
+  <div role="tablist" class="tabs tabs-boxed mb-6">
+    <a role="tab" 
+       class="tab" 
+       :class="{ 'tab-active': activeTab === 'all' }"
+       @click="activeTab = 'all'">
+      Tutti
+    </a>
+    <a role="tab" 
+       class="tab" 
+       :class="{ 'tab-active': activeTab === 'jobs' }"
+       @click="activeTab = 'jobs'">
+      Lavori
+    </a>
+    <a role="tab" 
+       class="tab" 
+       :class="{ 'tab-active': activeTab === 'courses' }"
+       @click="activeTab = 'courses'">
+      Corsi
+    </a>
+  </div>
+  
+  <div v-if="filteredJobs.length === 0" class="text-center py-8">
+    <p class="text-xl text-gray-600">Al momento non ci sono offerte disponibili, riprova più tardi 😕</p>
   </div>
 
   <ul v-else role="list" class="grid grid-cols-1 gap-x-6 gap-y-8 lg:grid-cols-3 xl:gap-x-8">
-    <li v-for="job in jobs" :key="job.id" class="overflow-hidden rounded-xl border border-gray-200" >
-      <div class="flex items-center gap-x-4 border-b border-gray-900/5 p-6 mb-4">
-        <div class="text-sm font-medium leading-6">{{ job.lavoro }}</div>
+    <li v-for="job in filteredJobs" 
+        :key="job.id" 
+        :class="[
+          'overflow-hidden rounded-xl border cursor-pointer transition-all duration-300', 
+          job.isCorso ? 'border-secondary bg-secondary/10' : 'border-primary bg-primary/10',
+          { 'lg:col-span-3': expandedCard === job.id }
+        ]"
+        @click="toggleCard(job.id)">
+      <div class="flex" :class="{ 'flex-col lg:flex-row': expandedCard === job.id }">
+        <!-- Basic Card Info -->
+        <div class="flex-1">
+          <div class="flex items-center gap-x-4 border-b border-gray-900/5 p-6 mb-4">
+            <div class="text-sm font-medium leading-6">
+              {{ job.isCorso ? '📚 ' : '💼 ' }}{{ job.lavoro }}
+            </div>
+          </div>
+          <dl class="-mt-8 px-6 py-4 text-sm leading-6">
+            <div class="flex justify-between py-1">
+              <p>📍 {{ job.luogo }}</p>
+            </div>
+            <div class="flex justify-between py-1">
+              <p>{{ job.isCorso ? '🏫' : '💼' }} {{ job.azienda }}</p>
+            </div>
+            <div class="flex justify-between py-1 divide-y">
+              <p>{{ job.isCorso ? '🆓' : '💶' }} {{ job.stipendio }}</p>
+            </div>
+            <p class="pt-4 pb-6">{{ job.descrizione }}</p>
+            <div class="flex justify-between items-center">
+              <button @click.stop="openWhatsApp(job)" 
+                :class="['btn btn-sm', job.isCorso ? 'btn-secondary' : 'btn-primary']">
+                {{ job.isCorso ? 'Iscriviti' : 'Candidati' }}
+              </button>
+              <p class="text-gray-500">Nuovo! <br/> 🆕</p>
+            </div>
+          </dl>
+        </div>
+
+        <!-- Extended Info (shown when expanded) -->
+        <div v-if="expandedCard === job.id" 
+             class="flex-1 p-6 border-t lg:border-l lg:border-t-0">
+          <div class="space-y-4">
+            <div>
+              <h4 class="font-semibold" :class="job.isCorso ? 'text-secondary' : 'text-primary'">
+                Requisiti
+              </h4>
+              <p>{{ job.requisiti || 'Nessun requisito specifico richiesto' }}</p>
+            </div>
+            <div>
+              <h4 class="font-semibold" :class="job.isCorso ? 'text-secondary' : 'text-primary'">
+                {{ job.isCorso ? 'Dettagli del corso' : 'Dettagli della posizione' }}
+              </h4>
+              <ul class="list-disc pl-4 space-y-2">
+                <li>Orario: {{ job.orario || 'Da definire' }}</li>
+                <li>Durata: {{ job.durata || 'Da definire' }}</li>
+                <li>Tipo contratto: {{ job.contratto || 'Da definire' }}</li>
+                <li v-if="job.benefit">Benefit: {{ job.benefit }}</li>
+                <li v-if="job.isCorso">Certificazione: {{ job.certificazione || 'Non specificata' }}</li>
+              </ul>
+            </div>
+            <div v-if="job.note">
+              <h4 class="font-semibold" :class="job.isCorso ? 'text-secondary' : 'text-primary'">
+                Note aggiuntive
+              </h4>
+              <p>{{ job.note }}</p>
+            </div>
+          </div>
+        </div>
       </div>
-      <dl class="-mt-8 px-6 py-4 text-sm leading-6">
-        <div class="flex justify-between py-1">
-          <p>📍 {{ job.luogo }}</p>
-        </div>
-        <div class="flex justify-between py-1">
-          <p>💼 {{ job.azienda }}</p>
-        </div>
-        <div class="flex justify-between py-1 divide-y">
-          <p>💶 € {{ job.stipendio }}</p>
-        </div>
-        <p class="pt-4 pb-6">{{ job.descrizione }}</p>
-        <div class="flex justify-between items-center">
-          <button @click="openWhatsApp(job)" class="btn btn-primary btn-sm">Candidati</button>
-          <p class="text-gray-500">Nuovo annuncio! <br/> 🆕</p>
-        </div>
-      </dl>
     </li>
   </ul>
 
@@ -44,18 +113,34 @@
 <script setup>
 import AppLayout from '@/Layouts/AppLayout.vue';
 import Banner from '@/Components/Banner.vue';
+import { ref, computed } from 'vue';
 
-defineProps({
+const props = defineProps({
   jobs: Object
-})
+});
+
+const activeTab = ref('all');
+const expandedCard = ref(null);
+
+const toggleCard = (jobId) => {
+  expandedCard.value = expandedCard.value === jobId ? null : jobId;
+};
+
+const filteredJobs = computed(() => {
+  if (activeTab.value === 'all') return props.jobs;
+  if (activeTab.value === 'jobs') return props.jobs.filter(job => !job.isCorso);
+  if (activeTab.value === 'courses') return props.jobs.filter(job => job.isCorso);
+  return props.jobs;
+});
 
 const openWhatsApp = (job) => {
     const phoneNumber = "393773024349";
-    const message = `Ciao, sono interessato/a alla posizione di ${job.lavoro} presso ${job.azienda} a ${job.luogo}.`;
+    const message = job.isCorso 
+        ? `Ciao, sono interessato/a al corso "${job.lavoro}" organizzato da ${job.azienda} a ${job.luogo}.`
+        : `Ciao, sono interessato/a alla posizione di ${job.lavoro} presso ${job.azienda} a ${job.luogo}.`;
     const url = `https://wa.me/${phoneNumber}?text=${encodeURIComponent(message)}`;
     window.open(url, '_blank');
 };
-
 </script>
 
 <style>
@@ -107,5 +192,11 @@ const openWhatsApp = (job) => {
     #td-5 {
       width: auto !important; display: none !important;
     }
+  }
+
+  .transition-all {
+    transition-property: all;
+    transition-timing-function: cubic-bezier(0.4, 0, 0.2, 1);
+    transition-duration: 300ms;
   }
 </style>

@@ -28,6 +28,7 @@ class JobsController extends Controller
             'luogo' => 'nullable|string|max:255',
             'descrizione' => 'nullable|string',
             'stipendio' => 'nullable|string|max:255',
+            'isCorso' => 'boolean',
         ]);        
 
         Jobs::create($validatedData);
@@ -53,6 +54,7 @@ class JobsController extends Controller
             'luogo' => 'nullable|string|max:255',
             'descrizione' => 'nullable|string',
             'stipendio' => 'nullable|string|max:255',
+            'isCorso' => 'boolean',
         ]);
 
         $job->update($validatedData);
