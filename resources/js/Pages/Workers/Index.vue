@@ -34,7 +34,7 @@
               />
               <img 
                 v-else
-                src="/storage/media/blank_avatar.webp"
+                src="../Admin/Workers/blank_avatar.webp"
                 :alt="worker.name"
                 class="w-full h-auto object-cover rounded-lg"
                 :class="{ 'lg:max-w-xs': expandedCard === worker.id }"
@@ -72,7 +72,9 @@
             <div class="space-y-4">
               <div>
                 <h4 class="font-semibold text-secondary">Descrizione</h4>
-                <p>{{ worker.description || 'Nessuna descrizione disponibile' }}</p>
+                <p :class="{ 'line-clamp-3': expandedCard !== worker.id }">
+                  {{ worker.description || 'Nessuna descrizione disponibile' }}
+                </p>
               </div>
               <div>
                 <h4 class="font-semibold text-secondary">Istruzione</h4>

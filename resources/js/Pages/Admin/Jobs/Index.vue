@@ -31,7 +31,9 @@
                                 <td class="py-4 px-4 text-sm">{{ job.azienda }}</td>
                                 <td class="py-4 px-4 text-sm">{{ job.luogo }}</td>
                                 <td class="py-4 px-4 text-sm">{{ job.stipendio }}</td>
-                                <td class="py-4 px-4 text-sm">{{ job.descrizione }}</td>
+                                <td class="py-4 px-4 text-sm">
+                                    <p class="line-clamp-2 max-w-xs">{{ job.descrizione }}</p>
+                                </td>
                                 <td class="py-4 px-4 text-sm">
                                 {{ new Date(job.data_pubblicazione).toLocaleDateString('it-IT', { month: 'short', day: 'numeric' }) }}
                                 </td>

@@ -21,13 +21,13 @@
        class="tab" 
        :class="{ 'tab-active': activeTab === 'jobs' }"
        @click="activeTab = 'jobs'">
-      Lavori
+      Offerte di lavoro
     </a>
     <a role="tab" 
        class="tab" 
        :class="{ 'tab-active': activeTab === 'courses' }"
        @click="activeTab = 'courses'">
-      Corsi
+      Corsi formativi
     </a>
   </div>
   
@@ -62,47 +62,31 @@
             <div class="flex justify-between py-1 divide-y">
               <p>{{ job.isCorso ? '🆓' : '💶' }} {{ job.stipendio }}</p>
             </div>
-            <p class="pt-4 pb-6">{{ job.descrizione }}</p>
+            <p class="pt-4 pb-6" :class="{ 'line-clamp-3': expandedCard !== job.id }">
+              {{ job.descrizione }}
+            </p>
             <div class="flex justify-between items-center">
               <button @click.stop="openWhatsApp(job)" 
                 :class="['btn btn-sm', job.isCorso ? 'btn-secondary' : 'btn-primary']">
                 {{ job.isCorso ? 'Iscriviti' : 'Candidati' }}
               </button>
-              <p class="text-gray-500">Nuovo! <br/> 🆕</p>
+              <!--<p class="text-gray-500">Nuovo! <br/> 🆕</p>-->
             </div>
           </dl>
         </div>
 
-        <!-- Extended Info (shown when expanded) -->
+        <!-- Extended Info (shown when expanded) 
         <div v-if="expandedCard === job.id" 
              class="flex-1 p-6 border-t lg:border-l lg:border-t-0">
           <div class="space-y-4">
             <div>
               <h4 class="font-semibold" :class="job.isCorso ? 'text-secondary' : 'text-primary'">
-                Requisiti
+                Descrizione completa
               </h4>
-              <p>{{ job.requisiti || 'Nessun requisito specifico richiesto' }}</p>
-            </div>
-            <div>
-              <h4 class="font-semibold" :class="job.isCorso ? 'text-secondary' : 'text-primary'">
-                {{ job.isCorso ? 'Dettagli del corso' : 'Dettagli della posizione' }}
-              </h4>
-              <ul class="list-disc pl-4 space-y-2">
-                <li>Orario: {{ job.orario || 'Da definire' }}</li>
-                <li>Durata: {{ job.durata || 'Da definire' }}</li>
-                <li>Tipo contratto: {{ job.contratto || 'Da definire' }}</li>
-                <li v-if="job.benefit">Benefit: {{ job.benefit }}</li>
-                <li v-if="job.isCorso">Certificazione: {{ job.certificazione || 'Non specificata' }}</li>
-              </ul>
-            </div>
-            <div v-if="job.note">
-              <h4 class="font-semibold" :class="job.isCorso ? 'text-secondary' : 'text-primary'">
-                Note aggiuntive
-              </h4>
-              <p>{{ job.note }}</p>
+              <p>{{ job.descrizione }}</p>
             </div>
           </div>
-        </div>
+        </div>-->
       </div>
     </li>
   </ul>
