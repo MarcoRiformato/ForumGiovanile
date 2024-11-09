@@ -34,7 +34,7 @@
                                     />
                                     <img 
                                         v-else
-                                        src="../Admin/Workers/blank_avatar.webp"
+                                        src="./blank_avatar.webp"
                                         :alt="worker.name"
                                         class="h-12 w-12 rounded-full object-cover"
                                     />
