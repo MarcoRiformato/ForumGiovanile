@@ -157,17 +157,13 @@ class ElectionController extends Controller
         $election = Election::with('questions.options', 'questions.candidates')
             ->findOrFail($id);
 
-        return Inertia::render('Elections/ShowDynamic', ['election'=> $election]);
+        return Inertia::render('Elections/Show', ['election'=> $election]);
 
         // Check if the user has already voted
-        /*
+        
         if ($this->hasVoted($election->id, request()->ip())) {
             return redirect()->route('elections.thanks')->with('error', 'You have already voted in this election.');
         }
-
-        return Inertia::render('Elections/Show', [
-            'election' => $election
-        ]);*/
     }
 
     public function storeVote(Request $request, Election $election)
