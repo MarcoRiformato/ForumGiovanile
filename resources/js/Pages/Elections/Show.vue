@@ -127,35 +127,29 @@ const submitVote = () => {
     return;
   }
 
-  // Create votes array
-  const votesToSend = [];
+  const votesToSend = selectedCandidates.value.map(candidateId => ({
+    election_id: props.election.id,
+    type: 'candidate',
+    questionId: props.election.questions[0].id,
+    selectedId: candidateId,
+    candidate_id: candidateId
+  }));
 
-  // Add candidate votes
-  selectedCandidates.value.forEach(candidateId => {
-    votesToSend.push({
-      election_id: props.election.id,
-      type: 'candidate',
-      questionId: props.election.questions[0].id,
-      selectedId: candidateId,
-      written_text: props.candidates.find(c => c.id === candidateId)?.name || ''  // Store candidate name as text
-    });
-  });
-
-  // Add voter information
+  // Add voter information as writing type votes
   votesToSend.push({
     election_id: props.election.id,
     questionId: props.election.questions[1].id,
     type: 'writing',
-    written_text: voter.full_name,
-    selectedId: voter.full_name
+    selectedId: voter.full_name,
+    candidate_id: null
   });
 
   votesToSend.push({
     election_id: props.election.id,
     questionId: props.election.questions[2].id,
     type: 'writing',
-    written_text: voter.dateOfBirth,
-    selectedId: voter.dateOfBirth
+    selectedId: voter.dateOfBirth,
+    candidate_id: null
   });
 
   form.votes = votesToSend;

@@ -138,10 +138,14 @@ class ElectionController extends Controller
     /**
      * Display the specified resource.
      */
-    public function showDynamic(string $id)
-    {
-        $election = Election::with('questions.options', 'questions.candidates')
-            ->findOrFail($id);
+    public function showDynamic(string $id) {
+        $election = Election::findOrFail($id);
+        $election->questions = [
+            ['id' => 1], 
+            ['id' => 2], 
+            ['id' => 3]
+        ];
+    
 
         $candidates = [
             ['id' => 1, 'name' => 'Pietro Gentili'],
