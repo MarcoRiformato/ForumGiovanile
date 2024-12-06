@@ -2,7 +2,6 @@
   <AppLayout title="Vota al sondaggio">
     <div class="bg-base-200 p-6">
       <!-- Election Details -->
-
       <div class="border-b-2 border-gray-300 pb-4 mb-6">
         <h1 class="text-xl font-bold">{{ election.name }}</h1>
         <p class="text-md"><strong>Descrizione:</strong> {{ election.description }}</p>
@@ -13,12 +12,12 @@
       <!-- Voting Form -->
       <form @submit.prevent="submitVote">
         <div class="mb-10">
-
           <div class="form-control mb-4">
-          <label class="label">
-            <span class="label-text">Scrivi il tuo nome e cognome</span>
-          </label>
-          <input type="text" placeholder="Nome e cognome" class="input input-bordered" v-model="voter.full_name" />
+            <label class="label">
+              <span class="label-text">Scrivi il tuo nome e cognome</span>
+            </label>
+            <input type="text" placeholder="Nome e cognome" class="input input-bordered" v-model="voter.full_name" />
+          </div>
 
           <div class="form-control mb-20">
             <label class="label">
@@ -37,13 +36,28 @@
           <div class="form-control mb-2" v-for="candidate in candidates" :key="candidate.id">
             <label class="label cursor-pointer">
               <span class="label-text">{{ candidate.name }}</span>
-              <input type="checkbox" v-model="selectedCandidates" :value="candidate.id" class="checkbox checkbox-secondary" />
+              <input 
+                type="checkbox" 
+                v-model="selectedCandidates" 
+                :value="candidate.id" 
+                class="checkbox checkbox-secondary"
+                :disabled="selectedCandidates.length >= 3 && !selectedCandidates.includes(candidate.id)" 
+              />
             </label>
           </div>
+        </div>
 
+        <div class="text-sm text-gray-600 mb-4">
+          Hai selezionato {{ selectedCandidates.length }} preferenze delle 3 disponibili
         </div>
-        </div>
-        <button type="submit" class="btn btn-primary" :disabled="selectedCandidates.length > 3">Vota</button>
+
+        <button 
+          type="submit" 
+          class="btn btn-primary" 
+          :disabled="!isFormValid"
+        >
+          Vota
+        </button>
       </form>
     </div>
   </AppLayout>
@@ -56,11 +70,14 @@ import { useForm } from '@inertiajs/vue3';
 
 const errors = ref([]);
 
-const { election } = defineProps({
+const props = defineProps({
   election: Object,
+  candidates: {
+    type: Array,
+    required: true
+  }
 });
 
-const reactiveElection = reactive({ ...election });
 const selectedCandidates = ref([]);
 
 const voter = reactive({
@@ -68,15 +85,15 @@ const voter = reactive({
   dateOfBirth: ''
 });
 
-const candidates = computed(() => [
-  { id: 13, name: 'Antonio Ferrini', description: '...' },
-  { id: 14, name: 'Mario Scelza', description: '...' },
-  { id: 15, name: 'Ilaria De Palma', description: '...' },
-  { id: 16, name: 'Giuditta Sgherri', description: '...' },
-]);
-
 const form = useForm({
   votes: []
+});
+
+const isFormValid = computed(() => {
+  return voter.full_name.trim() !== '' && 
+         voter.dateOfBirth.trim() !== '' && 
+         selectedCandidates.value.length > 0 && 
+         selectedCandidates.value.length <= 3;
 });
 
 watch(selectedCandidates, (newVal, oldVal) => {
@@ -92,52 +109,56 @@ const formatDate = (dateString) => {
 };
 
 const submitVote = () => {
+  errors.value = [];
 
-    errors.value = []; // Reset errors
+  if (!voter.full_name.trim()) {
+    errors.value.push('Per favore, inserisci il tuo nome e cognome.');
+  }
 
-    // Validate input fields
-    if (!voter.full_name.trim()) {
-      errors.value.push('Per favore, inserisci il tuo nome e cognome.');
-    }
+  if (!voter.dateOfBirth.trim()) {
+    errors.value.push('Per favore, inserisci la tua data di nascita.');
+  }
 
-    if (!voter.dateOfBirth.trim()) {
-      errors.value.push('Per favore, inserisci la tua data di nascita.');
-    }
+  if (selectedCandidates.value.length === 0) {
+    errors.value.push('Per favore, seleziona almeno un candidato.');
+  }
 
-    // If there are errors, stop the submission process
-    if (errors.value.length > 0) {
-      return;
-    }
+  if (errors.value.length > 0) {
+    return;
+  }
 
-  const votesToSend = selectedCandidates.value.map(candidateId => ({
-    election_id: election.id,
-    type: 'candidate',
-    questionId: 35,
-    candidate_id: candidateId,
-    written_text: '',
-    selectedId: candidateId
-  }));
+  // Create votes array
+  const votesToSend = [];
 
+  // Add candidate votes
+  selectedCandidates.value.forEach(candidateId => {
+    votesToSend.push({
+      election_id: props.election.id,
+      type: 'candidate',
+      questionId: props.election.questions[0].id,
+      selectedId: candidateId,
+      written_text: props.candidates.find(c => c.id === candidateId)?.name || ''  // Store candidate name as text
+    });
+  });
+
+  // Add voter information
   votesToSend.push({
-    election_id: election.id,
-    questionId: 36,
-    candidate_id: null,
+    election_id: props.election.id,
+    questionId: props.election.questions[1].id,
     type: 'writing',
     written_text: voter.full_name,
     selectedId: voter.full_name
   });
 
   votesToSend.push({
-    election_id: election.id,
-    questionId: 37,
-    candidate_id: null,
+    election_id: props.election.id,
+    questionId: props.election.questions[2].id,
     type: 'writing',
     written_text: voter.dateOfBirth,
     selectedId: voter.dateOfBirth
   });
 
   form.votes = votesToSend;
-  console.log(votesToSend)
-  form.post(route('election.vote', { election: election.id }));
+  form.post(route('election.vote', { election: props.election.id }));
 };
 </script>

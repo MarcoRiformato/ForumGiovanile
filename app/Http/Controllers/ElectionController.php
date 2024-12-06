@@ -129,7 +129,10 @@ class ElectionController extends Controller
     
 
     protected function hasVoted($electionId, $ipAddress) {
-        return Vote::where('election_id', $electionId)->where('ip_address', $ipAddress)->exists();
+        $ip = request()->header('X-Forwarded-For') ?? request()->ip();
+        return Vote::where('election_id', $electionId)
+                   ->where('ip_address', $ip)
+                   ->exists();
     }
 
     /**
@@ -140,15 +143,27 @@ class ElectionController extends Controller
         $election = Election::with('questions.options', 'questions.candidates')
             ->findOrFail($id);
 
-        // Check if the user has already voted
-        /*
-        if ($this->hasVoted($election->id, request()->ip())) {
-            return redirect()->route('elections.thanks')->with('error', 'You have already voted in this election.');
-        }
-        */
+        $candidates = [
+            ['id' => 1, 'name' => 'Pietro Gentili'],
+            ['id' => 2, 'name' => 'Guido Bastianelli'],
+            ['id' => 3, 'name' => 'Matteo Tiezzi'],
+            ['id' => 4, 'name' => 'Eva Gala Paletti'],
+            ['id' => 5, 'name' => 'Mario Scelza'],
+            ['id' => 6, 'name' => 'Martina Thanasi'],
+            ['id' => 7, 'name' => 'Marco Riformato'],
+            ['id' => 8, 'name' => 'Marco Antonio Perrone'],
+            ['id' => 9, 'name' => 'Arturo Sanna'],
+            ['id' => 10, 'name' => 'Ilaria De Palma'],
+            ['id' => 11, 'name' => 'Fernando Falcone'],
+            ['id' => 12, 'name' => 'Valentina Dionigi'],
+            ['id' => 13, 'name' => 'Asia De Pedri'],
+            ['id' => 14, 'name' => 'Francesca Borzino'],
+            ['id' => 15, 'name' => 'Lorenzo Cilli']
+        ];
 
         return Inertia::render('Elections/Show', [
-            'election' => $election
+            'election' => $election,
+            'candidates' => $candidates
         ]);
     }
 

@@ -55,7 +55,7 @@ Route::get('/', [MainDashboard::class, 'index'])->name('home');
 Route::middleware(['auth:sanctum', 'verified'])->get('/dashboard', [MainDashboard::class, 'index'])->name('dashboard');
 Route::get('documenti/indice', [DocumentController::class, 'index'])->name('documents.index');
 Route::get('/vota', [ElectionController::class, 'index'])->name('elections.index');
-Route::get('vota/{election}', [ElectionController::class, 'show'])->name('elections.show');
+Route::get('vota/{election}', [ElectionController::class, 'showDynamic'])->name('elections.show');
 Route::get('/elections/thanks', function () {
     return Inertia::render('Elections/Thanks');
 })->name('elections.thanks');
