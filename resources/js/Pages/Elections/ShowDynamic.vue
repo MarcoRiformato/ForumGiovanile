@@ -8,19 +8,26 @@
           <p><strong>Data inizio:</strong> {{ formatDate(election.start_date) }}</p>
           <p><strong>Data fine:</strong> {{ formatDate(election.end_date) }}</p>
         </div>
-  
+        <p>{{ candidates }}</p>
         <!-- Questions -->
         <form @submit.prevent="submitVote">
           <div v-for="question in election.questions" :key="question.id" class="mb-10">
             
             <h2 class="text-lg pb-4">{{ question.text }}</h2>
+            
+            <!-- Error message for each question -->
+            <div v-if="validationErrors[question.id]" class="text-error mb-2">
+              {{ validationErrors[question.id] }}
+            </div>
+
             <div v-if="question.type === 'options'">
               <div class="form-control mb-2" v-for="option in question.options" :key="option.id">
                 <label class="label cursor-pointer">
                   <span class="label-text">{{ option.text }}</span>
                   <input type="radio"
                   v-model="selectedVotes[question.id]"
-                  :value="option.id" class="radio radio-secondary" />
+                  :value="option.id" class="radio radio-secondary"
+                  @change="clearValidationError(question.id)" />
                 </label>
               </div>
             </div>
@@ -30,7 +37,8 @@
                   <span class="label-text">{{ candidate.name }} {{ candidate.description }}</span>
                   <input type="radio" 
                   v-model="selectedVotes[question.id]"
-                  :value="candidate.id" class="radio radio-secondary" />
+                  :value="candidate.id" class="radio radio-secondary"
+                  @change="clearValidationError(question.id)" />
                 </label>
               </div>
             </div>
@@ -40,6 +48,7 @@
               rows="3"
               v-model="selectedVotes[question.id]"
               placeholder="Scrivi qui"
+              @input="clearValidationError(question.id)"
               ></textarea>
             </div>
             <br/><hr/>
@@ -61,11 +70,41 @@
   
   const reactiveElection = reactive({ ...election });
   const selectedVotes = reactive({});
+  const validationErrors = reactive({});
+  
   const form = useForm({
     votes: []
   });
   
+  const validateForm = () => {
+    let isValid = true;
+    
+    // Clear all previous validation errors
+    Object.keys(validationErrors).forEach(key => delete validationErrors[key]);
+
+    // Check each question
+    reactiveElection.questions.forEach(question => {
+      if (!selectedVotes[question.id]) {
+        validationErrors[question.id] = 'Questa domanda è obbligatoria';
+        isValid = false;
+      } else if (question.type === 'writing' && !selectedVotes[question.id].trim()) {
+        validationErrors[question.id] = 'Per favore inserisci una risposta';
+        isValid = false;
+      }
+    });
+
+    return isValid;
+  };
+  
+  const clearValidationError = (questionId) => {
+    delete validationErrors[questionId];
+  };
+  
   const submitVote = () => {
+    if (!validateForm()) {
+      return;
+    }
+
     const votesArray = [];
     for (const [questionId, selectedId] of Object.entries(selectedVotes)) {
       const question = reactiveElection.questions.find(q => q.id === parseInt(questionId));

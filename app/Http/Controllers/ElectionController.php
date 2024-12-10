@@ -129,7 +129,17 @@ class ElectionController extends Controller
     
 
     protected function hasVoted($electionId, $ipAddress) {
-        $ip = request()->header('X-Forwarded-For') ?? request()->ip();
+        // Get IP from various possible headers that might be set by proxies/load balancers
+        $ip = request()->header('X-Forwarded-For') // AWS Load Balancer, most proxies
+            ?? request()->header('X-Real-IP')      // Nginx proxy
+            ?? request()->header('CF-Connecting-IP') // Cloudflare
+            ?? request()->ip();                     // Direct connection
+        
+        // If X-Forwarded-For contains multiple IPs, get the first one (original client)
+        if (strpos($ip, ',') !== false) {
+            $ip = trim(explode(',', $ip)[0]);
+        }
+
         return Vote::where('election_id', $electionId)
                    ->where('ip_address', $ip)
                    ->exists();
@@ -139,35 +149,16 @@ class ElectionController extends Controller
      * Display the specified resource.
      */
     public function showDynamic(string $id) {
-        $election = Election::findOrFail($id);
-        $election->questions = [
-            ['id' => 1], 
-            ['id' => 2], 
-            ['id' => 3]
-        ];
-    
+        $election = Election::with('questions.candidates')->findOrFail($id);
 
-        $candidates = [
-            ['id' => 1, 'name' => 'Pietro Gentili'],
-            ['id' => 2, 'name' => 'Guido Bastianelli'],
-            ['id' => 3, 'name' => 'Matteo Tiezzi'],
-            ['id' => 4, 'name' => 'Eva Gala Paletti'],
-            ['id' => 5, 'name' => 'Mario Scelza'],
-            ['id' => 6, 'name' => 'Martina Thanasi'],
-            ['id' => 7, 'name' => 'Marco Riformato'],
-            ['id' => 8, 'name' => 'Marco Antonio Perrone'],
-            ['id' => 9, 'name' => 'Arturo Sanna'],
-            ['id' => 10, 'name' => 'Ilaria De Palma'],
-            ['id' => 11, 'name' => 'Fernando Falcone'],
-            ['id' => 12, 'name' => 'Valentina Dionigi'],
-            ['id' => 13, 'name' => 'Asia De Pedri'],
-            ['id' => 14, 'name' => 'Francesca Borzino'],
-            ['id' => 15, 'name' => 'Lorenzo Cilli']
-        ];
+        // Check if the user has already voted
+        if ($this->hasVoted($election->id, request()->ip())) {
+            return redirect()->route('elections.thanks')
+                ->with('error', 'Hai già votato in questo sondaggio.');
+        }
 
-        return Inertia::render('Elections/Show', [
-            'election' => $election,
-            'candidates' => $candidates
+        return Inertia::render('Elections/ShowDynamic', [
+            'election' => $election
         ]);
     }
 
@@ -186,36 +177,61 @@ class ElectionController extends Controller
 
     public function storeVote(Request $request, Election $election)
     {
+        // Use the same IP detection method
+        $ip = request()->header('X-Forwarded-For')
+            ?? request()->header('X-Real-IP')
+            ?? request()->header('CF-Connecting-IP')
+            ?? request()->ip();
+        
+        if (strpos($ip, ',') !== false) {
+            $ip = trim(explode(',', $ip)[0]);
+        }
 
         // Check if the user has already voted
-        if (Vote::where('election_id', $election->id)->where('ip_address', $request->ip())->exists()) {
-            // If they have already voted, redirect them with an error message
-            return redirect()->route('elections.thanks')->with('error', 'You have already voted in this election.');
+        if ($this->hasVoted($election->id, $ip)) {
+            return redirect()->route('elections.thanks')
+                ->with('error', 'Hai già votato in questo sondaggio.');
         }
 
+        // Validate that all questions have been answered
+        $questions = $election->questions;
         $votes = $request->votes;
+        
+        // Create a map of question IDs from the submitted votes
+        $answeredQuestionIds = collect($votes)->pluck('questionId')->toArray();
+        
+        // Check if any questions are missing answers
+        foreach ($questions as $question) {
+            if (!in_array($question->id, $answeredQuestionIds)) {
+                return redirect()->back()
+                    ->with('error', 'Per favore rispondi a tutte le domande.');
+            }
+        }
+
+        // Process and store the votes
         foreach ($votes as $voteData) {
-            $questionId = $voteData['questionId'];
-            $type = $voteData['type'];
-            $selectedId = $voteData['selectedId'];
-    
             $vote = new Vote();
             $vote->election_id = $election->id;
-            $vote->question_id = $questionId;
-            $vote->ip_address = $request->ip(); 
-    
-            if ($type === 'candidate') {
-                $vote->candidate_id = $selectedId;
-            } elseif ($type === 'writing') {
-                $vote->written_text = $selectedId;
-            } elseif ($type === 'option') {
-                $vote->option_id = $selectedId;
+            $vote->question_id = $voteData['questionId'];
+            $vote->ip_address = $ip;
+
+            if ($voteData['type'] === 'candidate') {
+                $vote->candidate_id = $voteData['selectedId'];
+            } elseif ($voteData['type'] === 'writing') {
+                if (empty(trim($voteData['selectedId']))) {
+                    return redirect()->back()
+                        ->with('error', 'Le risposte scritte non possono essere vuote.');
+                }
+                $vote->written_text = $voteData['selectedId'];
+            } elseif ($voteData['type'] === 'option') {
+                $vote->option_id = $voteData['selectedId'];
             }
-    
+
             $vote->save();
         }
-    
-        return redirect()->route('elections.thanks')->with('message', 'Thank you for your vote');
+
+        return redirect()->route('elections.thanks')
+            ->with('message', 'Grazie per il tuo voto!');
     }
     
     
