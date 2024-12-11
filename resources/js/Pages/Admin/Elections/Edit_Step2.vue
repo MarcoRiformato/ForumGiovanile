@@ -64,27 +64,29 @@
     <script setup>
     import AppLayout from '@/Layouts/AppLayout.vue';
     import { useForm } from '@inertiajs/vue3';
-    import { ref, watchEffect } from 'vue';
+    import { ref, watchEffect, reactive } from 'vue';
     
     const props = defineProps({
         election: Object
     });
     
-    // Original questions for comparison
-    const originalQuestions = JSON.parse(JSON.stringify(props.election.questions));
-    
     const electionId = ref(props.election.id);
+    const isChanged = ref(false);
     
-    let form = useForm({
+    const form = useForm({
         id: props.election.id,
-        questions: props.election.questions
+        questions: props.election.questions.map(q => ({
+            id: q.id,
+            text: q.text,
+            type: q.type,
+            options: q.options || [],
+            candidates: q.candidates || [],
+        }))
     });
-    
-    const isChanged = ref(false); // Track changes
     
     // Watch for changes in the form
     watchEffect(() => {
-        isChanged.value = JSON.stringify(originalQuestions) !== JSON.stringify(form.questions);
+        isChanged.value = JSON.stringify(form.questions) !== JSON.stringify(props.election.questions);
     });
     
     const addQuestion = () => {
@@ -118,16 +120,16 @@
     };
     
     const saveChangesStep2 = () => {
-    form.put(route('admin.elections.updateStep2', { id: electionId.value }), {
-        onSuccess: () => {
-            isChanged.value = false; // Reset the change tracker
-            console.log('Questions updated successfully');
-        },
-        onError: (errors) => {
-            console.log('Failed to update questions:', errors);
-        }
-    });
-};
+        form.put(route('admin.elections.updateStep2', { id: electionId.value }), {
+            onSuccess: () => {
+                isChanged.value = false;
+                console.log('Questions updated successfully');
+            },
+            onError: (errors) => {
+                console.log('Failed to update questions:', errors);
+            }
+        });
+    };
 
     </script>
     

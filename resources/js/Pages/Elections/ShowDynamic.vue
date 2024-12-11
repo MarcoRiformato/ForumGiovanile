@@ -35,11 +35,18 @@
               <div class="form-control mb-2" v-for="candidate in question.candidates" :key="candidate.id">
                 <label class="label cursor-pointer">
                   <span class="label-text">{{ candidate.name }} {{ candidate.description }}</span>
-                  <input type="radio" 
-                  v-model="selectedVotes[question.id]"
-                  :value="candidate.id" class="radio radio-secondary"
-                  @change="clearValidationError(question.id)" />
+                  <input 
+                    type="checkbox"
+                    :name="'candidate_' + candidate.id"
+                    :value="candidate.id"
+                    :checked="isSelected(question.id, candidate.id)"
+                    @change="handleCandidateSelection($event, question.id, candidate.id)"
+                    :disabled="isMaxVotesReached(question.id) && !isSelected(question.id, candidate.id)"
+                  />
                 </label>
+              </div>
+              <div class="text-sm text-info mt-2">
+                Hai selezionato {{ getSelectedCount(question.id) }} candidati su {{ election.max_votes }} disponibili
               </div>
             </div>
             <div v-if="question.type === 'writing'">
@@ -68,7 +75,6 @@
     election: Object,
   });
   
-  const reactiveElection = reactive({ ...election });
   const selectedVotes = reactive({});
   const validationErrors = reactive({});
   
@@ -76,28 +82,51 @@
     votes: []
   });
   
+  const getSelectedCount = (questionId) => {
+    return selectedVotes[questionId]?.length || 0;
+  };
+  
+  const isSelected = (questionId, candidateId) => {
+    return selectedVotes[questionId]?.includes(candidateId) || false;
+  };
+  
+  const handleCandidateSelection = (event, questionId, candidateId) => {
+    if (!selectedVotes[questionId]) {
+      selectedVotes[questionId] = [];
+    }
+
+    if (event.target.checked) {
+      if (selectedVotes[questionId].length < election.max_votes) {
+        selectedVotes[questionId].push(candidateId);
+      } else {
+        event.target.checked = false;
+      }
+    } else {
+      selectedVotes[questionId] = selectedVotes[questionId].filter(id => id !== candidateId);
+    }
+    clearValidationError(questionId);
+  };
+  
+  const isMaxVotesReached = (questionId) => {
+    return (selectedVotes[questionId]?.length || 0) >= election.max_votes;
+  };
+  
   const validateForm = () => {
     let isValid = true;
     
     // Clear all previous validation errors
     Object.keys(validationErrors).forEach(key => delete validationErrors[key]);
-
-    // Check each question
-    reactiveElection.questions.forEach(question => {
-      if (!selectedVotes[question.id]) {
-        validationErrors[question.id] = 'Questa domanda è obbligatoria';
-        isValid = false;
-      } else if (question.type === 'writing' && !selectedVotes[question.id].trim()) {
-        validationErrors[question.id] = 'Per favore inserisci una risposta';
+    
+    // Validate each question
+    election.questions.forEach(question => {
+      if (!selectedVotes[question.id] || 
+          (question.type === 'candidates' && selectedVotes[question.id].length === 0)) {
+        validationErrors[question.id] = 'Per favore seleziona almeno un\'opzione';
         isValid = false;
       }
     });
-
+    
     return isValid;
-  };
-  
-  const clearValidationError = (questionId) => {
-    delete validationErrors[questionId];
   };
   
   const submitVote = () => {
@@ -106,30 +135,41 @@
     }
 
     const votesArray = [];
-    for (const [questionId, selectedId] of Object.entries(selectedVotes)) {
-      const question = reactiveElection.questions.find(q => q.id === parseInt(questionId));
+    for (const [questionId, selectedIds] of Object.entries(selectedVotes)) {
+      const question = election.questions.find(q => q.id === parseInt(questionId));
       if (question) {
-        let type;
-        if (question.type === 'options') type = 'option';
-        else if (question.type === 'candidates') type = 'candidate';
-        else type = 'writing';
-        
-        votesArray.push({
-          questionId: question.id,
-          type,
-          selectedId
-        });
+        if (question.type === 'candidates' && Array.isArray(selectedIds)) {
+          // Handle multiple candidate selections
+          selectedIds.forEach(candidateId => {
+            votesArray.push({
+              questionId: question.id,
+              type: 'candidate',
+              selectedId: candidateId
+            });
+          });
+        } else {
+          // Handle other question types
+          votesArray.push({
+            questionId: question.id,
+            type: question.type === 'options' ? 'option' : 'writing',
+            selectedId: selectedIds
+          });
+        }
       }
     }
-  
+
     form.votes = votesArray;
     form.post(route('election.vote', { election: election.id }));
+  };
+  
+  const clearValidationError = (questionId) => {
+    delete validationErrors[questionId];
   };
   
   const formatDate = (dateString) => {
     const options = { year: 'numeric', month: 'long', day: 'numeric' };
     const date = new Date(dateString);
-    return date.toLocaleDateString('it-IT', options); // Italian format
+    return date.toLocaleDateString('it-IT', options);
   };
   
   </script>

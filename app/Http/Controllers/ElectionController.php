@@ -82,6 +82,7 @@ class ElectionController extends Controller
             'start_date' => 'nullable|date',
             'end_date' => 'nullable|date',
             'status' => 'nullable|string',
+            'max_votes' => 'nullable|integer|min:1',
             'questions' => 'nullable|json',
         ]);
     
@@ -95,6 +96,7 @@ class ElectionController extends Controller
             'start_date' => $data['start_date'],
             'end_date' => $data['end_date'],
             'status' => $data['status'],
+            'max_votes' => $data['max_votes'],
         ]);
     
         // Handle the questions, options, candidates, and writing
@@ -290,6 +292,7 @@ class ElectionController extends Controller
              'start_date' => 'nullable|date',
              'end_date' => 'nullable|date',
              'status' => 'nullable',
+             'max_votes' => 'nullable|integer|min:1'
          ]);
      
          $election->update($validatedData);

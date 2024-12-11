@@ -52,6 +52,18 @@
                             </select>
                         </div>
                     </div>
+
+                    <!-- Max Votes -->
+                    <div class="sm:col-span-3">
+                        <label for="max_votes" class="block text-sm font-medium leading-6">Numero massimo di voti per utente</label>
+                        <div class="mt-2">
+                            <input
+                                v-model="form.max_votes"
+                                type="number"
+                                min="1"
+                                class="block w-full rounded-md border-0 bg-white/5 py-1.5 shadow-sm ring-1 ring-inset ring-white/10 focus:ring-2 focus:ring-inset focus:ring-indigo-500 sm:text-sm sm:leading-6" />
+                        </div>
+                    </div>
                 </div>
             </div>
         </div>
@@ -74,7 +86,8 @@ const form = reactive({
     description: '',
     start_date: '',
     end_date: '',
-    status: 'open'
+    status: 'open',
+    max_votes: 1
 });
 
 const submit = () => {

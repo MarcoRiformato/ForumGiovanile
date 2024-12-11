@@ -18,6 +18,7 @@ return new class extends Migration
             $table->timestamp('start_date')->nullable();
             $table->timestamp('end_date')->nullable();
             $table->string('status')->default('upcoming')->nullable();
+            $table->integer('max_votes')->default(1)->nullable();
             $table->timestamps();
         });
         

@@ -43,6 +43,18 @@
                             </select>
                         </div>
                     </div>
+
+                    <!-- Max Votes -->
+                    <div class="sm:col-span-3">
+                        <label for="max_votes" class="block text-sm font-medium leading-6 text-white">Numero massimo di voti per utente</label>
+                        <div class="mt-2">
+                            <input
+                                v-model="form.max_votes"
+                                type="number"
+                                min="1"
+                                class="block w-full rounded-md border-0 bg-white/5 py-1.5 text-white shadow-sm ring-1 ring-inset ring-white/10 focus:ring-2 focus:ring-inset focus:ring-indigo-500 sm:text-sm sm:leading-6" />
+                        </div>
+                    </div>
                 </div>
             </div>
             <div class="mt-6 flex items-center justify-between gap-x-6">
@@ -72,6 +84,7 @@ let form = useForm({
     start_date: formatDate(props.election.start_date),
     end_date: formatDate(props.election.end_date),
     status: props.election.status,
+    max_votes: props.election.max_votes,
 });
 
 const isChanged = ref(false); // Track changes
@@ -82,7 +95,8 @@ watchEffect(() => {
         form.description !== props.election.description ||
         form.start_date !== formatDate(props.election.start_date) ||
         form.end_date !== formatDate(props.election.end_date) ||
-        form.status !== props.election.status;
+        form.status !== props.election.status ||
+        form.max_votes !== props.election.max_votes;
 });
 
 function formatDate(dateString) {
