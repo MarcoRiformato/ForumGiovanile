@@ -38,12 +38,25 @@
                    class="relative flex flex-col bg-base-100 shadow-xl hover:shadow-2xl transition-shadow rounded-lg overflow-hidden">
                 <div class="flex">
                   <!-- Image container -->
-                  <div class="w-1/3 max-w-[200px] min-w-[150px] h-[200px] flex-shrink-0">
+                  <div class="w-1/3 max-w-[200px] min-w-[150px] h-[200px] flex-shrink-0 bg-gray-100">
                     <img 
+                      v-if="candidate.image_path"
                       :src="`/storage/${candidate.image_path}`"
                       :alt="candidate.name"
                       class="w-full h-full object-cover"
                     />
+                    <div 
+                      v-else
+                      class="w-full h-full flex items-center justify-center bg-gray-200"
+                    >
+                      <svg 
+                        class="w-24 h-24 text-gray-400" 
+                        fill="currentColor" 
+                        viewBox="0 0 24 24"
+                      >
+                        <path d="M24 20.993V24H0v-2.996A14.977 14.977 0 0112.004 15c4.904 0 9.26 2.354 11.996 5.993zM16.002 8c0 2.208-1.79 4-3.998 4-2.208 0-3.998-1.792-3.998-4s1.79-4 3.998-4c2.208 0 3.998 1.792 3.998 4z" />
+                      </svg>
+                    </div>
                   </div>
                   <!-- Content container -->
                   <div class="flex-1 p-4 flex flex-col h-[200px]">
