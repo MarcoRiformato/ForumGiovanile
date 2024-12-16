@@ -8,12 +8,11 @@
           <p><strong>Data inizio:</strong> {{ formatDate(election.start_date) }}</p>
           <p><strong>Data fine:</strong> {{ formatDate(election.end_date) }}</p>
         </div>
-        <p>{{ candidates }}</p>
+
         <!-- Questions -->
         <form @submit.prevent="submitVote">
           <div v-for="question in election.questions" :key="question.id" class="mb-10">
-            
-            <h2 class="text-lg pb-4">{{ question.text }}</h2>
+            <h2 class="text-lg font-semibold pb-4">{{ question.text }}</h2>
             
             <!-- Error message for each question -->
             <div v-if="validationErrors[question.id]" class="text-error mb-2">
@@ -26,29 +25,57 @@
                   <span class="label-text">{{ option.text }}</span>
                   <input type="radio"
                   v-model="selectedVotes[question.id]"
-                  :value="option.id" class="radio radio-secondary"
+                  :value="option.id" 
+                  class="radio radio-secondary"
                   @change="clearValidationError(question.id)" />
                 </label>
               </div>
             </div>
-            <div v-if="question.type === 'candidates'">
-              <div class="form-control mb-2" v-for="candidate in question.candidates" :key="candidate.id">
-                <label class="label cursor-pointer">
-                  <span class="label-text">{{ candidate.name }} {{ candidate.description }}</span>
-                  <input 
-                    type="checkbox"
-                    :name="'candidate_' + candidate.id"
-                    :value="candidate.id"
-                    :checked="isSelected(question.id, candidate.id)"
-                    @change="handleCandidateSelection($event, question.id, candidate.id)"
-                    :disabled="isMaxVotesReached(question.id) && !isSelected(question.id, candidate.id)"
-                  />
-                </label>
+
+            <div v-if="question.type === 'candidates'" class="grid gap-6">
+              <div v-for="candidate in randomizedCandidates[question.id]" 
+                   :key="candidate.id" 
+                   class="relative flex flex-col bg-base-100 shadow-xl hover:shadow-2xl transition-shadow rounded-lg overflow-hidden">
+                <div class="flex">
+                  <!-- Image container -->
+                  <div class="w-1/3 max-w-[200px] min-w-[150px] h-[200px] flex-shrink-0">
+                    <img 
+                      :src="`/storage/${candidate.image_path}`"
+                      :alt="candidate.name"
+                      class="w-full h-full object-cover"
+                    />
+                  </div>
+                  <!-- Content container -->
+                  <div class="flex-1 p-4 flex flex-col h-[200px]">
+                    <h3 class="text-lg font-bold mb-2">{{ candidate.name }}</h3>
+                    <p class="text-gray-300 flex-1 overflow-y-auto">
+                      {{ candidate.description }}
+                    </p>
+                  </div>
+                </div>
+                
+                <!-- Selection controls in a separate row -->
+                <div class="flex items-center justify-end gap-2 p-4 bg-blue-900 mt-auto">
+                  <span class="text-sm">Seleziona candidato</span>
+                  <label class="cursor-pointer">
+                    <input 
+                      type="checkbox"
+                      :name="'candidate_' + candidate.id"
+                      :value="candidate.id"
+                      :checked="isSelected(question.id, candidate.id)"
+                      @change="handleCandidateSelection($event, question.id, candidate.id)"
+                      :disabled="isMaxVotesReached(question.id) && !isSelected(question.id, candidate.id)"
+                      class="checkbox checkbox-primary"
+                    />
+                  </label>
+                </div>
               </div>
+              
               <div class="text-sm text-info mt-2">
                 Hai selezionato {{ getSelectedCount(question.id) }} candidati su {{ election.max_votes }} disponibili
               </div>
             </div>
+
             <div v-if="question.type === 'writing'">
               <textarea
               class="block w-full rounded-md border-0 bg-white/5 py-1.5 text-white shadow-sm ring-1 ring-inset ring-white/10 focus:ring-2 focus:ring-inset focus:ring-indigo-500 sm:text-sm sm:leading-6"
@@ -68,7 +95,7 @@
   
   <script setup>
   import AppLayout from '@/Layouts/AppLayout.vue';
-  import { ref, reactive } from 'vue';
+  import { ref, reactive, onMounted } from 'vue';
   import { useForm } from '@inertiajs/vue3';
   
   const { election } = defineProps({
@@ -77,6 +104,7 @@
   
   const selectedVotes = reactive({});
   const validationErrors = reactive({});
+  const randomizedCandidates = reactive({});
   
   const form = useForm({
     votes: []
@@ -172,7 +200,32 @@
     return date.toLocaleDateString('it-IT', options);
   };
   
+  const shuffleArray = (array) => {
+    for (let i = array.length - 1; i > 0; i--) {
+      const j = Math.floor(Math.random() * (i + 1));
+      [array[i], array[j]] = [array[j], array[i]];
+    }
+    return array;
+  };
+  
+  onMounted(() => {
+    election.questions.forEach(question => {
+      if (question.type === 'candidates') {
+        randomizedCandidates[question.id] = shuffleArray([...question.candidates]);
+      }
+    });
+  });
+  
   </script>
+  
+  <style>
+  .line-clamp-4 {
+    display: -webkit-box;
+    -webkit-line-clamp: 4;
+    -webkit-box-orient: vertical;
+    overflow: hidden;
+  }
+  </style>
   
   
   
