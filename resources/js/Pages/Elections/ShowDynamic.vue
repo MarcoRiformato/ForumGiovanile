@@ -41,7 +41,7 @@
                   <div class="w-1/3 max-w-[200px] min-w-[150px] h-[200px] flex-shrink-0 bg-gray-100">
                     <img 
                       v-if="candidate.image_path"
-                      :src="`/storage/${candidate.image_path}`"
+                      :src="`${candidate.image_path}`"
                       :alt="candidate.name"
                       class="w-full h-full object-cover"
                     />
