@@ -37,8 +37,8 @@
                    :key="candidate.id" 
                    class="relative flex flex-col bg-base-100 shadow-xl hover:shadow-2xl transition-shadow rounded-lg overflow-hidden">
                 <div class="flex">
-                  <!-- Image container - Updated height for when image exists -->
-                  <div class="w-1/3 max-w-[200px] min-w-[150px] h-[250px] flex-shrink-0 bg-gray-100">
+                  <!-- Image container -->
+                  <div class="w-1/3 max-w-[200px] min-w-[150px] h-[200px] flex-shrink-0 bg-gray-100">
                     <img 
                       v-if="candidate.image_path"
                       :src="`${candidate.image_path}`"
@@ -47,7 +47,7 @@
                     />
                     <div 
                       v-else
-                      class="w-full h-[200px] flex items-center justify-center bg-gray-200"
+                      class="w-full h-full flex items-center justify-center bg-gray-200"
                     >
                       <svg 
                         class="w-24 h-24 text-gray-400" 
@@ -58,8 +58,8 @@
                       </svg>
                     </div>
                   </div>
-                  <!-- Content container - Updated height to match -->
-                  <div class="flex-1 p-4 flex flex-col h-[250px]">
+                  <!-- Content container -->
+                  <div class="flex-1 p-4 flex flex-col h-[200px]">
                     <h3 class="text-lg font-bold mb-2">{{ candidate.name }}</h3>
                     <p class="text-gray-300 flex-1 overflow-y-auto">
                       {{ candidate.description }}
