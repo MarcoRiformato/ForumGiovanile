@@ -110,6 +110,7 @@
   import AppLayout from '@/Layouts/AppLayout.vue';
   import { ref, reactive, onMounted } from 'vue';
   import { useForm } from '@inertiajs/vue3';
+  import { router } from '@inertiajs/vue3';
   
   const { election } = defineProps({
     election: Object,
@@ -222,6 +223,15 @@
   };
   
   onMounted(() => {
+    // Check if election has ended
+    const currentDate = new Date();
+    const endDate = new Date(election.end_date);
+    
+    if (currentDate > endDate) {
+      // Redirect to homepage if election has ended
+      router.visit(route('home'));
+    }
+    
     election.questions.forEach(question => {
       if (question.type === 'candidates') {
         randomizedCandidates[question.id] = shuffleArray([...question.candidates]);

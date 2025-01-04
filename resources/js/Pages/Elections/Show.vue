@@ -65,8 +65,9 @@
 
 <script setup>
 import AppLayout from '@/Layouts/AppLayout.vue';
-import { ref, computed, reactive, watch } from 'vue';
+import { ref, computed, reactive, watch, onMounted } from 'vue';
 import { useForm } from '@inertiajs/vue3';
+import { router } from '@inertiajs/vue3';
 
 const errors = ref([]);
 
@@ -155,4 +156,15 @@ const submitVote = () => {
   form.votes = votesToSend;
   form.post(route('election.vote', { election: props.election.id }));
 };
+
+onMounted(() => {
+  // Check if election has ended
+  const currentDate = new Date();
+  const endDate = new Date(props.election.end_date);
+  
+  if (currentDate > endDate) {
+    // Redirect to homepage if election has ended
+    router.visit(route('home'));
+  }
+});
 </script>
