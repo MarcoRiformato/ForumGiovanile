@@ -68,7 +68,7 @@
             <div class="flex justify-between items-center">
               <button @click.stop="openWhatsApp(job)" 
                 :class="['btn btn-sm', job.isCorso ? 'btn-secondary' : 'btn-primary']">
-                {{ job.isCorso ? 'Iscriviti' : 'Candidati' }}
+                {{ job.isCorso ? 'Iscriviti' : 'Chiedi info' }}
               </button>
               <!--<p class="text-gray-500">Nuovo! <br/> 🆕</p>-->
             </div>
