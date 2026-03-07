@@ -13,6 +13,10 @@ class ElectionController extends Controller
      */
     public function index()
     {
+        if (!auth()->check() || !auth()->user()->isAdmin()) {
+            return redirect('/');
+        }
+        
         $election = Election::with('user')->where('status', 'open')->latest()->first();
     
         return Inertia::render('IndexElections', [ 'election' => $election]);
