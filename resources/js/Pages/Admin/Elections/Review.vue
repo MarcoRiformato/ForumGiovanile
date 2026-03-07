@@ -74,6 +74,7 @@ const form = useForm({
     start_date: election.start_date,
     end_date: election.end_date,
     status: election.status,
+    max_votes: election.max_votes,
     questions: JSON.stringify(election.questions),
     // Additional fields, if any
     media_file: election.media_file,

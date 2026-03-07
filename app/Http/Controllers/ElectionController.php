@@ -13,7 +13,7 @@ class ElectionController extends Controller
      */
     public function index()
     {
-        $election = Election::with('user')->find(7);
+        $election = Election::with('user')->where('status', 'open')->latest()->first();
     
         return Inertia::render('IndexElections', [ 'election' => $election]);
     }
@@ -36,6 +36,7 @@ class ElectionController extends Controller
             'start_date' => 'nullable|date',
             'end_date' => 'nullable|date',
             'status' => 'nullable',
+            'max_votes' => 'nullable|integer|min:1',
         ]);
 
         session(['election' => $validatedData]);
