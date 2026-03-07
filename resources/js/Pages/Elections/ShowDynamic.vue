@@ -85,16 +85,16 @@ const dashOffset = computed(() => circumference - (progress.value / 100) * circu
                 </div>
 
                 <!-- Strategic Layout: Main Content vs Sticky Status -->
-                <div class="grid lg:grid-cols-12 gap-12 xl:gap-20">
+                <div class="max-w-6xl mx-auto">
                     <!-- Left: Questions & Grid -->
-                    <div class="lg:col-span-8 space-y-24">
+                    <div class="space-y-24">
                         <div v-for="question in election.questions.filter(q => q.candidates && q.candidates.length > 0)" :key="question.id" class="space-y-8">
                             <div class="flex items-center gap-4">
                                 <span class="w-1 h-8 bg-indigo-500 rounded-full"></span>
                                 <h2 class="text-2xl md:text-3xl font-bold text-white tracking-tight">{{ question.text }}</h2>
                             </div>
                             
-                            <div class="grid md:grid-cols-2 lg:grid-cols-3 gap-8">
+                            <div class="grid md:grid-cols-2 xl:grid-cols-3 gap-6 lg:gap-8">
                                 <div 
                                     v-for="candidate in question.candidates" 
                                     :key="candidate.id"
@@ -127,10 +127,10 @@ const dashOffset = computed(() => circumference - (progress.value / 100) * circu
                                         </div>
                                         
                                         <div class="flex-1 min-w-0">
-                                            <h3 class="text-xl font-semibold text-white truncate">
+                                            <h3 class="text-lg md:text-xl font-bold text-white leading-tight mb-1">
                                                 {{ candidate.name }}
                                             </h3>
-                                            <p class="text-sm text-slate-500 line-clamp-1">
+                                            <p class="text-sm text-slate-400 line-clamp-2 leading-snug">
                                                 {{ candidate.description }}
                                             </p>
                                         </div>

@@ -154,10 +154,23 @@ class ElectionController extends Controller
     public function showDynamic(string $id) {
         $election = Election::with('questions.candidates')->findOrFail($id);
 
+        if (!auth()->check() || !auth()->user()->isAdmin()) {
+            $now = \Carbon\Carbon::now();
+            if ($election->start_date && $now->lt(\Carbon\Carbon::parse($election->start_date))) {
+                return redirect('/');
+            }
+            if ($election->end_date && $now->gt(\Carbon\Carbon::parse($election->end_date))) {
+                return redirect('/');
+            }
+            if ($election->status !== 'open') {
+                return redirect('/');
+            }
+        }
+
         // Check if the user has already voted
         if ($this->hasVoted($election->id, request()->ip())) {
             return redirect()->route('elections.thanks')
-                ->with('error', 'Hai già votato in questo sondaggio.');
+                ->with('error', 'Hai già votato in questa elezione.');
         }
 
         return Inertia::render('Elections/ShowDynamic', [
@@ -169,6 +182,19 @@ class ElectionController extends Controller
     {
         $election = Election::with('questions.options', 'questions.candidates')
             ->findOrFail($id);
+
+        if (!auth()->check() || !auth()->user()->isAdmin()) {
+            $now = \Carbon\Carbon::now();
+            if ($election->start_date && $now->lt($election->start_date)) {
+                return redirect('/');
+            }
+            if ($election->end_date && $now->gt($election->end_date)) {
+                return redirect('/');
+            }
+            if ($election->status !== 'open') {
+                return redirect('/');
+            }
+        }
 
         // Check if the user has already voted
         if ($this->hasVoted($election->id, request()->ip())) {
@@ -193,7 +219,7 @@ class ElectionController extends Controller
         // Check if the user has already voted
         if ($this->hasVoted($election->id, $ip)) {
             return redirect()->route('elections.thanks')
-                ->with('error', 'Hai già votato in questo sondaggio.');
+                ->with('error', 'Hai già votato in questa elezione.');
         }
 
         // Validate that all questions have been answered
