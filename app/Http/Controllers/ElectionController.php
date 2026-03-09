@@ -13,11 +13,18 @@ class ElectionController extends Controller
      */
     public function index()
     {
+        $query = Election::with('user')->where('status', 'open');
+        
         if (!auth()->check() || !auth()->user()->isAdmin()) {
-            return redirect('/');
+            $now = \Carbon\Carbon::now();
+            $query->where(function($q) use ($now) {
+                $q->whereNull('start_date')->orWhere('start_date', '<=', $now);
+            })->where(function($q) use ($now) {
+                $q->whereNull('end_date')->orWhere('end_date', '>=', $now);
+            });
         }
         
-        $election = Election::with('user')->where('status', 'open')->latest()->first();
+        $election = $query->latest()->first();
     
         return Inertia::render('IndexElections', [ 'election' => $election]);
     }
