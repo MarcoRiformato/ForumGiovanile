@@ -163,7 +163,7 @@ class ElectionController extends Controller
      * Display the specified resource.
      */
     public function showDynamic(string $id) {
-        $election = Election::with('questions.candidates')->findOrFail($id);
+        $election = Election::with('questions.candidates', 'questions.options')->findOrFail($id);
 
         if (!auth()->check() || !auth()->user()->isAdmin()) {
             $now = \Carbon\Carbon::now();
